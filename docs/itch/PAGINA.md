@@ -27,8 +27,32 @@ Textos e configurações prontos para copiar em **itch.io → Create new project
 | **Screenshots** | as 10 imagens de `docs/screenshots/` |
 | **Visibility** | Draft até conferir tudo; depois Public |
 
-Na aba **Edit theme** dá para usar `docs/itch/banner_960x300.png` como banner do topo e as cores:
-fundo `#120f14`, texto `#e8d6be`, links `#e0b860`.
+### Tema escuro (Edit theme, na barra do topo da página)
+
+| Opção | Valor |
+|---|---|
+| Banner (Header image) | `docs/itch/banner_960x300.png` |
+| Background image | `docs/itch/bg_tile_512.png` (repetir / repeat) |
+| BG color | `#120f14` |
+| BG2 color (fundo do conteúdo) | `#1c1820` |
+| Text color | `#e8d6be` |
+| Link color | `#e0b860` |
+| Button color | `#b8863a` |
+| Fonte do título / do texto | Cinzel (ou Merriweather) / Lato |
+| Layout | conteúdo à esquerda, capturas de tela na coluna da direita |
+
+### Descrição formatada
+Em **Edit game → Description**, troque para o modo HTML e cole `docs/itch/descricao.html`.
+Ela mostra os três GIFs (`docs/itch/gif_*.gif`); se o itch não aceitar imagens de fora, envie os
+GIFs pelo botão de imagem do editor no mesmo lugar.
+
+### Capturas de tela
+Envie em **Screenshots** os três GIFs e as capturas de `docs/screenshots/`. Elas aparecem na
+coluna da direita e deixam a página bem mais viva.
+
+### Arquivos para download
+Em **Uploads**, dê nomes legíveis: "IRONVEIL — Windows (64 bits)", "IRONVEIL — Linux",
+"IRONVEIL — macOS (Intel e Apple Silicon)", "IRONVEIL — Android (APK)".
 
 ---
 
