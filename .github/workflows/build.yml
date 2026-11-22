@@ -1,6 +1,7 @@
 # Compila IRONVEIL para Linux, Windows, macOS e Android.
 # - Em todo push/PR: roda o teste de fumaça e gera os builds como artefatos.
-# - Numa tag v* (ex.: v1.0.0): também publica um Release com os arquivos.
+# - Numa tag v* (ex.: v1.0.0): também publica um Release com os arquivos e,
+#   se configurado (secret BUTLER_API_KEY + variável ITCH_GAME), envia ao itch.io.
 # Android: sem os secrets de assinatura, gera um APK de depuração (instalável
 # por sideload). Com ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_ALIAS e
 # ANDROID_KEYSTORE_PASSWORD configurados, gera o APK de release assinado.
@@ -113,6 +114,33 @@ jobs:
             ~/godot/godot --headless --path app --export-debug "Android" "$B/android/ironveil.apk"
             cp "$B/android/ironveil.apk" "$B/dist/ironveil-android-debug.apk"
           fi
+
+      - name: Publicar no itch.io (tags v*)
+        # Precisa do secret BUTLER_API_KEY e da variável ITCH_GAME (usuario/jogo,
+        # o endereço da página no itch.io). Sem eles, o passo é pulado.
+        if: startsWith(github.ref, 'refs/tags/v') && vars.ITCH_GAME != ''
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+          ITCH_GAME: ${{ vars.ITCH_GAME }}
+        run: |
+          set -euo pipefail
+          if [ -z "${BUTLER_API_KEY}" ]; then echo "Sem BUTLER_API_KEY: pulando o itch.io."; exit 0; fi
+          BUTLER_VERSION=15.32.0
+          BUTLER_SHA256=5db7b053fc9b578b86ffaf3520a12b952eb95c9225171cc5720dfbc9fe4574b3
+          curl -fsL -o butler.zip "https://github.com/itchio/butler/releases/download/v${BUTLER_VERSION}/butler-linux-amd64.zip"
+          printf '%s  %s\n' "$BUTLER_SHA256" butler.zip | sha256sum -c -
+          unzip -jq butler.zip -d butler_bin
+          chmod +x butler_bin/butler
+          VERSION="${GITHUB_REF_NAME#v}"
+          B="$GITHUB_WORKSPACE/build"
+          # macOS: o zip exportado vira a pasta Ironveil.app
+          mkdir -p "$B/itch_macos" "$B/itch_android"
+          unzip -q "$B/macos/ironveil-macos.zip" -d "$B/itch_macos"
+          cp "$B"/dist/ironveil-android*.apk "$B/itch_android/"
+          ./butler_bin/butler push "$B/windows" "$ITCH_GAME:windows" --userversion "$VERSION" --if-changed
+          ./butler_bin/butler push "$B/linux" "$ITCH_GAME:linux" --userversion "$VERSION" --if-changed
+          ./butler_bin/butler push "$B/itch_macos" "$ITCH_GAME:osx" --userversion "$VERSION" --if-changed
+          ./butler_bin/butler push "$B/itch_android" "$ITCH_GAME:android" --userversion "$VERSION" --if-changed
 
       - uses: actions/upload-artifact@v4
         with:
