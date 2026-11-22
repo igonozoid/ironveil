@@ -1,8 +1,9 @@
 extends CanvasLayer
 ## Controles de toque (Android e telas sensíveis ao toque). Cada botão aciona a
 ## mesma ação do teclado, então as dicas do jogo (Z, X, C, A, S, Q) continuam
-## valendo: o botão mostra a letra e o nome da ação. Só aparecem em telas de
-## toque (TouchScreenButton.VISIBILITY_TOUCHSCREEN_ONLY).
+## valendo: o botão mostra a letra e o nome da ação. No Android ficam sempre
+## visíveis; no PC aparecem só depois de um toque de verdade na tela e somem
+## ao usar teclado ou controle.
 
 ## [ação, centro, raio, letra, nome, segurar-e-deslizar]
 const BUTTONS := [
@@ -27,6 +28,14 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for b in BUTTONS:
 		_add(b[0], b[1], b[2], b[3], b[4], b[5])
+	visible = OS.has_feature("mobile") or OS.has_feature("android")
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventScreenTouch:
+		visible = true
+	elif not OS.has_feature("mobile") and (event is InputEventKey or event is InputEventJoypadButton):
+		visible = false
 
 
 static func circle_texture(r: int, fill: Color, ring: Color) -> ImageTexture:
@@ -62,7 +71,7 @@ func _add(action: String, center: Vector2, radius: float, letter: String, captio
 	b.shape_centered = true
 	b.action = action
 	b.passby_press = passby
-	b.visibility_mode = TouchScreenButton.VISIBILITY_TOUCHSCREEN_ONLY
+	b.visibility_mode = TouchScreenButton.VISIBILITY_ALWAYS
 	b.position = center - Vector2(r + 1, r + 1)
 	add_child(b)
 	var l := Label.new()
