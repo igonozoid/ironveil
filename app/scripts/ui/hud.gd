@@ -75,6 +75,18 @@ func hide_hint() -> void:
 	hint_panel.visible = false
 
 
+## Aviso grande de upgrade novo.
+func show_upgrade(up_name: String, desc: String) -> void:
+	title_label.text = "NOVO: " + up_name
+	message(desc)
+	message_t = 4.5
+	title_label.modulate.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(title_label, "modulate:a", 1.0, 0.4)
+	tw.tween_interval(3.6)
+	tw.tween_property(title_label, "modulate:a", 0.0, 0.8)
+
+
 func show_title(t: String) -> void:
 	title_label.text = t
 	var tw := create_tween()
@@ -105,7 +117,7 @@ class HudDraw extends Control:
 		var font := ThemeDB.fallback_font
 		# Vida
 		draw_string(font, Vector2(10, 17), "VIDA", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
-		for i in Game.MAX_HP:
+		for i in Game.max_hp():
 			var r := Rect2(Vector2(38 + i * 15, 8), Vector2(12, 10))
 			draw_rect(r.grow(1), Color("1e1b1b"))
 			if i < Game.hp:
@@ -114,6 +126,22 @@ class HudDraw extends Control:
 			else:
 				draw_rect(r, Color("2e2a2a"))
 				draw_rect(r, Color("5a3a24"), false, 1.0)
+		var x := 38.0 + Game.max_hp() * 15.0 + 4.0
+		var pl = Game.world.player if Game.world else null
+		# Couraça (upgrade): placa cheia ou recarregando
+		if Game.has_upgrade("couraca") and pl != null:
+			var pr := Rect2(Vector2(x, 7), Vector2(10, 12))
+			draw_rect(pr.grow(1), Color("1e1b1b"))
+			if pl.armor > 0:
+				draw_rect(pr, Color("a07a38"))
+				draw_rect(Rect2(pr.position, Vector2(10, 3)), Color("e0b860"))
+			else:
+				var k: float = clampf(pl.armor_t / pl.ARMOR_RECHARGE, 0.0, 1.0)
+				draw_rect(pr, Color("2e2a2a"))
+				draw_rect(Rect2(pr.position + Vector2(0, 12 * (1.0 - k)), Vector2(10, 12 * k)), Color(0.63, 0.48, 0.22, 0.5))
+			x += 16.0
+		if Game.run_mode:
+			draw_string(font, Vector2(x + 2, 17), "CORRENDO", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.8, 0.45))
 		_draw_boss(font)
 		# Ferramenta
 		var box := Rect2(Vector2(470, 6), Vector2(162, 28))
@@ -124,7 +152,7 @@ class HudDraw extends Control:
 		if count > 0:
 			Icons.draw_tool(self, tool, box.position + Vector2(14, 14), 1.2)
 			draw_string(font, box.position + Vector2(28, 13), String(Game.TOOL_NAMES[tool]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.95, 0.9, 0.82))
-			draw_string(font, box.position + Vector2(28, 24), "x%d   Q trocar · S usar" % count, HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.8, 0.65, 0.5))
+			draw_string(font, box.position + Vector2(28, 24), "x%d   %s trocar · %s usar" % [count, Game.key_name("swap_tool"), Game.key_name("use_tool")], HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.8, 0.65, 0.5))
 		else:
 			draw_string(font, box.position + Vector2(10, 17), "— sem ferramenta —", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.55, 0.5, 0.47))
 

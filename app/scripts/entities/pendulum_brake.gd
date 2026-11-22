@@ -61,7 +61,7 @@ func _physics_process(delta: float) -> void:
 	t += delta
 	cd = maxf(cd - delta, 0.0)
 	pulled = maxf(pulled - delta, 0.0)
-	prompt = "TRAVE AGORA! (A)" if ready_now() else "A: puxar o freio (espere a lâmina chegar)"
+	prompt = "A: puxar o freio"
 	queue_redraw()
 
 

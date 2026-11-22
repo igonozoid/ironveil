@@ -275,7 +275,7 @@ func _on_intro_done() -> void:
 	if not Game.replay:
 		Game.write_save()
 	bar_visible = true
-	Game.world.hud.show_hint("Martelo-de-Vapor: acerte o tanque das costas ou o núcleo da frente quando ele abrir depois da martelada. Pule as ondas de choque. Vapor e cargas o atordoam.")
+	Game.world.hud.message("Ordo: Ninguém atravessa o Martelo!")
 	Sfx.play("lift", 0.0, 0.6)
 	_to_walk(1.2)
 
@@ -477,7 +477,7 @@ func _drop_supply() -> void:
 	Fx.debris(get_parent(), Vector2(x, arena.position.y + 50.0))
 	Fx.steam_puff(get_parent(), Vector2(x, arena.position.y + 50.0), 10)
 	Sfx.play("clunk", -2.0)
-	Game.world.hud.message("Um cano estourou: cargas de vapor no chão!")
+	Game.world.hud.message("Algo caiu de um cano estourado...")
 
 
 func _die() -> void:
@@ -536,6 +536,7 @@ func _final_blast() -> void:
 		b.pool(global_position + Vector2(facing * 8, 0), 26.0)
 	if exit_lift != null:
 		exit_lift.locked = false
+	Game.world.on_boss_defeated(Vector2(global_position.x, global_position.y - 22.0))
 	await get_tree().create_timer(1.2).timeout
 	if Game.world:
 		bar_visible = false

@@ -5,7 +5,7 @@ extends RefCounted
 
 const MAX := 48
 
-## Cada item: [x (px, lado da frente > 0), h (0 = pés, 1 = topo), raio, cor, escorrido (px)]
+## Cada item: [x (px, lado da frente > 0), h (0 = pés, 1 = topo), raio, cor, escorrido (px), criado (s)]
 var items: Array = []
 var ring := 0
 
@@ -15,12 +15,24 @@ func add(local: Vector2, facing: int, height: float, half_w: float, r: float, co
 	var x := clampf(local.x * float(facing), -half_w, half_w)
 	var h := clampf(-local.y / height, 0.05, 1.0)
 	var drip := randf_range(0.0, 3.5) if r > 1.0 and randf() < 0.45 else 0.0
-	var it := [x, h, clampf(r, 0.5, 1.8), col.darkened(randf_range(0.0, 0.25)), drip]
+	var it := [x, h, clampf(r, 0.5, 1.8), col.darkened(randf_range(0.0, 0.25)), drip, Time.get_ticks_msec() / 1000.0]
 	if items.size() < MAX:
 		items.append(it)
 	else:
 		items[ring] = it
 		ring = (ring + 1) % MAX
+
+
+## Remove as manchas com mais de `max_age` segundos.
+func expire(max_age: float) -> void:
+	var now := Time.get_ticks_msec() / 1000.0
+	var keep: Array = []
+	for it in items:
+		if it.size() < 6 or now - float(it[5]) < max_age:
+			keep.append(it)
+	if keep.size() != items.size():
+		items = keep
+		ring = 0
 
 
 func clear() -> void:
@@ -33,8 +45,12 @@ func count() -> int:
 
 
 ## Desenha no CanvasItem já transformado (espelhado pelo facing do dono).
-func draw_on(ci: CanvasItem, height: float, x_scale: float = 1.0) -> void:
+func draw_on(ci: CanvasItem, height: float, x_scale: float = 1.0, limit: int = -1) -> void:
+	var n := 0
 	for it in items:
+		if limit >= 0 and n >= limit:
+			break
+		n += 1
 		var p := Vector2(float(it[0]) * x_scale, -float(it[1]) * height)
 		var r: float = it[2]
 		var col: Color = it[3]

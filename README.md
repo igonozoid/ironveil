@@ -68,7 +68,9 @@ despencam, pistões e cargas explosivas.
 - **Lança-rebites (X)** — rebites retos; ↑ + X dispara o rebite de escalada.
 - **Ferramentas (S / Q)** — cargas de vapor, selante (+2 de vida) e cartões de acesso.
 - **Furtividade** — holofotes, multidões para se misturar e guardas que não atiram com civis na frente.
-- **Três chefões** com pontos fracos diferentes: tanque nas costas, canhões-arpão, freios do pêndulo.
+- **Três chefões** — descubra como vencê-los. Cada um deixa um **upgrade**: mais vida, um arpão
+  de mão carregável e uma couraça que absorve golpes.
+- **Moradores** dão dicas conversando, e reagem ao sangue: fogem, vomitam, rezam ou se encolhem.
 
 ### Controles
 
@@ -78,10 +80,14 @@ despencam, pistões e cargas explosivas.
 | Pular | **Z** | A | **Z** |
 | Atirar | **X** | X / gatilho direito | **X** |
 | Rolar | **C** | LB / gatilho esquerdo | **C** |
+| Trotar / correr | **Shift** | L3 | **⇧** |
 | Encostar | ↑ (junto à reentrância) | ↑ | ▲ |
 | Interagir | **A** | B | **A** |
 | Usar / trocar ferramenta | **S** / **Q** | Y / RB | **S** / **Q** |
 | Pausa | Esc | Start | **II** |
+| Tela cheia | **F11** | — | — |
+
+Todas as teclas podem ser trocadas em **Configurações**.
 
 ### Visual
 
@@ -148,6 +154,11 @@ git tag v1.0.1 && git push origin v1.0.1
 ```
 
 Os arquivos aparecem sozinhos em **Releases** alguns minutos depois.
+
+## 🗺️ Próximos passos
+
+O plano até o ato final (Atos 4 e 5, o Véu de Ferro) e as melhorias propostas para as fases
+atuais estão em [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## 📚 Documentação
 

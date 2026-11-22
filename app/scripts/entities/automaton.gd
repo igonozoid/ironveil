@@ -227,6 +227,14 @@ func on_rivet_hit(dir: int) -> void:
 		_stun(0.9)
 
 
+## Arpão de mão: fura a couraça.
+func pierce_hit(dir: int) -> void:
+	if state == S.DEAD:
+		return
+	Fx.sparks(get_parent(), global_position + Vector2(-dir * 6, -18))
+	_damage(2, "rivet", Vector2(dir, 0))
+
+
 func steam_hit(n: int) -> void:
 	_damage(n, "steam", Vector2.ZERO)
 	if state != S.DEAD:

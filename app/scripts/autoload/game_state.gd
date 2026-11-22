@@ -5,7 +5,27 @@ extends Node
 const TILE := 20
 const SCREEN_W := 32
 const SCREEN_H := 18
+## Vida base; o upgrade "vida" (Martelo-de-Vapor) soma 1. Use max_hp().
 const MAX_HP := 4
+## Upgrades ganhos ao derrotar cada chefão: id -> [fase do chefão, nome, descrição]
+const UPGRADES := {
+	"vida": [2, "Válvula do Martelo", "+1 quadrado de vida"],
+	"arpao": [5, "Arpão de mão", "Segure o tiro para carregar um arpão que atravessa escudos e inimigos"],
+	"couraca": [8, "Couraça do Regulador", "Uma placa de latão absorve um golpe e se recarrega com o tempo"],
+}
+## Ações que o jogador pode reconfigurar: [ação, nome na tela]
+const REBINDABLE := [
+	["move_left", "Mover para a esquerda"], ["move_right", "Mover para a direita"],
+	["move_up", "Cima / encostar"], ["move_down", "Agachar"],
+	["jump", "Pular"], ["shoot", "Atirar"], ["roll", "Rolar"], ["run", "Trotar / correr"],
+	["interact", "Interagir"], ["use_tool", "Usar ferramenta"], ["swap_tool", "Trocar ferramenta"],
+	["pause", "Pausa"],
+]
+const DEFAULT_KEYS := {
+	"move_left": KEY_LEFT, "move_right": KEY_RIGHT, "move_up": KEY_UP, "move_down": KEY_DOWN,
+	"jump": KEY_Z, "shoot": KEY_X, "roll": KEY_C, "run": KEY_SHIFT, "interact": KEY_A,
+	"use_tool": KEY_S, "swap_tool": KEY_Q, "pause": KEY_ESCAPE,
+}
 const PHASE_COUNT := 9
 ## Atos e suas fases (índices globais de fase).
 const ACTS := [
@@ -31,9 +51,9 @@ var tool_index: int = 0
 var checkpoint: Dictionary = {}
 ## Progresso permanente: fases já concluídas (índices) e se o ato foi terminado.
 ## Não é apagado por "Novo jogo".
-var progress: Dictionary = {"completed": [], "act1_complete": false, "acts_complete": []}
+var progress: Dictionary = {"completed": [], "act1_complete": false, "acts_complete": [], "upgrades": []}
 ## Opções do jogador (salvas junto com o progresso).
-var settings: Dictionary = {"gore": true, "fx": true}
+var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "keys": {}}
 var show_story: bool = false
 var intro_to_menu: bool = false
 ## Repetição de uma fase já concluída (pelo mapa): não mexe no checkpoint salvo.
@@ -44,6 +64,11 @@ var map_mode: String = "browse"
 var map_from: int = -1
 ## Ato cuja tela de conclusão deve ser mostrada.
 var end_act: int = 0
+## A próxima fase carregada começa com a animação de entrada (Sera chega e o
+## jogador aperta uma tecla). Morrer e recarregar não repete a entrada.
+var phase_intro: bool = false
+## Modo corrida (alternado pela tecla de trotar/correr).
+var run_mode: bool = false
 ## Sangue e sujeira na roupa de Sera (só nesta sessão; some ao fim de cada ato).
 var sera_splats: Array = []
 var sera_grime: float = 0.0
@@ -56,6 +81,14 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_setup_input()
 	load_save()
+	apply_keys()
+	apply_fullscreen()
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F11:
+		toggle_fullscreen()
+		get_viewport().set_input_as_handled()
 
 
 # ---------------------------------------------------------------- controles
@@ -68,6 +101,7 @@ func _setup_input() -> void:
 	_add_action("jump", [KEY_Z], [JOY_BUTTON_A], [])
 	_add_action("shoot", [KEY_X], [JOY_BUTTON_X], [[JOY_AXIS_TRIGGER_RIGHT, 1.0]])
 	_add_action("roll", [KEY_C], [JOY_BUTTON_LEFT_SHOULDER], [[JOY_AXIS_TRIGGER_LEFT, 1.0]])
+	_add_action("run", [KEY_SHIFT], [JOY_BUTTON_LEFT_STICK], [])
 	_add_action("interact", [KEY_A], [JOY_BUTTON_B], [])
 	_add_action("use_tool", [KEY_S], [JOY_BUTTON_Y], [])
 	_add_action("swap_tool", [KEY_Q], [JOY_BUTTON_RIGHT_SHOULDER], [])
@@ -97,11 +131,99 @@ func _add_action(action: String, keys: Array, buttons: Array, axes: Array) -> vo
 		InputMap.action_add_event(action, jm)
 
 
+## Aplica as teclas salvas (só os eventos de teclado; controle e toque ficam).
+func apply_keys() -> void:
+	var saved: Dictionary = settings.get("keys", {})
+	for a in DEFAULT_KEYS.keys():
+		var code: int = int(saved.get(a, DEFAULT_KEYS[a]))
+		for ev in InputMap.action_get_events(a):
+			if ev is InputEventKey:
+				InputMap.action_erase_event(a, ev)
+		var k := InputEventKey.new()
+		k.keycode = code as Key
+		InputMap.action_add_event(a, k)
+
+
+func rebind(action: String, keycode: int) -> void:
+	var keys: Dictionary = settings.get("keys", {})
+	# Tira a tecla de outra ação que já a usava (troca as duas).
+	var old: int = int(keys.get(action, DEFAULT_KEYS[action]))
+	for a in DEFAULT_KEYS.keys():
+		if a != action and int(keys.get(a, DEFAULT_KEYS[a])) == keycode:
+			keys[a] = old
+	keys[action] = keycode
+	settings["keys"] = keys
+	apply_keys()
+	write_save()
+
+
+func reset_keys() -> void:
+	settings["keys"] = {}
+	apply_keys()
+	write_save()
+
+
+func keycode_of(action: String) -> int:
+	return int((settings.get("keys", {}) as Dictionary).get(action, DEFAULT_KEYS.get(action, 0)))
+
+
+## Nome curto da tecla de uma ação, para dicas e menus.
+func key_name(action: String) -> String:
+	var code := keycode_of(action)
+	match code:
+		KEY_LEFT: return "←"
+		KEY_RIGHT: return "→"
+		KEY_UP: return "↑"
+		KEY_DOWN: return "↓"
+		KEY_ESCAPE: return "Esc"
+	return OS.get_keycode_string(code)
+
+
+## Troca marcas como [jump] pelo nome da tecla atual.
+func fmt(text: String) -> String:
+	var out := text
+	for a in DEFAULT_KEYS.keys():
+		out = out.replace("[%s]" % a, key_name(a))
+	return out
+
+
+func toggle_fullscreen() -> void:
+	settings["fullscreen"] = not bool(settings.get("fullscreen", false))
+	apply_fullscreen()
+	write_save()
+
+
+func apply_fullscreen() -> void:
+	if OS.has_feature("mobile") or DisplayServer.get_name() == "headless":
+		return
+	var fs := bool(settings.get("fullscreen", false))
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fs else DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+# ---------------------------------------------------------------- upgrades
+
+func max_hp() -> int:
+	return MAX_HP + (1 if has_upgrade("vida") else 0)
+
+
+func has_upgrade(id: String) -> bool:
+	return (progress.get("upgrades", []) as Array).has(id)
+
+
+func grant_upgrade(id: String) -> void:
+	var u: Array = progress.get("upgrades", [])
+	if not u.has(id):
+		u.append(id)
+	progress["upgrades"] = u
+	write_save()
+
+
 # ---------------------------------------------------------------- fluxo
 
 func new_game() -> void:
+	phase_intro = true
 	phase = 0
-	hp = MAX_HP
+	hp = max_hp()
 	inv = {"charge": 0, "sealant": 0, "card": 0}
 	tool_index = 0
 	show_story = false
@@ -134,6 +256,7 @@ func continue_game() -> void:
 		return
 	show_story = false
 	replay = false
+	phase_intro = true
 	restore_checkpoint()
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
@@ -170,6 +293,7 @@ func is_phase_unlocked(i: int) -> bool:
 
 ## Começa (ou repete) uma fase a partir do mapa.
 func play_from_map(i: int) -> void:
+	phase_intro = true
 	get_tree().paused = false
 	if not checkpoint.is_empty() and int(checkpoint.get("phase", -1)) == i and not is_phase_complete(i):
 		replay = false
@@ -178,14 +302,14 @@ func play_from_map(i: int) -> void:
 		# Repetição: começa com a vida cheia e um kit básico.
 		replay = true
 		phase = i
-		hp = MAX_HP
+		hp = max_hp()
 		inv = {"charge": 1 if i >= 3 else 0, "sealant": 0, "card": 0}
 		tool_index = 0
 		save_checkpoint()
 	else:
 		replay = false
 		phase = i
-		hp = MAX_HP
+		hp = max_hp()
 		inv = {"charge": 0, "sealant": 0, "card": 0}
 		tool_index = 0
 		save_checkpoint()
@@ -288,7 +412,7 @@ func restore_checkpoint() -> void:
 	if c.is_empty():
 		return
 	phase = int(c.get("phase", 0))
-	hp = int(c.get("hp", MAX_HP))
+	hp = mini(int(c.get("hp", max_hp())), max_hp())
 	var saved_inv: Dictionary = c.get("inv", {})
 	inv = {"charge": 0, "sealant": 0, "card": 0}
 	for k in saved_inv.keys():
@@ -318,6 +442,14 @@ func load_save() -> bool:
 	if typeof(sett) == TYPE_DICTIONARY:
 		settings["gore"] = bool(sett.get("gore", true))
 		settings["fx"] = bool(sett.get("fx", true))
+		settings["fullscreen"] = bool(sett.get("fullscreen", false))
+		var keys: Dictionary = {}
+		var sk = sett.get("keys", {})
+		if typeof(sk) == TYPE_DICTIONARY:
+			for a in sk.keys():
+				if DEFAULT_KEYS.has(String(a)):
+					keys[String(a)] = int(sk[a])
+		settings["keys"] = keys
 	if typeof(prog) == TYPE_DICTIONARY:
 		var done: Array = []
 		for v in prog.get("completed", []):
@@ -327,14 +459,21 @@ func load_save() -> bool:
 			acts.append(int(v))
 		if bool(prog.get("act1_complete", false)) and not acts.has(0):
 			acts.append(0)
-		progress = {"completed": done, "act1_complete": acts.has(0), "acts_complete": acts}
+		var ups: Array = []
+		for v in prog.get("upgrades", []):
+			ups.append(String(v))
+		# Chefões vencidos antes de existirem os upgrades também dão o prêmio.
+		for id in UPGRADES.keys():
+			if done.has(int(UPGRADES[id][0])) and not ups.has(id):
+				ups.append(id)
+		progress = {"completed": done, "act1_complete": acts.has(0), "acts_complete": acts, "upgrades": ups}
 	checkpoint["phase"] = clampi(int(checkpoint.get("phase", 0)), 0, PHASE_COUNT - 1)
 	# Save antigo parado no fim de um ato já concluído (de antes de existir o
 	# ato seguinte): o checkpoint passa para o começo do próximo ato.
 	var cp_phase := int(checkpoint["phase"])
 	if is_phase_complete(cp_phase) and is_last_of_act(cp_phase) and cp_phase + 1 < PHASE_COUNT \
 			and not is_phase_complete(cp_phase + 1):
-		checkpoint = {"phase": cp_phase + 1, "hp": MAX_HP, "inv": checkpoint.get("inv", {}),
+		checkpoint = {"phase": cp_phase + 1, "hp": max_hp(), "inv": checkpoint.get("inv", {}),
 			"tool_index": int(checkpoint.get("tool_index", 0))}
 	return true
 

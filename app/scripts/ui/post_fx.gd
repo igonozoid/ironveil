@@ -51,7 +51,5 @@ func _process(delta: float) -> void:
 	# Tempo real: o efeito continua decaindo durante o hitstop.
 	hurt = maxf(0.0, hurt - delta / maxf(Engine.time_scale, 0.05) * 2.5)
 	mat.set_shader_parameter("hurt", hurt)
-	var low := 0.0
-	if Game.hp == 1:
-		low = 1.0
-	mat.set_shader_parameter("low_hp", low)
+	# A vida baixa agora é mostrada pela borda de vida (health_border.gd).
+	mat.set_shader_parameter("low_hp", 0.0)

@@ -226,7 +226,7 @@ func _on_intro_done() -> void:
 	if not Game.replay:
 		Game.write_save()
 	bar_visible = true
-	Game.world.hud.show_hint("O Regulador: o pêndulo varre o centro — agache, role (C) ou pule. Quando a lâmina chegar ao alto do seu lado, puxe o freio (A): a cabine do Diretor desce e o núcleo fica exposto aos rebites.")
+	Game.world.hud.message("Maar: Deem corda ao Regulador.")
 	_to_wait(1.4)
 
 
@@ -335,7 +335,7 @@ func brake_ready(side: int) -> bool:
 
 func try_brake(side: int) -> bool:
 	if not brake_ready(side):
-		Game.world.hud.message("Cedo demais — espere a lâmina chegar ao alto deste lado.")
+		Game.world.hud.message("O freio range, mas não pega.")
 		return false
 	pend_mode = "jammed"
 	state = S.EXPOSED
@@ -346,7 +346,7 @@ func try_brake(side: int) -> bool:
 	Fx.sparks(get_parent(), blade_pos())
 	Fx.steam_puff(get_parent(), pivot + Vector2(0, 10), 16)
 	Game.world.shake(6.0)
-	Game.world.hud.message("Pêndulo travado! A cabine do Diretor está descendo!")
+	Game.world.hud.message("Maar: O que... o pêndulo travou!")
 	_damage(BRAKE_DMG)
 	return true
 
@@ -505,6 +505,7 @@ func _process_dying(delta: float) -> void:
 			b.pool(Vector2(c.x, floor_y - 2.0), 26.0)
 		if exit_lift != null:
 			exit_lift.locked = false
+		Game.world.on_boss_defeated(Vector2(pivot.x, floor_y - 22.0))
 		await get_tree().create_timer(1.6).timeout
 		if Game.world:
 			bar_visible = false

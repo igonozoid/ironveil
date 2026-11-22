@@ -83,7 +83,7 @@ func _check_hits() -> void:
 	var r := danger_rect()
 	var p = Game.world.player
 	if p != null and not p.is_dead() and r.intersects(p.hitbox()):
-		p.hurt(Game.MAX_HP, "crush")
+		p.hurt(Game.max_hp(), "crush")
 	for g in get_tree().get_nodes_in_group("guard"):
 		if g.is_alive() and r.intersects(g.rect()):
 			g.crush()

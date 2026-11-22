@@ -21,6 +21,7 @@ const JunctionScript := preload("res://scripts/entities/junction_box.gd")
 const GrappleScript := preload("res://scripts/entities/grapple_point.gd")
 const PickupScript := preload("res://scripts/entities/pickup.gd")
 const HintScript := preload("res://scripts/entities/hint.gd")
+const NpcScript := preload("res://scripts/entities/npc.gd")
 const CoverScript := preload("res://scripts/entities/cover_spot.gd")
 const TomeScript := preload("res://scripts/entities/tome.gd")
 const ZiplineScript := preload("res://scripts/entities/zipline.gd")
@@ -70,6 +71,7 @@ var falling_grates: Array = []
 ## Luzes 2D fixas do cenário: [luz, tela]. Só as da tela atual ficam acesas.
 var lights: Array = []
 var lights_made := false
+var npc_spots: Array = []
 var lit_screen := Vector2i(99999, 99999)
 
 
@@ -150,13 +152,13 @@ func build(data: Dictionary) -> void:
 				elif ch == "-":
 					oneway[c] = true
 				elif ch == "?":
+					# Morador que dá a dica conversando (texto vazio = ninguém).
 					var txt := ""
 					if hi < hint_list.size():
 						txt = String(hint_list[hi])
 					hi += 1
-					var h = HintScript.new()
-					h.setup(cell_bottom_center(c), txt)
-					add_child(h)
+					if txt != "":
+						npc_spots.append([c, txt])
 				elif ch != ".":
 					if not markers.has(ch):
 						markers[ch] = []
@@ -165,6 +167,7 @@ func build(data: Dictionary) -> void:
 	_build_collision()
 	_build_screen_walls()
 	_spawn_entities()
+	_spawn_npcs()
 
 	var bg := Backdrop.new()
 	bg.level = self
@@ -580,6 +583,21 @@ func _spawn_entities() -> void:
 			var dr = DroneScript.new()
 			dr.setup(cell_center(c) + Vector2(0, 6), pair[1])
 			add_child(dr)
+
+
+func _spawn_npcs() -> void:
+	var i := 0
+	for e in npc_spots:
+		var c: Vector2i = e[0]
+		var f: Vector2i = c
+		var n := 0
+		while n < 12 and not is_solid(f + Vector2i(0, 1)) and not is_oneway(f + Vector2i(0, 1)):
+			f.y += 1
+			n += 1
+		var npc = NpcScript.new()
+		npc.setup_npc(cell_bottom_center(f) - Vector2(0, 0.5), String(e[1]), theme, phase_index * 13 + i)
+		add_child(npc)
+		i += 1
 
 
 # ---------------------------------------------------------------- luzes

@@ -21,6 +21,8 @@ Gênero: plataforma cinematográfico 2D, side-scroller. Resolução interna 640�
 | Pular | Z | A (Xbox) / ✕ |
 | Atirar | X | X (Xbox) / ▢ ou gatilho direito |
 | Rolar (esquiva) | C | LB / gatilho esquerdo |
+| Trotar / correr (alterna) | Shift | L3 (apertar o analógico) |
+| Tela cheia | F11 | — |
 | Encostar (junto a uma reentrância) | ↑ | Direcional ↑ |
 | Rebite de escalada | segurar ↑ + X | ↑ + X |
 | Interagir | A | B (Xbox) / ◯ |
@@ -587,3 +589,53 @@ gibs e vidro, se o gore estiver ligado). O elevador para o alto da Torre é libe
 O elevador leva à tela final: amanhecer no alto da Torre, o relógio parado, vapor subindo das
 Caldeiras e Sera lendo o livro na corneta dos alto-falantes. Depois, o mapa para repetir fases.
 Um save antigo parado no fim do Ato 2 passa a continuar no começo do Ato 3.
+
+---
+
+## 14. Configurações, abertura de fase, moradores e upgrades
+
+### Configurações (menu principal e pausa)
+- **Sangue e gore**, **Efeitos de tela** e **Tela cheia** (também com F11 a qualquer momento).
+- **Teclas**: cada ação pode receber outra tecla (clique ou Enter, depois a tecla nova; Esc
+  cancela). Se a tecla já era de outra ação, as duas trocam. "Restaurar teclas padrão" desfaz tudo.
+  As falas dos moradores, os avisos e os textos de controles usam sempre as teclas atuais.
+- **O que "Efeitos de tela" muda**: gradação de cor de cada ato, brilho em volta das luzes,
+  cantos escurecidos, grão de filme e a separação de cores ao levar dano. As luzes 2D do cenário
+  e a borda de vida não dependem dessa opção.
+
+### Trotar e correr
+- Por padrão Sera **trota** (o movimento de antes). **Shift** alterna para **correr**: velocidade
+  215 em vez de 150, inclinação maior, poeira e pulos bem mais longos. O HUD mostra "CORRENDO".
+- Correndo, ela não se mistura na multidão.
+
+### Abertura de fase
+- Ao começar ou continuar uma fase (menu, mapa ou passagem entre fases), entram faixas de
+  cinema com o ato, o nome da fase e uma linha de clima, e Sera chega andando pela esquerda.
+- O jogo só começa quando o jogador aperta qualquer tecla (ou botão, ou toque).
+- Morrer e voltar ao checkpoint não repete a abertura. No checkpoint do chefão também não há.
+
+### Sujeira e borda de vida
+- A sujeira de Sera (fuligem e sangue no macacão) acompanha a **vida perdida**: com a vida cheia
+  ela está limpa; cada quadrado perdido suja mais. **Ao se curar, ela limpa** (inclusive os
+  respingos de sangue alheio, que de qualquer forma somem sozinhos em ~9 s).
+- **Borda de vida**: a borda da tela fica vermelha e mais grossa conforme a vida cai, pulsa com
+  1 de vida e fecha em preto na morte. Ao se curar, volta a ficar transparente.
+
+### Moradores que dão dicas
+- As dicas agora são **pessoas** (operários nas Caldeiras, feirantes no Mercado, criados e
+  relojoeiros na Torre). Quando Sera chega perto aparece um balão; **A** conversa.
+- Nos chefões ninguém explica nada: descobrir o ponto fraco faz parte da luta.
+- **Reação ao sangue** (moradores e civis): ao serem respingados, ao acaso **fogem
+  desesperados**, **vomitam**, **se ajoelham e rezam** ou **se encolhem tremendo**.
+
+### Upgrades dos chefões
+| Chefão | Upgrade | Efeito |
+|---|---|---|
+| Martelo-de-Vapor | **Válvula do Martelo** | +1 quadrado de vida (5 no total). |
+| Dirigível Vigília | **Arpão de mão** | Segure o tiro por meio segundo e solte: um arpão que atravessa inimigos, fura escudos e couraças (2 de dano) e para na parede. Em chefões conta como dois rebites. |
+| O Regulador | **Couraça do Regulador** | Uma placa de latão absorve um golpe (menos quedas e esmagamento) e se recarrega após 12 s. Aparece ao lado da vida no HUD. |
+
+- O prêmio cai no chão da arena quando o chefão morre; pegá-lo enche a vida. Quem sair sem pegar
+  recebe mesmo assim. Saves antigos com chefões já vencidos recebem os upgrades ao carregar.
+
+O plano para os próximos atos e as melhorias propostas estão em [docs/ROADMAP.md](../docs/ROADMAP.md).

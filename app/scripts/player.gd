@@ -7,6 +7,9 @@ extends CharacterBody2D
 const RivetScript := preload("res://scripts/entities/rivet.gd")
 const ChargeScript := preload("res://scripts/entities/steam_charge.gd")
 const GrappleShotScript := preload("res://scripts/entities/grapple_shot.gd")
+const HarpoonShotScript := preload("res://scripts/entities/harpoon_shot.gd")
+const HARPOON_CHARGE := 0.55
+const ARMOR_RECHARGE := 12.0
 const Fx := preload("res://scripts/fx.gd")
 const SplatsScript := preload("res://scripts/splats.gd")
 const Light := preload("res://scripts/fx/light.gd")
@@ -20,6 +23,8 @@ const GRAVITY := 980.0
 const MAX_FALL := 520.0
 const WALK := 80.0
 const RUN := 150.0
+## Modo corrida (tecla de trotar/correr): mais rápida e pulos mais longos.
+const RUN_FAST := 215.0
 const CROUCH_SPEED := 40.0
 const ROLL_SPEED := 210.0
 const ROLL_TIME := 0.36
@@ -79,8 +84,20 @@ var roll_t := 0.0
 var roll_dir: int = 1
 var roll_cd := 0.0
 ## Sangue grudado na roupa e sujeira acumulada (0..1).
+## Respingos de sangue alheio: somem em alguns segundos.
 var splats = SplatsScript.new()
+## Sujeira e ferimentos: acompanham a vida perdida (mais suja com menos vida,
+## limpa ao se curar).
+var wounds = SplatsScript.new()
 var grime := 0.0
+var hp_seen := 99
+## Animação de entrada no começo da fase: Sera chega andando até o início.
+var entering := false
+var enter_to := 0.0
+## Upgrades: carga do arpão de mão e placa da couraça.
+var charge := 0.0
+var armor := 0
+var armor_t := 0.0
 ## Esticar e achatar (só visual): pulo estica, pouso achata.
 var squash := Vector2.ONE
 var dead_t := 0.0
@@ -115,16 +132,34 @@ func _ready() -> void:
 	add_child(collider)
 	peak_y = global_position.y
 	add_to_group("splat_target")
+	armor = 1 if Game.has_upgrade("couraca") else 0
 	# Luz de preenchimento: Sera sempre legível no escuro.
 	var fill = Light.make(self, Vector2(0, -16), Color(1.0, 0.92, 0.82), 72.0, 0.42)
 	fill.z_index = 20
-	splats.from_array(Game.sera_splats)
-	grime = Game.sera_grime
+	_build_wounds()
+	grime = _damage_ratio()
 
 
-func _exit_tree() -> void:
-	Game.sera_splats = splats.to_array()
-	Game.sera_grime = grime
+## Manchas fixas espalhadas pelo corpo (sempre as mesmas), mostradas aos
+## poucos conforme a vida cai: fuligem e sangue.
+func _build_wounds() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7741
+	wounds.clear()
+	for i in 44:
+		var blood := rng.randf() < 0.55
+		var col := Color(rng.randf_range(0.4, 0.6), 0.03, 0.03, 0.95) if blood else Color(0.16, 0.12, 0.1, rng.randf_range(0.7, 0.95))
+		var it := [rng.randf_range(-HALF_W + 1.0, HALF_W - 1.0), rng.randf_range(0.08, 0.92),
+			rng.randf_range(0.6, 1.6), col, rng.randf_range(0.5, 3.0) if blood and rng.randf() < 0.4 else 0.0]
+		wounds.items.append(it)
+
+
+func _damage_ratio() -> float:
+	return clampf(1.0 - float(Game.hp) / float(maxi(1, Game.max_hp())), 0.0, 1.0)
+
+
+func _wound_count() -> int:
+	return int(round(wounds.count() * _damage_ratio()))
 
 
 func splat_rect() -> Rect2:
@@ -135,7 +170,41 @@ func splat_rect() -> Rect2:
 func receive_splat(p: Vector2, r: float, col: Color) -> void:
 	var h := CROUCH_H if crouching else STAND_H
 	splats.add(p - global_position, facing, h, HALF_W - 1.0, r * 0.85, col)
-	grime = minf(1.0, grime + 0.006 * r)
+
+
+## Começa a entrada: Sera aparece de trás da parede/borda à esquerda e anda
+## até o ponto de início.
+func begin_entrance() -> void:
+	entering = true
+	enter_to = global_position.x
+	global_position.x -= 96.0
+	facing = 1
+	vis_scale = 1.0
+	collision_mask = 0
+	z_index = -2
+
+
+func _process_entrance(delta: float) -> void:
+	var spd := WALK * 0.85
+	global_position.x = move_toward(global_position.x, enter_to, spd * delta)
+	velocity = Vector2(spd, 0)
+	walk_phase += spd * delta * 0.11
+	step_t -= spd * delta
+	if step_t <= 0.0:
+		step_t = 26.0
+		Sfx.play("step", -16.0)
+	if absf(global_position.x - enter_to) < 0.5:
+		entering = false
+		velocity = Vector2.ZERO
+		collision_mask = 1 | 16
+		z_index = 5
+
+
+## Upgrade recebido agora (prêmio do chefão).
+func on_upgrade(id: String) -> void:
+	if id == "couraca":
+		armor = 1
+		armor_t = 0.0
 
 
 func is_rolling() -> bool:
@@ -200,12 +269,27 @@ func _physics_process(delta: float) -> void:
 	invuln = maxf(invuln - delta, 0.0)
 	grab_cd = maxf(grab_cd - delta, 0.0)
 	roll_cd = maxf(roll_cd - delta, 0.0)
+	if armor == 0 and Game.has_upgrade("couraca") and state != S.DEAD:
+		armor_t += delta
+		if armor_t >= ARMOR_RECHARGE:
+			armor = 1
+			Sfx.play("clunk", -6.0, 1.4)
 	since_shot += delta
 	if drop_through_t > 0.0:
 		drop_through_t -= delta
 		if drop_through_t <= 0.0:
 			collision_mask = 1 | 16
+	if entering:
+		_process_entrance(delta)
+		_update_secondary(delta)
+		queue_redraw()
+		return
 	var locked: bool = Game.world != null and Game.world.is_input_locked()
+	if not locked and Input.is_action_just_pressed("run"):
+		Game.run_mode = not Game.run_mode
+		Sfx.play("step", -4.0, 1.4 if Game.run_mode else 0.9)
+		if Game.world:
+			Game.world.hud.message("Correndo" if Game.run_mode else "Trotando")
 	current_prompt = ""
 	match state:
 		S.DEAD:
@@ -227,6 +311,8 @@ func _physics_process(delta: float) -> void:
 	if turn_timer <= 0.0:
 		vis_scale = move_toward(vis_scale, float(facing), delta * 14.0)
 	locked_last = locked
+	if state == S.NORMAL and is_on_floor() and absf(velocity.x) > RUN + 20.0 and fmod(anim_t, 0.12) < delta:
+		Fx.dust(get_parent(), global_position + Vector2(-facing * 4.0, 0), 2)
 	_update_secondary(delta)
 	squash = squash.lerp(Vector2.ONE, minf(1.0, delta * 14.0))
 	queue_redraw()
@@ -271,6 +357,8 @@ func _process_normal(delta: float, locked: bool) -> void:
 				var max_speed := WALK
 				if crouching:
 					max_speed = CROUCH_SPEED
+				elif Game.run_mode:
+					max_speed = RUN_FAST
 				else:
 					run_timer += delta
 					if run_timer >= RUN_DELAY and inp.y > 0.65:
@@ -330,6 +418,17 @@ func _process_normal(delta: float, locked: bool) -> void:
 			_try_interact()
 		if Input.is_action_just_pressed("shoot") and shoot_cd <= 0.0 and turn_timer <= 0.0:
 			_shoot()
+		# Arpão de mão: segurar o tiro carrega; soltar dispara.
+		if Game.has_upgrade("arpao"):
+			if Input.is_action_pressed("shoot") and turn_timer <= 0.0:
+				var before := charge
+				charge += delta
+				if before < HARPOON_CHARGE and charge >= HARPOON_CHARGE:
+					Sfx.play("lever", -6.0, 1.6)
+			elif charge > 0.0:
+				if charge >= HARPOON_CHARGE:
+					_fire_harpoon()
+				charge = 0.0
 		if Input.is_action_just_pressed("use_tool"):
 			_use_tool()
 		if Input.is_action_just_pressed("swap_tool"):
@@ -358,9 +457,12 @@ func _process_normal(delta: float, locked: bool) -> void:
 func _update_prompt() -> void:
 	var it = _find_interactable()
 	if it != null:
-		current_prompt = String(it.prompt)
+		var pr := String(it.prompt)
+		if pr.begins_with("A:"):
+			pr = Game.key_name("interact") + ":" + pr.substr(2)
+		current_prompt = pr
 	elif not crouching and _find_cover() != null:
-		current_prompt = "↑: encostar"
+		current_prompt = Game.key_name("move_up") + ": encostar"
 	elif hidden_in_crowd():
 		current_prompt = "Misturada na multidão"
 
@@ -371,6 +473,8 @@ func hidden_in_crowd() -> bool:
 	if state != S.NORMAL or not is_on_floor() or since_shot < 1.2 or absf(velocity.x) > WALK + 5.0:
 		return false
 	for c in get_tree().get_nodes_in_group("civilian"):
+		if c.is_in_group("npc"):
+			continue
 		if c.can_hide() and absf(c.global_position.x - global_position.x) < 12.0 \
 				and absf(c.global_position.y - global_position.y) < 10.0:
 			return true
@@ -767,6 +871,21 @@ func _shoot() -> void:
 	Light.make(get_parent(), global_position + Vector2(dir * 15.0, -h), Color(1.0, 0.75, 0.4), 60.0, 1.3, 0.0, 0.09)
 
 
+func _fire_harpoon() -> void:
+	var h := 9.0 if crouching else 18.0
+	var hs = HarpoonShotScript.new()
+	hs.setup(global_position + Vector2(facing * 10.0, -h), facing)
+	Game.world.add_entity(hs)
+	shoot_cd = SHOOT_COOLDOWN * 1.5
+	shoot_flash = 0.14
+	shoot_dir = facing
+	since_shot = 0.0
+	velocity.x -= facing * 40.0
+	Sfx.play("grapple", 0.0, 0.8)
+	Sfx.play("shot", -2.0, 0.6)
+	Light.make(get_parent(), global_position + Vector2(facing * 15.0, -h), Color(1.0, 0.8, 0.45), 80.0, 1.6, 0.0, 0.12)
+
+
 func _find_grapple():
 	var best = null
 	var best_d := GRAPPLE_RANGE
@@ -812,10 +931,10 @@ func _use_tool() -> void:
 			Game.consume("charge")
 			Sfx.play("throw")
 		"sealant":
-			if Game.hp >= Game.MAX_HP:
+			if Game.hp >= Game.max_hp():
 				_msg("A vida já está cheia")
 				return
-			Game.hp = mini(Game.MAX_HP, Game.hp + 2)
+			Game.hp = mini(Game.max_hp(), Game.hp + 2)
 			Game.consume("sealant")
 			Sfx.play("heal")
 			_msg("Selante aplicado: +2 de vida")
@@ -849,6 +968,17 @@ func hurt(amount: int, kind: String = "generic") -> void:
 	# Rolando, Sera escapa de tiros, ondas de choque, estilhaços e vapor.
 	if state == S.ROLL and kind != "fall" and kind != "crush":
 		return
+	# Couraça (upgrade): a placa absorve um golpe e se recarrega com o tempo.
+	if armor > 0 and kind != "fall" and kind != "crush":
+		armor = 0
+		armor_t = 0.0
+		invuln = 0.8
+		Sfx.play("clang", 0.0, 0.8)
+		Fx.sparks(get_parent(), center())
+		if Game.world:
+			Game.world.shake(2.0)
+			Game.world.hud.message("A couraça segurou o golpe")
+		return
 	Game.hp = maxi(0, Game.hp - amount)
 	invuln = 1.0
 	Sfx.play("hurt")
@@ -859,11 +989,7 @@ func hurt(amount: int, kind: String = "generic") -> void:
 		if b and kind != "steam":
 			var away := Vector2(-facing, -0.4)
 			b.spray(center(), away, 14 + amount * 8, 200.0, 0.6, 1.3)
-			# O próprio sangue mancha a roupa em volta do ferimento.
-			for k in 3 + amount * 2:
-				splats.add(Vector2(randf_range(-HALF_W, HALF_W), -randf_range(8.0, 24.0)), 1, STAND_H, HALF_W,
-					randf_range(0.8, 1.7), b.blood_color())
-			grime = minf(1.0, grime + 0.05 * amount)
+			# O ferimento aparece na roupa pelas manchas ligadas à vida (wounds).
 	if Game.hp <= 0:
 		_die()
 		return
@@ -934,6 +1060,13 @@ func _init_hair() -> void:
 
 
 func _update_secondary(delta: float) -> void:
+	# Sujeira segue a vida; curar limpa também os respingos.
+	grime = move_toward(grime, _damage_ratio(), delta * 0.8)
+	if Game.hp > hp_seen:
+		splats.clear()
+	hp_seen = Game.hp
+	if fmod(anim_t, 0.5) < delta:
+		splats.expire(9.0)
 	if hair_pts.is_empty():
 		_init_hair()
 	var dv := velocity - last_vel
@@ -983,7 +1116,7 @@ func _draw() -> void:
 	suit_dc = SUIT_D.lerp(DIRT.darkened(0.3), g)
 	suit_lc = SUIT_L.lerp(DIRT.lightened(0.2), g)
 	# Sombra no chão
-	if state != S.HANG and state != S.CLIMB and is_on_floor():
+	if state != S.HANG and state != S.CLIMB and (is_on_floor() or entering):
 		draw_set_transform(Vector2(0, -0.5), 0.0, Vector2(1.0, 0.22))
 		draw_circle(Vector2.ZERO, 8.0, Color(0, 0, 0, 0.3))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
@@ -991,6 +1124,7 @@ func _draw() -> void:
 		return
 	if state == S.COVER:
 		_draw_cover()
+		wounds.draw_on(self, STAND_H - 4.0, 0.9, _wound_count())
 		splats.draw_on(self, STAND_H - 4.0, 0.9)
 		return
 	var sx := vis_scale
@@ -1023,7 +1157,7 @@ func _draw() -> void:
 		_:
 			if crouching:
 				_draw_crouch_pose()
-			elif not is_on_floor():
+			elif not is_on_floor() and not entering:
 				_draw_air()
 			else:
 				_draw_ground()
@@ -1031,6 +1165,7 @@ func _draw() -> void:
 		var sh := STAND_H
 		if crouching or state == S.STUN:
 			sh = CROUCH_H + 2.0
+		wounds.draw_on(self, sh, 1.0, _wound_count())
 		splats.draw_on(self, sh)
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
@@ -1046,6 +1181,7 @@ func _draw_roll() -> void:
 	var x := Transform2D(0.0, Vector2(sx, 1.0), 0.0, Vector2.ZERO) * Transform2D(k * TAU, c) * Transform2D(0.0, -c)
 	draw_set_transform_matrix(x)
 	_draw_crouch_pose()
+	wounds.draw_on(self, CROUCH_H + 2.0, 1.0, _wound_count())
 	splats.draw_on(self, CROUCH_H + 2.0)
 
 
@@ -1210,6 +1346,16 @@ func _rig(hip_y: float, lean: float, l1: float, b1: float, l2: float, b2: float,
 	if shoot_flash > 0.0:
 		var dir := signf(sin(front_angle))
 		draw_circle(shoulder + Vector2(dir * 15.0, 0.5), 2.6, Color(1.0, 0.85, 0.4, 0.9))
+	# Carga do arpão de mão
+	if charge > 0.08:
+		var k := clampf(charge / HARPOON_CHARGE, 0.0, 1.0)
+		var gp := shoulder + Vector2(12.0, 2.0)
+		var full := k >= 1.0
+		draw_circle(gp, 1.5 + k * 2.5 + (sin(anim_t * 30.0) if full else 0.0), Color(1.0, 0.85, 0.45, 0.35 + k * 0.5))
+	# Placa da couraça no ombro
+	if armor > 0:
+		draw_rect(Rect2(shoulder + Vector2(-2.6, -1.2), Vector2(4.6, 3.4)), Color("a07a38"))
+		draw_line(shoulder + Vector2(-2.6, -1.2), shoulder + Vector2(2.0, -1.2), Color("e0b860"), 0.8)
 
 
 # ---------------------------------------------------------------- poses
@@ -1226,6 +1372,9 @@ func _draw_ground() -> void:
 	var running := speed > WALK + 10.0
 	var amp := 0.85 if running else 0.45
 	var lean := 0.26 if running else 0.06
+	if speed > RUN + 20.0:
+		lean = 0.38
+		amp = 1.0
 	var ph := walk_phase
 	var dirsign := 1.0
 	var s1 := sin(ph) * amp * dirsign

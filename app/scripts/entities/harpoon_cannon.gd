@@ -89,7 +89,7 @@ func _physics_process(delta: float) -> void:
 			s.harpoon_hit(shot_pos)
 		elif shot_pos.y < global_position.y - 420.0:
 			flying = false
-	prompt = "A: disparar arpão" + (" — ALVO NA MIRA!" if ship_in_line() else "")
+	prompt = "A: disparar arpão"
 	queue_redraw()
 
 

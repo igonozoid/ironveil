@@ -111,17 +111,17 @@ static func _phase_1() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"← →: mover. Segure a direção para Sera embalar e correr.",
-				"Z: pular. Correndo, o pulo é mais longo. Pule junto a uma borda para se agarrar e aperte ↑ ou Z para subir.",
-				"↓: agachar. Agachada, Sera passa por vãos baixos e desvia de tiros. Para descer de uma borda: agache na beirada e aperte Z.",
+				"Dora|Sera? Graças... Os guardas estão revirando as Caldeiras atrás de você.||Dora|Vai pela esquerda e pela direita com [move_left] e [move_right]. Se precisar fugir rápido, [run] alterna entre trotar e correr.",
+				"Bento|Aquela parede? Pula com [jump] e agarra na beirada. Daí é só [move_up] ou [jump] de novo pra subir.||Bento|Correndo você pula bem mais longe.",
+				"Velho Ilo|Esse túnel é baixo, menina. Agacha com [move_down] e vai de joelhos.||Velho Ilo|E pra descer de uma beirada sem quebrar a perna: agacha na ponta e aperta [jump].",
 			],
 			"1,0": [
-				"A: interagir. A válvula solta jatos de vapor que ferem os guardas — e você também.",
-				"↑ junto a uma reentrância: encostar. Encostada, Sera é imune a tiros e os guardas param de atirar.",
-				"X: atirar rebites. C: rolar — Sera escapa dos tiros enquanto rola e passa por vãos baixos.",
+				"Nina|Tá vendo a válvula? Gira com [interact] e o vapor sai pelos bocais. Queima guarda que é uma beleza.||Nina|Só não fica embaixo, que queima você também.",
+				"Caio|Essas reentrâncias na parede salvaram muito operário. Encosta com [move_up] e bala nenhuma te pega.||Caio|Os guardas desistem de atirar e ficam esperando você sair.",
+				"Dora|Ainda tem o lança-rebites? [shoot] dispara.||Dora|E se o tiro vier na sua direção, rola com [roll]. Rolando, nada te acerta.",
 			],
 			"2,0": [
-				"S: usar ferramenta · Q: trocar. A carga de vapor explode em 2 s e destrói grades. Afaste-se!",
+				"Bento|Essa grade não abre na mão. Pega a carga de vapor ali, troca a ferramenta com [swap_tool] e joga com [use_tool].||Bento|Conta dois segundos e sai de perto!",
 			],
 		},
 	}
@@ -197,15 +197,15 @@ static func _phase_2() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"Caixas de força seguram grades suspensas. Atire nelas (ou A) para cortar a corrente.",
-				"Alavancas (A) acionam os elevadores de carga.",
+				"Marta|Aquela grade pendurada fica presa por uma caixa de força. Um rebite nela e... cabum, cai em quem estiver embaixo.",
+				"Marta|A alavanca chama o elevador de carga. É só puxar.",
 			],
 			"1,0": [
-				"Painéis (A) religam máquinas — como a porta blindada desta sala. Drones baixos: agache ou atire.",
+				"Teo|O painel ali religa a porta blindada.||Teo|E cuidado com os drones. Os que voam baixo você desvia agachada, ou derruba a rebite.",
 			],
 			"2,0": [
-				"Rebite de escalada: segure ↑ e aperte X perto do ponto marcado. Depois pule e agarre-se nele.",
-				"Porta de segurança: selecione o Cartão de acesso (Q) e use com S.",
+				"Teo|Tá vendo o anel amarelo lá em cima? Segura [move_up] e aperta [shoot] perto dele: o rebite de escalada crava ali e você se pendura.",
+				"Marta|Porta de segurança só abre com cartão. Se você achou um, escolhe com [swap_tool] e usa com [use_tool].",
 			],
 		},
 	}
@@ -302,14 +302,14 @@ static func _phase_3() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"Os guardas não atiram em quem está encostada: esperam um pouco e voltam a patrulhar.",
-				"Jatos no teto: abra a válvula quando o guarda passar por baixo.",
+				"Velho Ilo|Encostada na parede você some pra eles. Espera o guarda desistir e passa.",
+				"Nina|Os bocais do teto soltam vapor pra baixo. Espera o guarda passar embaixo e abre a válvula.",
 			],
 			"1,0": [
-				"A: conversar. Tomé opera o guindaste do poço.",
+				"Caio|O Tomé opera o guindaste do poço. Fala com ele, que ele te ajuda a subir.",
 			],
 			"1,-2": [
-				"Atraia o Martelo para cima dos bocais do chão e abra a válvula. Cargas de vapor também o atordoam.",
+				"",
 			],
 		},
 	}
@@ -388,16 +388,16 @@ static func _phase_4() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"Bem-vinda ao Mercado Suspenso. Embaixo das plataformas só há o abismo: cair é fatal.",
-				"Tábuas podres rangem e caem logo depois que você pisa. Não pare em cima delas.",
-				"Tirolesa: suba nas caixas e pule contra o cabo para agarrar. Z ou ↓ soltam antes do fim.",
+				"Mãe Zélia|Bem-vinda ao Mercado Suspenso, filha. Olha onde pisa: embaixo das plataformas é só o abismo.",
+				"Rui|Essas tábuas tão podres. Rangeu, corre! Elas despencam logo depois que você pisa.",
+				"Rui|A gente atravessa pelo cabo. Sobe nas caixas e pula contra ele que o gancho prende.||Rui|Quer soltar antes do fim? [jump] ou [move_down].",
 			],
 			"1,0": [
-				"Holofote: se a luz pegar você, soa o alarme e chega reforço. Encostada, a luz não te vê. Um rebite quebra a lâmpada — por trás é mais seguro.",
-				"As reentrâncias continuam protegendo dos tiros.",
+				"Tito|Não deixa a luz te pegar, moça! Se pegar, toca o alarme e desce mais guarda.||Tito|Encostada na parede a luz não te vê. E a lâmpada quebra com um rebite... por trás é mais fácil.",
+				"Mãe Zélia|Aqui também tem aqueles nichos nas paredes. Encosta neles quando começar o tiroteio.",
 			],
 			"2,0": [
-				"Guarda com escudo: rebites de frente batem no escudo. Acerte pelas costas quando ele virar, ou use uma carga de vapor.",
+				"Graça|Aquele ali tem escudo. De frente não adianta atirar.||Graça|Espera ele virar as costas... ou manda uma carga de vapor.",
 			],
 		},
 	}
@@ -476,14 +476,14 @@ static func _phase_5() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"Ande no meio do povo — sem correr nem atirar — e os guardas e holofotes não te enxergam.",
-				"Os guardas não atiram com um civil na linha de tiro.",
+				"Mãe Zélia|Quer passar pelos guardas? Anda no meio do povo, devagar, sem correr nem atirar. Ninguém repara em mais uma.",
+				"Tito|Os guardas não atiram se tiver gente na frente. Pelo menos isso.",
 			],
 			"1,0": [
-				"A mulher de capuz perto da barraca parece saber de algo. A: conversar.",
+				"Rui|A de capuz ali na barraca é a Lira. Contrabandista. Se alguém sabe um atalho, é ela.",
 			],
 			"2,0": [
-				"Suba nas caixas, agarre a borda da sacada e pegue a tirolesa até o elevador.",
+				"Graça|Sobe pelas caixas, agarra na sacada e pega o cabo até o elevador. É o jeito.",
 			],
 		},
 	}
@@ -563,15 +563,15 @@ static func _phase_6() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"Telhados do Diretório. As chaminés servem de reentrância.",
-				"Corra antes de pular: vãos de 3 células pedem impulso.",
+				"Varredor|Telhados do Diretório. Ninguém sobe aqui sem ser chamado.||Varredor|As chaminés têm nicho, dá pra se encostar.",
+				"Varredor|Esses vãos são largos. Liga a corrida com [run] e pula com tudo.",
 			],
 			"1,0": [
-				"O armário do arquivo guarda o livro de válvulas da Caldeira Sul.",
-				"Rebite de escalada: segure ↑ e aperte X embaixo do ponto marcado no alto do muro.",
+				"Escrivã|Você é a engenheira? O livro de válvulas da Caldeira Sul está naquele armário. Eu nunca te disse isso.",
+				"Escrivã|O muro é alto. Tem um anel de escalada lá em cima: [move_up] com [shoot] embaixo dele.",
 			],
 			"2,0": [
-				"Canhões-arpão (A) disparam contra o dirigível quando o casco estiver na mira. As chaminés servem de reentrância.",
+				"",
 			],
 		},
 	}
@@ -649,17 +649,17 @@ static func _phase_7() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"Átrio de Bronze, a base da Torre do Diretório. Daqui para cima não há ferrugem: só latão, pedra polida e vigilância.",
-				"C: rolar. Rolando, Sera atravessa tiros, ondas de choque e vapor, e cabe em vãos baixos. Role por baixo da grade.",
-				"Torreta-sentinela: mira com um laser e solta uma rajada. Encoste ou role na hora do tiro. 3 rebites a destroem.",
+				"Lúcia|Você... veio das Caldeiras? Aqui é o Átrio de Bronze. Daqui pra cima é só latão, pedra e vigilância.",
+				"Lúcia|A grade só deixa uma frestinha embaixo. Rola por ela com [roll].",
+				"Edmundo|Cuidado com a sentinela. Quando a luz vermelha te achar, ela dispara uma rajada.||Edmundo|Dizem que a carcaça é fina... alguns rebites resolvem.",
 			],
 			"1,0": [
-				"Pistões esmagadores: a luz vermelha pisca antes da batida. Embaixo deles nem rolar salva — passe entre uma batida e outra.",
-				"Autômato de corda: a couraça da frente para os rebites. Quando ele investir, role através dele, vire e acerte a chave nas costas.",
+				"Edmundo|Os pistões batem no compasso do relógio. A luz vermelha pisca antes. Embaixo deles, nada te salva.",
+				"Ferraz|Os autômatos são blindados na frente. Mas toda máquina de corda tem uma chave em algum lugar...",
 			],
 			"2,0": [
-				"Plataformas de engrenagem vão e voltam sozinhas. Embaixo, o poço solta vapor — se cair, agarre a borda e suba.",
-				"O elevador de serviço sobe para a Engrenagem Mestra.",
+				"Lúcia|As plataformas vão e voltam sozinhas. Embaixo é o poço de vapor: se cair, sobe rápido.",
+				"Ferraz|O elevador de serviço sobe até a Engrenagem Mestra.",
 			],
 		},
 	}
@@ -737,14 +737,14 @@ static func _phase_8() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"A Engrenagem Mestra move o relógio da Torre. Guardas, torretas e pistões trabalham juntos aqui: use as reentrâncias.",
+				"Edmundo|Trinta anos dando corda nesse relógio... A Engrenagem Mestra é a parte mais vigiada. Usa os nichos.",
 			],
 			"1,0": [
-				"Um autômato vigia o corredor de baixo. Role através dele quando investir e acerte as costas.",
-				"A plataforma vertical leva ao corredor de cima.",
+				"Lúcia|Tem um autômato no corredor de baixo. Quando ele vem em disparada, ele não para nem vira...",
+				"Ferraz|Essa plataforma sobe pro corredor de cima.",
 			],
 			"2,0": [
-				"Última galeria antes do Gabinete. O elevador do fundo sobe direto até o Diretor.",
+				"Edmundo|O elevador do fundo sobe direto pro Gabinete do Diretor. Que o relógio esteja do seu lado.",
 			],
 		},
 	}
@@ -803,7 +803,7 @@ static func _phase_9() -> Dictionary:
 		},
 		"hints": {
 			"0,0": [
-				"O Gabinete do Diretor fica além desta porta. Lá dentro, o Regulador não para: chegue com vida e ferramentas.",
+				"Lúcia|O Diretor está logo ali. Pega tudo o que puder antes de entrar. Lá dentro, o relógio não para.",
 			],
 		},
 	}

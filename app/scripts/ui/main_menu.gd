@@ -1,10 +1,11 @@
 extends Control
 ## Menu inicial: Novo jogo, Continuar (checkpoint por fase), Mapa de fases,
-## introdução, opção de gore e Sair.
+## introdução, Configurações e Sair.
 
 var t := 0.0
 var continue_btn: Button
 var new_btn: Button
+var controls: Label
 
 
 func _ready() -> void:
@@ -41,18 +42,9 @@ func _ready() -> void:
 	var row1 := _row(vb)
 	var map_btn := _button(row1, "Mapa de fases", func(): Game.open_map("browse"))
 	_button(row1, "Introdução", func(): Game.watch_intro())
-	var row2 := _row(vb)
-	var gore_btn := _button(row2, "", Callable())
-	gore_btn.text = _gore_label()
-	gore_btn.pressed.connect(func():
-		Game.toggle_gore()
-		gore_btn.text = _gore_label())
-	var fx_btn := _button(row2, "", Callable())
-	fx_btn.text = _fx_label()
-	fx_btn.pressed.connect(func():
-		Game.toggle_fx()
-		fx_btn.text = _fx_label())
-	for r in [row1, row2]:
+	var cfg_btn := _button(vb, "Configurações", Callable())
+	cfg_btn.pressed.connect(func(): _open_settings(cfg_btn))
+	for r in [row1]:
 		for btn in r.get_children():
 			btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			btn.add_theme_font_size_override("font_size", 11)
@@ -86,14 +78,22 @@ func _ready() -> void:
 	prog.add_theme_font_size_override("font_size", 10)
 	add_child(prog)
 
-	var controls := Label.new()
-	controls.text = "Setas/analógico: mover · Z: pular · X: atirar · C: rolar (esquiva)\n↑ junto à parede: encostar · A: interagir · S: usar ferramenta · Q: trocar · Esc: pausa"
+	controls = Label.new()
+	controls.text = Game.fmt("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia")
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls.position = Vector2(0, 306)
 	controls.size = Vector2(640, 40)
 	controls.add_theme_font_size_override("font_size", 9)
 	controls.modulate = Color(1, 0.85, 0.7, 0.7)
 	add_child(controls)
+
+
+func _open_settings(from: Button) -> void:
+	var s = load("res://scripts/ui/settings_menu.gd").new()
+	s.on_close = func():
+		controls.text = Game.fmt("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia")
+		from.grab_focus()
+	add_child(s)
 
 
 func _gore_label() -> String:

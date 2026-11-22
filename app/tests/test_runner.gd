@@ -20,6 +20,7 @@ func _ready() -> void:
 	await _boss()
 	await _act2()
 	await _act3()
+	await _features()
 	Game.checkpoint = saved_cp
 	Game.progress = saved_prog
 	if backup != "":
@@ -606,7 +607,7 @@ func _act3() -> void:
 	await frames(3)
 	victim.blast_hit(2, Vector2(110, 285))
 	await frames(70)
-	check(p.splats.count() > 0 and p.grime > 0.0, "gore blood sticks to Sera's suit (%d)" % p.splats.count())
+	check(p.splats.count() > 0, "gore blood sticks to Sera's suit (%d)" % p.splats.count())
 	check(witness.splats.count() > 0, "gore blood sticks to a nearby guard (%d)" % witness.splats.count())
 	var bg_stains := 0
 	for k in g.blood.stains.s_kind:
@@ -616,12 +617,18 @@ func _act3() -> void:
 	check(g.screen_blood.blobs.size() > 0, "gore blood splashes the screen (%d)" % g.screen_blood.blobs.size())
 	witness.queue_free()
 	await frames(2)
-	# Sujeira continua depois de morrer/recarregar (mesma sessão)
-	var n_splats: int = p.splats.count()
-	await load_phase(6)
+	# Sujeira acompanha a vida; curar limpa
+	Game.hp = Game.max_hp()
+	await frames(2)
+	var clean: int = p._wound_count()
+	Game.hp = 1
+	await frames(2)
+	var dirty: int = p._wound_count()
+	Game.hp = Game.max_hp()
+	await frames(3)
+	check(clean == 0 and dirty > 20 and p._wound_count() == 0 and p.splats.count() == 0,
+		"dirt follows HP and healing cleans (%d -> %d)" % [clean, dirty])
 	Game.hp = 99
-	p = g.player
-	check(p.splats.count() == n_splats, "Sera's stains persist across reload")
 	# Rolamento atravessa tiros
 	await place(Vector2(60, 299.5), 1)
 	await tap("roll")
@@ -674,7 +681,7 @@ func _act3() -> void:
 		p.global_position = Vector2(cr.global_position.x, 299.5)
 		if Game.hp < hp0:
 			break
-	check(Game.hp <= hp0 - Game.MAX_HP, "p6 crusher crushes Sera (hp %d)" % Game.hp)
+	check(Game.hp <= hp0 - Game.max_hp(), "p6 crusher crushes Sera (hp %d)" % Game.hp)
 	# Autômato: couraça na frente, ponto fraco nas costas
 	var au = get_tree().get_nodes_in_group("automaton")[0]
 	au.state = au.S.PAUSE
@@ -824,3 +831,124 @@ func _act3() -> void:
 		var f2 := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
 		f2.store_string(backup)
 		f2.close()
+
+
+func _features() -> void:
+	var backup := ""
+	if FileAccess.file_exists(Game.SAVE_PATH):
+		backup = FileAccess.get_file_as_string(Game.SAVE_PATH)
+	var saved_cp: Dictionary = Game.checkpoint.duplicate()
+	var saved_prog: Dictionary = Game.progress.duplicate(true)
+	var saved_settings: Dictionary = Game.settings.duplicate(true)
+	Game.checkpoint = {}
+	Game.progress["upgrades"] = []
+	# ---------------- Teclas
+	Game.rebind("jump", KEY_K)
+	var has_k := false
+	var has_z := false
+	for ev in InputMap.action_get_events("jump"):
+		if ev is InputEventKey:
+			has_k = has_k or ev.keycode == KEY_K
+			has_z = has_z or ev.keycode == KEY_Z
+	check(has_k and not has_z and Game.fmt("[jump]") == "K", "rebind jump to K")
+	Game.rebind("shoot", KEY_K)
+	check(Game.keycode_of("shoot") == KEY_K and Game.keycode_of("jump") == KEY_X, "rebinding a used key swaps them")
+	Game.reset_keys()
+	check(Game.keycode_of("jump") == KEY_Z and Game.keycode_of("shoot") == KEY_X, "reset keys")
+	var sm = load("res://scripts/ui/settings_menu.gd").new()
+	add_child(sm)
+	await frames(3)
+	check(sm.key_buttons.size() == Game.REBINDABLE.size(), "settings screen lists every action")
+	sm.queue_free()
+	# ---------------- Abertura de fase
+	Game.phase_intro = true
+	await load_phase(6)
+	var p = g.player
+	check(g.cutscene and p.entering, "phase intro: Sera walks in, input locked")
+	await frames(150)
+	check(not p.entering and g.cutscene, "phase intro waits for a key")
+	var ev := InputEventKey.new()
+	ev.keycode = KEY_SPACE
+	ev.pressed = true
+	Input.parse_input_event(ev)
+	await frames(5)
+	var ev2 := InputEventKey.new()
+	ev2.keycode = KEY_SPACE
+	ev2.pressed = false
+	Input.parse_input_event(ev2)
+	await frames(3)
+	check(not g.cutscene, "phase intro starts on key press")
+	# ---------------- Trotar / correr
+	Game.hp = 99
+	Game.run_mode = true
+	await place(Vector2(60, 299.5), 1)
+	Input.action_press("move_right")
+	await frames(40)
+	var run_v: float = absf(p.velocity.x)
+	Input.action_release("move_right")
+	Game.run_mode = false
+	check(run_v > 200.0, "run mode is faster (%.0f)" % run_v)
+	# ---------------- Moradores que dão dicas
+	var npcs := get_tree().get_nodes_in_group("npc")
+	check(npcs.size() > 0, "hint NPCs spawned (%d)" % npcs.size())
+	if npcs.size() > 0:
+		var n = npcs[0]
+		await place(n.global_position + Vector2(-14, 0), 1)
+		await frames(5)
+		await tap("interact")
+		await frames(3)
+		check(g.dialog.active, "talking to an NPC opens a dialog")
+		for i in 20:
+			await tap("interact")
+			await frames(3)
+			if not g.dialog.active:
+				break
+		n.react(n.global_position + Vector2(-10, -10))
+		check(n.reaction != "", "NPC reacts to gore (%s)" % n.reaction)
+	# ---------------- Upgrades
+	await load_phase(6)
+	p = g.player
+	Game.hp = 2
+	await place(Vector2(200, 299.5), 1)
+	var UpS = load("res://scripts/entities/upgrade_pickup.gd")
+	var up = UpS.new()
+	up.setup(p.global_position + Vector2(0, -14), "vida")
+	g.level.add_child(up)
+	await frames(5)
+	check(Game.has_upgrade("vida") and Game.max_hp() == 5 and Game.hp == 5, "boss prize: +1 life square")
+	# Arpão de mão atravessa o escudo
+	Game.grant_upgrade("arpao")
+	var GuardS = load("res://scripts/entities/guard.gd")
+	var sg = GuardS.new()
+	sg.position = Vector2(330, 299.5)
+	sg.shielded = true
+	sg.facing = -1
+	g.level.add_child(sg)
+	await frames(3)
+	sg.state = sg.S.PAUSE
+	sg.t = 99.0
+	Input.action_press("shoot")
+	await frames(45)
+	Input.action_release("shoot")
+	await frames(20)
+	check(not sg.is_alive(), "charged harpoon pierces a shield guard")
+	# Couraça absorve um golpe
+	Game.grant_upgrade("couraca")
+	p.on_upgrade("couraca")
+	p.invuln = 0.0
+	var hp0: int = Game.hp
+	p.hurt(1, "bullet")
+	check(Game.hp == hp0 and p.armor == 0, "brass armor absorbs a hit")
+	p.invuln = 0.0
+	p.hurt(1, "bullet")
+	check(Game.hp == hp0 - 1, "next hit goes through")
+	check(get_tree().get_nodes_in_group("upgrade").size() == 0, "upgrade pickup collected")
+	release_all()
+	Game.settings = saved_settings
+	Game.apply_keys()
+	Game.checkpoint = saved_cp
+	Game.progress = saved_prog
+	if backup != "":
+		var f := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
+		f.store_string(backup)
+		f.close()

@@ -12,6 +12,9 @@ const BloodScript := preload("res://scripts/blood.gd")
 const ScreenBloodScript := preload("res://scripts/ui/screen_blood.gd")
 const PostFxScript := preload("res://scripts/ui/post_fx.gd")
 const TouchScript := preload("res://scripts/ui/touch_controls.gd")
+const HealthBorderScript := preload("res://scripts/ui/health_border.gd")
+const PhaseIntroScript := preload("res://scripts/ui/phase_intro.gd")
+const UpgradeScript := preload("res://scripts/entities/upgrade_pickup.gd")
 ## Escurecimento do mundo por tema (as luzes 2D clareiam por cima).
 const AMBIENT := {
 	"boiler": Color(0.86, 0.79, 0.77),
@@ -91,6 +94,7 @@ func _ready() -> void:
 	post_fx = PostFxScript.new()
 	add_child(post_fx)
 	post_fx.apply_theme(level.theme)
+	add_child(HealthBorderScript.new())
 	add_child(TouchScript.new())
 	dialog = DialogScript.new()
 	add_child(dialog)
@@ -109,8 +113,19 @@ func _ready() -> void:
 	tw.tween_property(fade_rect, "modulate:a", 0.0, 0.8)
 
 	Sfx.start_ambient()
+	var intro: bool = Game.phase_intro and not at_boss_checkpoint()
+	Game.phase_intro = false
 	if at_boss_checkpoint():
 		hud.show_title(String(phase_data.get("boss_title", "Plataforma do Elevador")))
+	elif intro:
+		# Abertura: Sera chega andando e o jogo espera uma tecla.
+		cutscene = true
+		player.begin_entrance()
+		var pi = PhaseIntroScript.new()
+		pi.on_start = func():
+			cutscene = false
+			input_lock = 0.15
+		add_child(pi)
 	else:
 		hud.show_title(String(phase_data.get("title", "")))
 
@@ -257,6 +272,16 @@ func on_arena_reached() -> void:
 	hud.message("Checkpoint salvo")
 
 
+## Chefão derrotado: deixa o prêmio (upgrade) no chão da arena.
+func on_boss_defeated(pos: Vector2) -> void:
+	for id in Game.UPGRADES.keys():
+		if int(Game.UPGRADES[id][0]) == Game.phase:
+			var u = UpgradeScript.new()
+			u.setup(pos, id)
+			level.add_child.call_deferred(u)
+			return
+
+
 func on_player_died() -> void:
 	if finishing:
 		return
@@ -290,6 +315,10 @@ func complete_phase() -> void:
 	await tw.finished
 	var done_phase: int = Game.phase
 	Game.mark_phase_complete(done_phase)
+	# Quem saiu sem pegar o prêmio do chefão ganha mesmo assim.
+	for id in Game.UPGRADES.keys():
+		if int(Game.UPGRADES[id][0]) == done_phase and not Game.has_upgrade(id):
+			Game.grant_upgrade(id)
 	if Game.replay:
 		# Repetição concluída: volta ao mapa e recupera o checkpoint de verdade.
 		Game.replay = false
@@ -300,7 +329,7 @@ func complete_phase() -> void:
 	if done_phase + 1 < Game.PHASE_COUNT:
 		Game.phase = done_phase + 1
 		if last_of_act:
-			Game.hp = Game.MAX_HP
+			Game.hp = Game.max_hp()
 		Game.save_checkpoint()
 	if last_of_act:
 		Game.end_act = Game.act_of(done_phase)

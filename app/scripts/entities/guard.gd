@@ -276,6 +276,19 @@ func on_rivet_hit(dir: int) -> void:
 		_engage()
 
 
+## Arpão de mão: atravessa escudo e abrigo.
+func pierce_hit(dir: int) -> void:
+	if state == S.DEAD:
+		return
+	if shielded:
+		Sfx.play("crash", -6.0, 1.4)
+		Fx.sparks(get_parent(), global_position + Vector2(facing * 8, -14))
+	var b = _blood()
+	if b:
+		b.spray(global_position + Vector2(0, -18), Vector2(dir, -0.2), 26, 300.0, 0.4, 1.6)
+	_damage(2, "rivet", Vector2(dir, 0))
+
+
 func steam_hit(n: int) -> void:
 	var b = _blood()
 	if b and randf() < 0.6:

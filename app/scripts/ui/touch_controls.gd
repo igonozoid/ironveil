@@ -17,6 +17,7 @@ const BUTTONS := [
 	["interact", Vector2(600, 236), 19.0, "A", "usar", false],
 	["use_tool", Vector2(488, 296), 18.0, "S", "ferram.", false],
 	["swap_tool", Vector2(488, 250), 15.0, "Q", "trocar", false],
+	["run", Vector2(548, 214), 15.0, "⇧", "correr", false],
 	["pause", Vector2(446, 22), 13.0, "II", "", false],
 ]
 

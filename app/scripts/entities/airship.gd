@@ -242,7 +242,7 @@ func _on_intro_done() -> void:
 	if not Game.replay:
 		Game.write_save()
 	bar_visible = true
-	Game.world.hud.show_hint("Dirigível Vigília: use os canhões-arpão do telhado (A) quando o casco estiver na mira. Encoste nas chaminés durante a varredura do holofote e fuja dos alvos vermelhos das bombas.")
+	Game.world.hud.message("Vesk: Vigília, varrer o telhado!")
 	_to_cruise(1.5)
 
 
@@ -352,7 +352,7 @@ func _launch_anchor() -> void:
 	var cs: CollisionShape2D = get_node("AnchorShape")
 	cs.set_deferred("disabled", false)
 	Sfx.play("lift", -2.0, 0.6)
-	Game.world.hud.message("A âncora! Corte-a a rebites.")
+	Game.world.hud.message("Vesk: Soltem a âncora!")
 
 
 func _process_anchor(delta: float, p) -> void:
@@ -499,6 +499,7 @@ func _process_dying(delta: float) -> void:
 		Game.world.shake(12.0)
 		if exit_lift != null:
 			exit_lift.locked = false
+		Game.world.on_boss_defeated(Vector2(arena.get_center().x, floor_y - 22.0))
 		await get_tree().create_timer(1.4).timeout
 		if Game.world:
 			bar_visible = false
