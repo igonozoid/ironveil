@@ -10,6 +10,7 @@
 [![Release](https://img.shields.io/github/v/release/igonozoid/ironveil?label=download)](https://github.com/igonozoid/ironveil/releases/latest)
 ![Godot 4.7](https://img.shields.io/badge/Godot-4.7-478cbf?logo=godotengine&logoColor=white)
 ![Plataformas](https://img.shields.io/badge/Windows%20·%20Linux%20·%20macOS%20·%20Android-grey)
+[![itch.io](https://img.shields.io/badge/itch.io-jogar-fa5c5c?logo=itchdotio&logoColor=white)](https://igonoz.itch.io/ironveil)
 
 <img src="docs/screenshots/09_regulador.jpg" alt="Sera enfrenta o Regulador, o relógio-mestre da Torre, com seu pêndulo de lâmina" width="100%">
 
@@ -108,7 +109,8 @@ cenário e na tela. **Gore** e **Efeitos** podem ser desligados no menu.
 
 ## ⬇️ Instalar
 
-Baixe o arquivo da sua plataforma na página de **[Releases](https://github.com/igonozoid/ironveil/releases/latest)**:
+Baixe na página do jogo no **[itch.io](https://igonoz.itch.io/ironveil)** (o app do itch atualiza
+sozinho) ou nos **[Releases](https://github.com/igonozoid/ironveil/releases/latest)** do GitHub:
 
 | Plataforma | Arquivo | Como abrir |
 |---|---|---|
@@ -197,7 +199,8 @@ plataformas a cada push na `main`. Para publicar uma versão nova:
 git tag v1.0.1 && git push origin v1.0.1
 ```
 
-Os arquivos aparecem sozinhos em **Releases** alguns minutos depois.
+Os arquivos aparecem sozinhos em **Releases** e no **itch.io** alguns minutos depois (o envio ao
+itch usa o secret `BUTLER_API_KEY` e a variável `ITCH_GAME`; veja [docs/itch/PAGINA.md](docs/itch/PAGINA.md)).
 
 ## 🗺️ Próximos passos
 
