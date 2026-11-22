@@ -42,6 +42,7 @@ var rng := RandomNumberGenerator.new()
 
 
 func _ready() -> void:
+	Music.play("menu")
 	get_tree().paused = false
 	Engine.time_scale = 1.0
 	set_anchors_preset(Control.PRESET_FULL_RECT)

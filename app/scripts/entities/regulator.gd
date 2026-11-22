@@ -469,7 +469,7 @@ func _die() -> void:
 	pend_mode = "falling"
 	pend_vel = 0.0
 	vents.clear()
-	Game.world.hud.message("Maar: Não... o tempo da cidade sou eu...")
+	Game.world.hud.message("Maar: Tolinha... o relógio nunca foi meu. Pergunte ao Conselho... lá embaixo, na Fornalha...")
 	for g in summoned:
 		if is_instance_valid(g) and g.is_alive():
 			g.blast_hit(2, booth_center())

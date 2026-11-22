@@ -15,11 +15,14 @@ const TouchScript := preload("res://scripts/ui/touch_controls.gd")
 const HealthBorderScript := preload("res://scripts/ui/health_border.gd")
 const PhaseIntroScript := preload("res://scripts/ui/phase_intro.gd")
 const UpgradeScript := preload("res://scripts/entities/upgrade_pickup.gd")
+const WindScript := preload("res://scripts/wind.gd")
 ## Escurecimento do mundo por tema (as luzes 2D clareiam por cima).
 const AMBIENT := {
 	"boiler": Color(0.86, 0.79, 0.77),
 	"market": Color(0.9, 0.82, 0.84),
 	"tower": Color(0.82, 0.82, 0.94),
+	"foundry": Color(0.44, 0.38, 0.37),
+	"veil": Color(0.62, 0.66, 0.78),
 }
 const Fx := preload("res://scripts/fx.gd")
 
@@ -32,6 +35,7 @@ var post_fx = null
 var trauma := 0.0
 var shake_t := 0.0
 var hitstop_id := 0
+var wind = null
 var ambient: Array = []
 var hitstop_left := 0.0
 var player = null
@@ -61,6 +65,9 @@ func _ready() -> void:
 	blood.level = level
 	level.add_child(blood)
 	_build_ambient()
+	wind = WindScript.new()
+	wind.setup(float(phase_data.get("wind", 0.0)))
+	add_child(wind)
 	var cm := CanvasModulate.new()
 	cm.color = AMBIENT.get(level.theme, AMBIENT["boiler"])
 	add_child(cm)
@@ -131,6 +138,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	_update_music()
 	if input_lock > 0.0:
 		input_lock -= delta
 	# Tremor: trauma² com senos de frequências diferentes (sem chiado aleatório),
@@ -145,6 +153,15 @@ func _process(delta: float) -> void:
 	else:
 		camera.offset = Vector2.ZERO
 		camera.rotation = 0.0
+
+
+## Trilha do ato; a do chefão enquanto a barra de vida dele estiver na tela.
+func _update_music() -> void:
+	var id := "act%d" % (Game.act_of(Game.phase) + 1)
+	if boss != null and boss.bar_visible and boss.is_alive():
+		id = "boss"
+	if Music.wanted != id:
+		Music.play(id)
 
 
 func _physics_process(_delta: float) -> void:
@@ -179,9 +196,21 @@ func _apply_camera() -> void:
 func _build_ambient() -> void:
 	var specs: Array = []
 	var idx := int(phase_data.get("index", 0))
-	if idx >= 6:
+	if idx >= 12:
+		idx = 300
+	elif idx >= 9:
+		idx = 200
+	elif idx >= 6:
 		idx = 100
 	match idx:
+		300:
+			# Véu: chuva fina e fagulhas de solda nas placas.
+			specs = [[Color(0.75, 0.82, 0.95, 0.45), 90, Vector2(0.2, 1), 340.0, Vector2(0, 200), 0.6, 1.0, 1.0],
+				[Color(1.0, 0.8, 0.4, 0.7), 10, Vector2(0, 1), 30.0, Vector2(0, 200), 0.8, 1.4, 1.6]]
+		200:
+			# Fundições: brasas subindo e cinza caindo.
+			specs = [[Color(1.0, 0.5, 0.15, 0.9), 50, Vector2(0, -1), 22.0, Vector2(0, -10), 1.0, 2.2, 5.0],
+				[Color(0.5, 0.45, 0.45, 0.4), 40, Vector2(0, 1), 8.0, Vector2(0, 6), 1.0, 2.0, 8.0]]
 		100:
 			# Torre: poeira dourada flutuando e faíscas de engrenagem.
 			specs = [[Color(1.0, 0.9, 0.6, 0.45), 40, Vector2(1, 0), 5.0, Vector2(0, 1), 1.0, 1.8, 10.0],
@@ -270,6 +299,12 @@ func on_arena_reached() -> void:
 	if not Game.replay:
 		Game.write_save()
 	hud.message("Checkpoint salvo")
+
+
+## Liga/desliga o vento (chefão final, estágio 3).
+func set_wind(s: float) -> void:
+	if wind != null:
+		wind.strength = s
 
 
 ## Chefão derrotado: deixa o prêmio (upgrade) no chão da arena.

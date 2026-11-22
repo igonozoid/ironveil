@@ -2,7 +2,7 @@
 
 # ⚙️ IRONVEIL
 
-**Plataforma cinematográfico 2D em três atos — vapor, latão e uma conspiração no alto da Torre.**
+**Plataforma cinematográfico 2D em cinco atos — vapor, latão e uma conspiração que fecha o céu.**
 
 [![build](https://github.com/igonozoid/ironveil/actions/workflows/build.yml/badge.svg)](https://github.com/igonozoid/ironveil/actions/workflows/build.yml)
 [![Release](https://img.shields.io/github/v/release/igonozoid/ironveil?label=download)](https://github.com/igonozoid/ironveil/releases/latest)
@@ -28,13 +28,17 @@ Quando a **Caldeira Sul** explode e mata vinte e três pessoas, o Diretório apo
 livro de válvulas escondido nos arquivos do Mercado, que a ordem de abrir as válvulas saiu da
 própria Torre.
 
-Agora Sera precisa subir até o Diretor Halvard Maar e fazer a cidade inteira ouvir a verdade.
+Agora Sera precisa subir até o Diretor Halvard Maar — e descobrir que ele só obedecia ao Conselho
+das Válvulas, que mantém Ironveil fechada sob o **Véu de Ferro**. Para abrir o céu, ela vai ter que
+descer até a Fornalha-Mãe e depois subir até o topo da cúpula.
 
 | Ato | Fases | Chefão |
 |---|---|---|
 | **I — As Caldeiras** | Caldeira Norte · Sala das Bombas · Poço do Guindaste | **Martelo-de-Vapor** — o exoesqueleto do Capataz Ordo |
 | **II — O Mercado Suspenso** | Docas de Carga · Bazar das Correntes · Telhados do Diretório | **Dirigível Vigília** — da Comandante Vesk |
 | **III — A Torre do Diretório** | Átrio de Bronze · Engrenagem Mestra · Gabinete do Diretor | **O Regulador** — o relógio-mestre do Diretor Maar |
+| **IV — As Fundições Profundas** | Poço de Escória · Cadinhos · Coração da Montanha | **A Fornalha-Mãe** — o golem da Conselheira Ívora |
+| **V — O Véu de Ferro** | Passarelas do Véu · Doca da Frota · A Coroa | **O Tecelão** — a máquina do Conselho das Válvulas |
 
 ## 🖼️ Telas
 
@@ -68,8 +72,10 @@ despencam, pistões e cargas explosivas.
 - **Lança-rebites (X)** — rebites retos; ↑ + X dispara o rebite de escalada.
 - **Ferramentas (S / Q)** — cargas de vapor, selante (+2 de vida) e cartões de acesso.
 - **Furtividade** — holofotes, multidões para se misturar e guardas que não atiram com civis na frente.
-- **Três chefões** — descubra como vencê-los. Cada um deixa um **upgrade**: mais vida, um arpão
-  de mão carregável e uma couraça que absorve golpes.
+- **Cinco chefões** — descubra como vencê-los. Os quatro primeiros deixam um **upgrade**: mais
+  vida, um arpão de mão carregável, uma couraça que absorve golpes e botas com impulso no ar.
+- **Ferro fundido, esteiras, água que faz crosta** nas Fundições; **vento em rajadas** no Véu.
+- **Trilha sonora procedural**: uma faixa por ato, outra para os chefões, tudo gerado por código.
 - **Moradores** dão dicas conversando, e reagem ao sangue: fogem, vomitam, rezam ou se encolhem.
 
 ### Controles
@@ -157,8 +163,8 @@ Os arquivos aparecem sozinhos em **Releases** alguns minutos depois.
 
 ## 🗺️ Próximos passos
 
-O plano até o ato final (Atos 4 e 5, o Véu de Ferro) e as melhorias propostas para as fases
-atuais estão em [docs/ROADMAP.md](docs/ROADMAP.md).
+Os cinco atos estão no jogo. As melhorias propostas para as fases e ideias futuras (segredos,
+tempo e medalhas, Novo Jogo+, sprites com normal map) estão em [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## 📚 Documentação
 
@@ -167,4 +173,4 @@ atuais estão em [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Créditos
 
-Criado por **igonozoid**, com Godot 4 e GDScript. Arte e sons gerados por código.
+Criado por **igonozoid**, com Godot 4 e GDScript. Arte, sons e música gerados por código.

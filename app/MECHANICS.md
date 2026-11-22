@@ -1,4 +1,4 @@
-# IRONVEIL — Atos 1, 2 e 3 · Regras e mecânicas
+# IRONVEIL — Atos 1 a 5 · Regras e mecânicas
 
 Ironveil é uma cidade vertical lacrada dentro de uma montanha. Sera Vael, engenheira-chefe de
 manutenção, é acusada de sabotagem e foge das Caldeiras (o nível mais baixo da cidade), subindo
@@ -634,8 +634,82 @@ Um save antigo parado no fim do Ato 2 passa a continuar no começo do Ato 3.
 | Martelo-de-Vapor | **Válvula do Martelo** | +1 quadrado de vida (5 no total). |
 | Dirigível Vigília | **Arpão de mão** | Segure o tiro por meio segundo e solte: um arpão que atravessa inimigos, fura escudos e couraças (2 de dano) e para na parede. Em chefões conta como dois rebites. |
 | O Regulador | **Couraça do Regulador** | Uma placa de latão absorve um golpe (menos quedas e esmagamento) e se recarrega após 12 s. Aparece ao lado da vida no HUD. |
+| Fornalha-Mãe | **Botas de Pressão** | No ar, a tecla de rolar dá um impulso horizontal (uma vez por pulo). |
 
 - O prêmio cai no chão da arena quando o chefão morre; pegá-lo enche a vida. Quem sair sem pegar
   recebe mesmo assim. Saves antigos com chefões já vencidos recebem os upgrades ao carregar.
 
-O plano para os próximos atos e as melhorias propostas estão em [docs/ROADMAP.md](../docs/ROADMAP.md).
+
+---
+
+## 15. Trilha sonora
+
+Música procedural, sem arquivos de áudio: cada faixa é composta por regras (progressão de acordes,
+baixo, pad, arpejo, melodia em frases e percussão) e sintetizada nota a nota em segundo plano
+(`scripts/music_synth.gd`, ~5 s por faixa, gerada ao abrir o menu). Loops de 16 compassos com
+crossfade de 1,6 s.
+
+| Faixa | Onde | Clima |
+|---|---|---|
+| menu | menu, mapa, introdução | lenta, caixinha de música |
+| act1 | Caldeiras | baixo em ostinato e batidas de metal |
+| act2 | Mercado | frígio, cordas dedilhadas, palheta, swing |
+| act3 | Torre | cravo, tique-taque de relógio |
+| act4 | Fundições | drones graves e bigornas |
+| act5 | Véu de Ferro | metais e bateria acelerados |
+| boss | qualquer chefão com a barra na tela | 140 bpm, menor harmônica |
+| ending | final do jogo | maior, calma |
+
+**Configurações**: volume da Música e dos Efeitos sonoros (cada clique +10%; depois de 100% volta a 0).
+
+---
+
+## 16. Ato 4 — As Fundições Profundas
+
+Antes de morrer, o Diretor Maar revela que obedecia ao **Conselho das Válvulas**, que mantém a
+cidade fechada sob o **Véu de Ferro** — e que a pressão que segura o Véu vem da **Fornalha-Mãe**,
+abaixo das Caldeiras. Sera desce com Tomé.
+
+| Fase | Telas | O que tem |
+|---|---|---|
+| 10 — **Poço de Escória** | 2 | Esteira que despeja no ferro fundido; poço vertical com parapeitos; poça larga que só se atravessa com crosta; autômato. |
+| 11 — **Cadinhos** | 3 | Esteira contra Sera, martelos-pilão, rio de ferro com um registro, guardas e autômato. |
+| 12 — **Coração da Montanha** | 2 | Antessala com Lira e itens; arena da Fornalha-Mãe. |
+
+- **Escuridão**: o mundo fica bem mais escuro e a luz de Sera vira uma lanterna maior.
+- **Ferro fundido (`~`)**: encostar é morte na hora — nem rolar, nem a couraça, nem a
+  invencibilidade salvam. Guardas e autômatos viram cinza.
+- **Registro de resfriamento (`j` + bico `q`)**: abre a água por 1,3 s numa coluna até o chão.
+  O ferro atingido vira **crosta** por 6 s (dá para andar em cima); recarrega em 5 s.
+- **Esteiras (`>` `<`)**: arrastam quem estiver em cima a 55 px/s.
+
+### Chefão: a Fornalha-Mãe (Conselheira Ívora)
+Golem de fundição que anda dentro da poça de ferro, com a conselheira numa gaiola no ombro.
+30 de vida (segunda metade em 15). Punhos na beira da poça soltam ondas de choque; bolas de
+ferro fundido caem em arco. Como vencê-la fica para o jogador descobrir (os moradores dão pistas).
+Prêmio: **Botas de Pressão**.
+
+---
+
+## 17. Ato 5 — O Véu de Ferro
+
+Sem a Fornalha, as placas do Véu cedem. Sera sobe à cúpula para derrubar o Conselho.
+
+| Fase | Telas | O que tem |
+|---|---|---|
+| 13 — **Passarelas do Véu** | 3 | Abismo, vento em rajadas, tábuas soltas, holofote, tirolesa sobre o vazio. |
+| 14 — **Doca da Frota** | 3 | Vento, esteiras de carga, prensa, plataforma de carga sobre o vão, torreta, autômato. |
+| 15 — **A Coroa** | 2 | Antessala; arena do Tecelão. |
+
+- **Vento**: ciclos de calmaria, aviso (riscos finos e assobio) e rajada que empurra Sera para um
+  lado. Agachada, o empurrão cai para 30%. A fase define a força (`"wind"`).
+
+### Chefão final: o Tecelão (o Conselho das Válvulas)
+A máquina que tece as placas do Véu, com o Conselho numa cápsula de vidro. 36 de vida, em três
+estágios (24 e 12). Lançadeira que cruza a arena numa de três alturas (com linha de aviso), placas
+que despencam, raios, autômatos e, no último estágio, vento. A cada estágio o Véu se abre mais e
+entra luz do sol. Derrotado, o Véu se abre: **fim do jogo**.
+
+### Legenda nova (formato das fases)
+`~` ferro fundido · `>` `<` esteira · `j` registro de resfriamento · `q` bico de água ·
+`U` Fornalha-Mãe · `I` Tecelão · opção de fase `"theme": "foundry"` / `"veil"` e `"wind": força`.

@@ -39,6 +39,10 @@ const AutomatonScript := preload("res://scripts/entities/automaton.gd")
 const RegulatorScript := preload("res://scripts/entities/regulator.gd")
 const BrakeScript := preload("res://scripts/entities/pendulum_brake.gd")
 const Light := preload("res://scripts/fx/light.gd")
+const LavaScript := preload("res://scripts/entities/lava.gd")
+const ValveCoolScript := preload("res://scripts/entities/cooling_valve.gd")
+const GolemScript := preload("res://scripts/entities/forge_golem.gd")
+const WeaverScript := preload("res://scripts/entities/weaver.gd")
 
 const C_DEEP := Color("332b28")
 const C_HATCH := Color("3b322e")
@@ -58,7 +62,7 @@ var player_start := Vector2(70, 300)
 var phase_index := 0
 var warm_light := false
 var exit_prompt := "A: subir"
-## "boiler" (Ato 1), "market" (Ato 2) ou "tower" (Ato 3).
+## "boiler" (Ato 1), "market" (Ato 2), "tower" (Ato 3), "foundry" (Ato 4) ou "veil" (Ato 5).
 var theme := "boiler"
 ## Sem chão abaixo das telas de baixo: cair é morte.
 var abyss := false
@@ -72,6 +76,8 @@ var falling_grates: Array = []
 var lights: Array = []
 var lights_made := false
 var npc_spots: Array = []
+## Esteiras: célula -> direção (+1 direita, -1 esquerda). Contam como sólidas.
+var belts: Dictionary = {}
 var lit_screen := Vector2i(99999, 99999)
 
 
@@ -99,7 +105,7 @@ func screen_rect(s: Vector2i) -> Rect2:
 
 ## Célula sólida (blocos estáticos). Fora das telas existentes conta como sólido.
 func is_solid(c: Vector2i) -> bool:
-	if solid.has(c):
+	if solid.has(c) or belts.has(c):
 		return true
 	return not screens.has(screen_of_cell(c))
 
@@ -151,6 +157,8 @@ func build(data: Dictionary) -> void:
 					solid[c] = true
 				elif ch == "-":
 					oneway[c] = true
+				elif ch == ">" or ch == "<":
+					belts[c] = 1 if ch == ">" else -1
 				elif ch == "?":
 					# Morador que dá a dica conversando (texto vazio = ninguém).
 					var txt := ""
@@ -165,6 +173,7 @@ func build(data: Dictionary) -> void:
 					markers[ch].append(c)
 
 	_build_collision()
+	_build_belts()
 	_build_screen_walls()
 	_spawn_entities()
 	_spawn_npcs()
@@ -578,11 +587,110 @@ func _spawn_entities() -> void:
 				l.locked = true
 				reg.exit_lift = l
 
+	# Ato 4 — ferro fundido: cada trecho horizontal de ~ vira uma poça.
+	var seen_lava: Dictionary = {}
+	for c in _marks("~"):
+		if seen_lava.has(c) or _marks("~").has(c + Vector2i(-1, 0)):
+			continue
+		var n2 := 0
+		var cur2: Vector2i = c
+		while _marks("~").has(cur2):
+			seen_lava[cur2] = true
+			n2 += 1
+			cur2 += Vector2i(1, 0)
+		var lv = LavaScript.new()
+		lv.setup(Rect2(Vector2(c.x * TILE, c.y * TILE), Vector2(n2 * TILE, TILE)))
+		add_child(lv)
+
+	# Registros de resfriamento: alavanca j -> bico q mais próximo
+	for c in _marks("j"):
+		var best_q = null
+		var bq := INF
+		for q in _marks("q"):
+			var dq: float = Vector2(q - c).length()
+			if dq < bq:
+				bq = dq
+				best_q = q
+		if best_q == null:
+			continue
+		var fl: Vector2i = best_q + Vector2i(0, 1)
+		var guard_n := 0
+		while guard_n < 20 and not solid.has(fl):
+			fl.y += 1
+			guard_n += 1
+		var cv2 = ValveCoolScript.new()
+		cv2.setup(cell_bottom_center(c), cell_center(best_q), float(fl.y * TILE))
+		add_child(cv2)
+
+	for c in _marks("U"):
+		var scr := screen_of_cell(c)
+		# A poça mais larga da tela é a casa do golem.
+		var lx0 := INF
+		var lx1 := -INF
+		var ly := 0.0
+		for lc in _marks("~"):
+			if screen_of_cell(lc) == scr:
+				lx0 = minf(lx0, lc.x * TILE)
+				lx1 = maxf(lx1, (lc.x + 1) * TILE)
+				ly = lc.y * TILE + 6.0
+		var gol = GolemScript.new()
+		gol.setup(cell_bottom_center(c), screen_rect(scr), ly, lx0, lx1)
+		add_child(gol)
+		boss = gol
+		for l in lifts:
+			if l.mode == "exit" and screen_of_pos(l.position + Vector2(0, -4)) == scr:
+				l.locked = true
+				gol.exit_lift = l
+
+	for c in _marks("I"):
+		var scr := screen_of_cell(c)
+		var fy2: Vector2i = c
+		var n3 := 0
+		while n3 < 30 and not is_solid(fy2):
+			fy2.y += 1
+			n3 += 1
+		var wv = WeaverScript.new()
+		wv.setup(cell_center(c), screen_rect(scr), float(fy2.y * TILE))
+		add_child(wv)
+		boss = wv
+		for l in lifts:
+			if l.mode == "exit" and screen_of_pos(l.position + Vector2(0, -4)) == scr:
+				l.locked = true
+				wv.exit_lift = l
+
 	for pair in [["D", "h"], ["d", "v"], ["o", "o"]]:
 		for c in _marks(pair[0]):
 			var dr = DroneScript.new()
 			dr.setup(cell_center(c) + Vector2(0, 6), pair[1])
 			add_child(dr)
+
+
+## Esteiras: um corpo estático por trecho, com velocidade que arrasta quem
+## estiver em cima (Sera, guardas, autômatos).
+func _build_belts() -> void:
+	if belts.is_empty():
+		return
+	var done: Dictionary = {}
+	for c in belts.keys():
+		if done.has(c) or belts.has(c + Vector2i(-1, 0)) and belts[c + Vector2i(-1, 0)] == belts[c]:
+			continue
+		var d: int = belts[c]
+		var n := 0
+		var cur: Vector2i = c
+		while belts.has(cur) and belts[cur] == d:
+			done[cur] = true
+			n += 1
+			cur += Vector2i(1, 0)
+		var body := StaticBody2D.new()
+		body.collision_layer = 1
+		body.collision_mask = 0
+		body.constant_linear_velocity = Vector2(d * 55.0, 0)
+		add_child(body)
+		_add_rect_shape(body, Rect2(Vector2(c.x * TILE, c.y * TILE), Vector2(n * TILE, TILE)))
+	var drawer := BeltDrawer.new()
+	drawer.level = self
+	drawer.z_index = 1
+	add_child(drawer)
 
 
 func _spawn_npcs() -> void:
@@ -637,6 +745,8 @@ func light_screen(s: Vector2i) -> void:
 func _draw() -> void:
 	var market := theme == "market"
 	var tower := theme == "tower"
+	var foundry := theme == "foundry"
+	var veil := theme == "veil"
 	var c_deep := Color("2b2422") if market else C_DEEP
 	var c_hatch := Color("342a26") if market else C_HATCH
 	var c_iron := Color("3e332c") if market else C_IRON
@@ -653,6 +763,24 @@ func _draw() -> void:
 		c_rim = Color("a8843c")
 		c_rim_l = Color("f0d27a")
 		c_rust = Color("4a3a2a")
+	elif foundry:
+		# Rocha negra com veios de escória.
+		c_deep = Color("1c1716")
+		c_hatch = Color("261e1b")
+		c_iron = Color("2e2422")
+		c_iron2 = Color("342826")
+		c_rim = Color("8a3a18")
+		c_rim_l = Color("e06a28")
+		c_rust = Color("5a2412")
+	elif veil:
+		# Chapas de ferro rebitadas, molhadas de chuva.
+		c_deep = Color("23262e")
+		c_hatch = Color("2c3039")
+		c_iron = Color("3a3f4a")
+		c_iron2 = Color("414654")
+		c_rim = Color("7a8494")
+		c_rim_l = Color("c8d2e0")
+		c_rust = Color("4a3a32")
 	for c in solid.keys():
 		var cell: Vector2i = c
 		var r := Rect2(Vector2(cell * TILE), Vector2(TILE, TILE))
@@ -719,6 +847,12 @@ class Backdrop extends Node2D:
 			return
 		if level.theme == "tower":
 			_draw_tower(s, rect, rng)
+			return
+		if level.theme == "foundry":
+			_draw_foundry(s, rect, rng)
+			return
+		if level.theme == "veil":
+			_draw_veil(s, rect, rng)
 			return
 		# Faixas verticais de chapas
 		var bands := 8
@@ -926,3 +1060,105 @@ class Backdrop extends Node2D:
 			draw_circle(p, 8.0, Color(1.0, 0.75, 0.35, 0.07))
 			draw_rect(Rect2(p + Vector2(-2, -3), Vector2(4, 6)), Color(1.0, 0.82, 0.45, 0.7))
 			draw_rect(Rect2(p + Vector2(-3, 3), Vector2(6, 2)), Color("6e5428"))
+
+
+	## Fundições Profundas: escuro de caverna, rios de ferro fundido ao longe,
+	## cadinhos gigantes e correntes; quase nada de luz.
+	func _draw_foundry(_s: Vector2i, rect: Rect2, rng: RandomNumberGenerator) -> void:
+		draw_rect(rect, Color(0.07, 0.05, 0.05))
+		# Paredes de rocha em camadas
+		for i in 6:
+			var y := rect.position.y + rng.randf_range(0, rect.size.y)
+			var pts := PackedVector2Array()
+			var x := rect.position.x
+			while x <= rect.end.x + 40:
+				pts.append(Vector2(x, y + rng.randf_range(-14, 14)))
+				x += 40.0
+			pts.append(Vector2(rect.end.x, rect.end.y))
+			pts.append(Vector2(rect.position.x, rect.end.y))
+			draw_colored_polygon(pts, Color(0.1, 0.07, 0.065, 0.35))
+		# Rio de ferro fundido ao fundo
+		var ry := rect.position.y + rng.randf_range(rect.size.y * 0.45, rect.size.y * 0.7)
+		for k in 5:
+			draw_rect(Rect2(Vector2(rect.position.x, ry - 10 + k * 4), Vector2(rect.size.x, 4)), Color(0.9, 0.35, 0.08, 0.05 + k * 0.03))
+		_spot(Vector2(rect.position.x + rect.size.x * 0.3, ry), Color(1.0, 0.45, 0.12), 150.0, 0.45, 0.2)
+		_spot(Vector2(rect.position.x + rect.size.x * 0.75, ry), Color(1.0, 0.45, 0.12), 150.0, 0.45, 0.2)
+		# Cadinhos pendurados
+		for i in rng.randi_range(1, 2):
+			var cx := rect.position.x + rng.randf_range(80, rect.size.x - 80)
+			var cy := rect.position.y + rng.randf_range(60, 140)
+			draw_line(Vector2(cx, rect.position.y), Vector2(cx, cy - 24), Color(0.25, 0.2, 0.18), 3.0)
+			draw_colored_polygon(PackedVector2Array([Vector2(cx - 28, cy - 24), Vector2(cx + 28, cy - 24), Vector2(cx + 18, cy + 18), Vector2(cx - 18, cy + 18)]), Color(0.16, 0.12, 0.11))
+			draw_rect(Rect2(Vector2(cx - 24, cy - 24), Vector2(48, 4)), Color(1.0, 0.5, 0.15, 0.5))
+			_spot(Vector2(cx, cy - 26), Color(1.0, 0.5, 0.15), 70.0, 0.6, 0.25)
+		# Correntes e engrenagens quebradas
+		for i in rng.randi_range(2, 4):
+			var x2 := rect.position.x + rng.randf_range(10, rect.size.x - 10)
+			var y2 := rect.position.y
+			var end_y := rect.position.y + rng.randf_range(80, 220)
+			while y2 < end_y:
+				draw_rect(Rect2(Vector2(x2 - 2, y2), Vector2(4, 7)), Color(0.2, 0.16, 0.14))
+				y2 += 10.0
+		# Brasas presas na rocha
+		for i in 20:
+			var p := rect.position + Vector2(rng.randf_range(0, rect.size.x), rng.randf_range(0, rect.size.y))
+			draw_rect(Rect2(p, Vector2(1.5, 1.5)), Color(1.0, 0.5, 0.15, rng.randf_range(0.2, 0.6)))
+
+
+	## Véu de Ferro: céu de tempestade, a curva gigante da cúpula rebitada,
+	## guindastes de placas e luzes de aviso piscando.
+	func _draw_veil(s: Vector2i, rect: Rect2, rng: RandomNumberGenerator) -> void:
+		for i in 18:
+			var k := i / 17.0
+			draw_rect(Rect2(rect.position + Vector2(0, i * 20), Vector2(rect.size.x, 20)), Color(0.12, 0.13, 0.17).lerp(Color(0.2, 0.22, 0.27), k))
+		# Nuvens de tempestade
+		for i in 6:
+			var c := rect.position + Vector2(rng.randf_range(0, rect.size.x), rng.randf_range(10, 120))
+			draw_circle(c, rng.randf_range(30, 60), Color(0.08, 0.09, 0.12, 0.5))
+		# A cúpula: grandes placas curvas com rebites
+		var base_y := rect.position.y + 40.0 - float(s.x) * 6.0
+		for i in 9:
+			var x0 := rect.position.x - 40.0 + i * 82.0
+			var y0 := base_y + absf(i - 4.0) * 10.0
+			var plate := PackedVector2Array([Vector2(x0, y0), Vector2(x0 + 80, y0 - 6), Vector2(x0 + 84, y0 + 120), Vector2(x0 + 4, y0 + 126)])
+			draw_colored_polygon(plate, Color(0.2, 0.22, 0.27, 0.9))
+			draw_line(Vector2(x0, y0), Vector2(x0 + 80, y0 - 6), Color(0.45, 0.5, 0.58, 0.6), 1.5)
+			for r in 5:
+				draw_circle(Vector2(x0 + 10 + r * 15, y0 + 4 - r * 1.2), 1.3, Color(0.5, 0.55, 0.62))
+		# Guindastes de placas e luzes vermelhas de aviso
+		for i in rng.randi_range(1, 2):
+			var gx := rect.position.x + rng.randf_range(60, rect.size.x - 60)
+			draw_line(Vector2(gx, rect.end.y), Vector2(gx, rect.position.y + 150), Color(0.18, 0.19, 0.23), 5.0)
+			draw_line(Vector2(gx, rect.position.y + 150), Vector2(gx + 90, rect.position.y + 140), Color(0.18, 0.19, 0.23), 4.0)
+			draw_circle(Vector2(gx + 2, rect.position.y + 146), 3.0, Color(1.0, 0.2, 0.1, 0.8))
+			_spot(Vector2(gx + 2, rect.position.y + 146), Color(1.0, 0.25, 0.15), 50.0, 0.7, 0.4)
+		# Holofotes de serviço
+		for i in rng.randi_range(1, 2):
+			var p := rect.position + Vector2(rng.randf_range(40, rect.size.x - 40), rng.randf_range(160, 260))
+			_spot(p, Color(0.8, 0.88, 1.0), 70.0, 0.55)
+			draw_rect(Rect2(p + Vector2(-3, -2), Vector2(6, 4)), Color(0.85, 0.9, 1.0, 0.8))
+
+
+## Esteiras: faixa de borracha com setas que andam.
+class BeltDrawer extends Node2D:
+	var level = null
+	var t := 0.0
+
+	func _process(delta: float) -> void:
+		t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		for c in level.belts.keys():
+			var cell: Vector2i = c
+			var d: int = level.belts[c]
+			var r := Rect2(Vector2(cell * 20), Vector2(20, 20))
+			draw_rect(r, Color("2a2422"))
+			draw_rect(Rect2(r.position, Vector2(20, 5)), Color("3a3230"))
+			var off := fposmod(t * 55.0 * d, 10.0)
+			for k in 3:
+				var x := r.position.x + fposmod(off + k * 10.0, 20.0)
+				draw_line(Vector2(x, r.position.y + 1), Vector2(x + d * 3.0, r.position.y + 2.5), Color("8a6a2a"), 1.0)
+				draw_line(Vector2(x + d * 3.0, r.position.y + 2.5), Vector2(x, r.position.y + 4), Color("8a6a2a"), 1.0)
+			draw_circle(r.position + Vector2(5, 13), 3.5, Color("4a4240"))
+			draw_circle(r.position + Vector2(15, 13), 3.5, Color("4a4240"))

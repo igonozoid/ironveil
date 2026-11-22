@@ -15,12 +15,14 @@ func _ready() -> void:
 	_rng.seed = 1337
 	for i in 16:
 		var p := AudioStreamPlayer.new()
+		p.bus = "SFX"
 		add_child(p)
 		players.append(p)
 	_build_all()
 	ambient = AudioStreamPlayer.new()
 	ambient.stream = streams["ambient"]
 	ambient.volume_db = -16.0
+	ambient.bus = "SFX"
 	add_child(ambient)
 
 

@@ -10,6 +10,7 @@ var hint: Label
 
 
 func _ready() -> void:
+	Music.play("ending" if Game.end_act >= Game.ACTS.size() - 1 else "menu")
 	get_tree().paused = false
 	# Novo ato, roupa limpa.
 	Game.clean_sera()
@@ -19,10 +20,18 @@ func _ready() -> void:
 		title = _label("Ato 1 concluído", 26, 210)
 		sub = _label("Acima, as luzes do Mercado Suspenso. Os guardas do Diretório não vão parar —\nmas Sera também não.", 11, 248)
 		hint = _label("Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 2" % [done, Game.PHASE_COUNT], 9, 312)
-	elif Game.end_act >= 2:
-		title = _label("Ato 3 concluído — Fim", 26, 200)
-		sub = _label("O Regulador parou. Pelos alto-falantes do Diretório, Sera lê o livro de válvulas\npara toda Ironveil: a ordem que matou vinte e três pessoas na Caldeira Sul tem nome e assinatura.\nLá embaixo, as Caldeiras abrem as válvulas — desta vez, para aliviar quem sempre carregou a pressão.", 10, 236)
+	elif Game.end_act >= 4:
+		title = _label("Ato 5 concluído — Fim", 26, 200)
+		sub = _label("O Tecelão caiu e o Véu de Ferro se abre, placa por placa. Pela primeira vez, Ironveil vê o céu.\nDo alto da cúpula, Sera lê o livro de válvulas para a cidade inteira:\nninguém mais vai decidir quem respira e quem carrega a pressão.", 10, 236)
 		hint = _label("Fases concluídas: %d/%d  ·  Progresso salvo  ·  Obrigado por jogar IRONVEIL\nZ / Enter: abrir o mapa (repita qualquer fase)" % [done, Game.PHASE_COUNT], 9, 316)
+	elif Game.end_act == 3:
+		title = _label("Ato 4 concluído", 26, 200)
+		sub = _label("A Fornalha-Mãe esfriou. Pela primeira vez em cem anos, as Caldeiras silenciam.\nLá no alto, sem pressão, as placas do Véu rangem e começam a ceder.\nO Conselho ainda está lá em cima, dentro do Tecelão.", 10, 236)
+		hint = _label("Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 5" % [done, Game.PHASE_COUNT], 9, 316)
+	elif Game.end_act == 2:
+		title = _label("Ato 3 concluído", 26, 200)
+		sub = _label("O Regulador parou. Antes de morrer, Maar riu: o relógio nunca foi dele.\nQuem mantém Ironveil fechada sob o Véu de Ferro é o Conselho das Válvulas —\ne a pressão que segura o Véu vem da Fornalha-Mãe, lá embaixo. Para chegar ao céu, é preciso descer.", 10, 236)
+		hint = _label("Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 4" % [done, Game.PHASE_COUNT], 9, 316)
 	else:
 		title = _label("Ato 2 concluído", 26, 210)
 		sub = _label("O livro de válvulas prova: a ordem que explodiu a Caldeira Sul saiu da Torre do Diretório.\nLá em cima, alguém já sabe que Sera tem o livro.", 11, 248)
@@ -71,8 +80,14 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	if Game.end_act >= 2:
-		_draw_finale()
+	if Game.end_act >= 4:
+		_draw_finale(true)
+		return
+	if Game.end_act == 3:
+		_draw_foundry_end()
+		return
+	if Game.end_act == 2:
+		_draw_finale(false)
 		return
 	if Game.end_act >= 1:
 		_draw_tower()
@@ -179,13 +194,13 @@ func _draw_tower() -> void:
 	draw_rect(Rect2(base + Vector2(4, -18), Vector2(6, 1.5)), Color("ffd27a"))
 
 
-## Final: alto da Torre ao amanhecer. O relógio parado atrás, a cidade lá
+## Final (Ato 5, open_sky) ou fim do Ato 3 (noite, Véu fechado): alto da Torre. O relógio parado atrás, a cidade lá
 ## embaixo, colunas de vapor subindo das Caldeiras e Sera no parapeito com o
 ## livro, diante da corneta dos alto-falantes.
-func _draw_finale() -> void:
+func _draw_finale(open_sky: bool) -> void:
 	var w := 640.0
 	var h := 360.0
-	var k := clampf(t / 5.0, 0.0, 1.0)
+	var k := clampf(t / 5.0, 0.0, 1.0) if open_sky else 0.12
 	# Céu: noite virando amanhecer
 	for i in 24:
 		var y := i * 15.0
@@ -240,3 +255,55 @@ func _draw_finale() -> void:
 	draw_line(base + Vector2(4, -20), base + Vector2(10, -19), sc, 2.2)
 	draw_rect(Rect2(base + Vector2(9, -23), Vector2(8, 6)), Color("6e2f18"))
 	draw_rect(Rect2(base + Vector2(9.5, -22.5), Vector2(7, 1.2)), Color("ffd27a"))
+	# O Véu de Ferro: placas que cobrem o céu (abrem no final)
+	var gap := (k * 300.0) if open_sky else 0.0
+	for side in [-1.0, 1.0]:
+		var x0: float = 320.0 + side * gap * 0.5
+		var x1: float = x0 + side * 420.0
+		var pts := PackedVector2Array([Vector2(x0, 0), Vector2(x1, 0), Vector2(x1, 70), Vector2(x0, 90)])
+		draw_colored_polygon(pts, Color(0.12, 0.12, 0.15))
+		draw_line(Vector2(x0, 0), Vector2(x0, 90), Color(0.45, 0.48, 0.55), 2.0)
+		for i in 8:
+			draw_circle(Vector2(x0 + side * (12.0 + i * 24.0), 80.0 - i * 1.5), 1.6, Color(0.45, 0.48, 0.55))
+
+
+## Fim do Ato 4: a caverna da Fornalha, o golem resfriado afundando no ferro
+## que escurece, vapor subindo e Sera com a lanterna olhando o poço de luz.
+func _draw_foundry_end() -> void:
+	var w := 640.0
+	var h := 360.0
+	var k := clampf(t / 4.0, 0.0, 1.0)
+	draw_rect(Rect2(0, 0, w, h), Color(0.05, 0.035, 0.035))
+	# Poço de luz fria vindo de cima
+	for i in 20:
+		var y := i * 18.0
+		var sp := 60.0 + i * 5.0
+		draw_rect(Rect2(450 - sp * 0.5, y, sp, 18), Color(0.7, 0.8, 1.0, maxf(0.0, (0.16 - i * 0.007) * k)))
+	# Ferro esfriando (de laranja a cinza)
+	var lava := Color(0.9, 0.35, 0.08).lerp(Color(0.18, 0.15, 0.15), k)
+	draw_rect(Rect2(0, 290, w, 70), lava)
+	for i in 12:
+		var x := fmod(i * 61.0, w)
+		draw_line(Vector2(x, 292), Vector2(x + 18, 300), Color(1.0, 0.5, 0.15, 0.5 * (1.0 - k)), 1.0)
+	# Golem afundando, crosta preta
+	var gy := 300.0 - 90.0 * (1.0 - k * 0.6)
+	draw_colored_polygon(PackedVector2Array([Vector2(150, 300), Vector2(250, 300), Vector2(258, gy + 40), Vector2(236, gy), Vector2(164, gy), Vector2(142, gy + 40)]), Color(0.12, 0.1, 0.1))
+	draw_rect(Rect2(186, gy - 24, 28, 22), Color(0.12, 0.1, 0.1))
+	draw_rect(Rect2(196, gy - 16, 8, 3), Color(0.3, 0.35, 0.4, 1.0 - k))
+	# Vapor
+	for i in 14:
+		var px := 120.0 + fmod(i * 47.0, 200.0) + sin(t + i) * 8.0
+		var py := 300.0 - fmod(t * (20.0 + i * 2.0) + i * 31.0, 260.0)
+		draw_circle(Vector2(px, py), 8.0 + (i % 4) * 4.0, Color(1, 1, 1, 0.045))
+	# Margem e Sera com a lanterna
+	draw_rect(Rect2(380, 290, 260, 70), Color("1c1716"))
+	draw_rect(Rect2(380, 290, 260, 3), Color("8a3a18"))
+	var base := Vector2(450, 290)
+	draw_circle(base + Vector2(6, -14), 30.0, Color(1.0, 0.8, 0.5, 0.08))
+	draw_line(base + Vector2(-2, -13), base + Vector2(-3, 0), Color("3d93c2"), 3.2)
+	draw_line(base + Vector2(2, -13), base + Vector2(3, 0), Color("3d93c2"), 3.2)
+	draw_rect(Rect2(base + Vector2(-4.5, -23), Vector2(9, 11)), Color("7fd4ff"))
+	draw_rect(Rect2(base + Vector2(-4.5, -14), Vector2(9, 2)), Color("b87333"))
+	draw_circle(base + Vector2(0.5, -27), 3.4, Color("2b2f3a"))
+	draw_line(base + Vector2(4, -20), base + Vector2(8, -14), Color("7fd4ff"), 2.2)
+	draw_rect(Rect2(base + Vector2(6, -14), Vector2(5, 6)), Color(1.0, 0.85, 0.5))

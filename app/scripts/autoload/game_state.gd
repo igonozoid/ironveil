@@ -12,6 +12,7 @@ const UPGRADES := {
 	"vida": [2, "Válvula do Martelo", "+1 quadrado de vida"],
 	"arpao": [5, "Arpão de mão", "Segure o tiro para carregar um arpão que atravessa escudos e inimigos"],
 	"couraca": [8, "Couraça do Regulador", "Uma placa de latão absorve um golpe e se recarrega com o tempo"],
+	"botas": [11, "Botas de Pressão", "No ar, aperte [roll] para dar um impulso na direção em que está olhando"],
 }
 ## Ações que o jogador pode reconfigurar: [ação, nome na tela]
 const REBINDABLE := [
@@ -26,16 +27,20 @@ const DEFAULT_KEYS := {
 	"jump": KEY_Z, "shoot": KEY_X, "roll": KEY_C, "run": KEY_SHIFT, "interact": KEY_A,
 	"use_tool": KEY_S, "swap_tool": KEY_Q, "pause": KEY_ESCAPE,
 }
-const PHASE_COUNT := 9
+const PHASE_COUNT := 15
 ## Atos e suas fases (índices globais de fase).
 const ACTS := [
 	{"title": "Ato 1 — As Caldeiras", "short": "As Caldeiras", "phases": [0, 1, 2]},
 	{"title": "Ato 2 — O Mercado Suspenso", "short": "O Mercado Suspenso", "phases": [3, 4, 5]},
 	{"title": "Ato 3 — A Torre do Diretório", "short": "A Torre do Diretório", "phases": [6, 7, 8]},
+	{"title": "Ato 4 — As Fundições Profundas", "short": "As Fundições Profundas", "phases": [9, 10, 11]},
+	{"title": "Ato 5 — O Véu de Ferro", "short": "O Véu de Ferro", "phases": [12, 13, 14]},
 ]
 const PHASE_NAMES := ["Caldeira Norte", "Sala das Bombas", "Poço do Guindaste",
 	"Docas de Carga", "Bazar das Correntes", "Telhados do Diretório",
-	"Átrio de Bronze", "Engrenagem Mestra", "Gabinete do Diretor"]
+	"Átrio de Bronze", "Engrenagem Mestra", "Gabinete do Diretor",
+	"Poço de Escória", "Cadinhos", "Coração da Montanha",
+	"Passarelas do Véu", "Doca da Frota", "A Coroa"]
 const SAVE_PATH := "user://ironveil_save.json"
 const TOOLS: Array[String] = ["charge", "sealant", "card"]
 const TOOL_NAMES := {
@@ -53,7 +58,7 @@ var checkpoint: Dictionary = {}
 ## Não é apagado por "Novo jogo".
 var progress: Dictionary = {"completed": [], "act1_complete": false, "acts_complete": [], "upgrades": []}
 ## Opções do jogador (salvas junto com o progresso).
-var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "keys": {}}
+var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "keys": {}, "music": 0.7, "sfx": 1.0}
 var show_story: bool = false
 var intro_to_menu: bool = false
 ## Repetição de uma fase já concluída (pelo mapa): não mexe no checkpoint salvo.
@@ -185,6 +190,16 @@ func fmt(text: String) -> String:
 	for a in DEFAULT_KEYS.keys():
 		out = out.replace("[%s]" % a, key_name(a))
 	return out
+
+
+## Sobe o volume em 10% (volta a 0 depois de 100%).
+func cycle_volume(key: String) -> void:
+	var v := float(settings.get(key, 1.0)) + 0.1
+	if v > 1.05:
+		v = 0.0
+	settings[key] = snappedf(v, 0.1)
+	Music.apply_volumes()
+	write_save()
 
 
 func toggle_fullscreen() -> void:
@@ -443,6 +458,8 @@ func load_save() -> bool:
 		settings["gore"] = bool(sett.get("gore", true))
 		settings["fx"] = bool(sett.get("fx", true))
 		settings["fullscreen"] = bool(sett.get("fullscreen", false))
+		settings["music"] = clampf(float(sett.get("music", 0.7)), 0.0, 1.0)
+		settings["sfx"] = clampf(float(sett.get("sfx", 1.0)), 0.0, 1.0)
 		var keys: Dictionary = {}
 		var sk = sett.get("keys", {})
 		if typeof(sk) == TYPE_DICTIONARY:

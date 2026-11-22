@@ -14,6 +14,9 @@ func _ready() -> void:
 	var saved_cp: Dictionary = Game.checkpoint.duplicate()
 	var saved_prog: Dictionary = Game.progress.duplicate(true)
 	Game.checkpoint = {}
+	# Testes sem upgrades (vida 4, sem couraça) e sem música.
+	Game.progress["upgrades"] = []
+	Music.stop()
 	await _phase0()
 	await _phase1()
 	await _phase2()
@@ -21,6 +24,7 @@ func _ready() -> void:
 	await _act2()
 	await _act3()
 	await _features()
+	await _act45()
 	Game.checkpoint = saved_cp
 	Game.progress = saved_prog
 	if backup != "":
@@ -817,7 +821,7 @@ func _act3() -> void:
 	check(map.sel == 6, "map opens on Act 3 (sel %d)" % map.sel)
 	map.queue_free()
 	var es = load("res://scenes/end_screen.tscn").instantiate()
-	Game.end_act = 2
+	Game.end_act = 4
 	add_child(es)
 	await frames(5)
 	check(es.title.text.contains("Fim"), "finale end screen")
@@ -952,3 +956,191 @@ func _features() -> void:
 		var f := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
 		f.store_string(backup)
 		f.close()
+
+
+func _act45() -> void:
+	var backup := ""
+	if FileAccess.file_exists(Game.SAVE_PATH):
+		backup = FileAccess.get_file_as_string(Game.SAVE_PATH)
+	var saved_cp: Dictionary = Game.checkpoint.duplicate()
+	var saved_prog: Dictionary = Game.progress.duplicate(true)
+	Game.checkpoint = {}
+	Game.progress["upgrades"] = []
+	# ---------------- Fase 10: Poço de Escória
+	await load_phase(9)
+	Game.hp = 99
+	var p = g.player
+	check(g.level.theme == "foundry" and not g.level.belts.is_empty(), "p9 foundry theme with belts")
+	# Esteira arrasta Sera
+	var belt_cell: Vector2i = g.level.belts.keys()[0]
+	var bx: float = belt_cell.x * 20.0 + 10.0
+	await place(Vector2(bx, belt_cell.y * 20.0 - 0.5), 1)
+	var x0: float = p.global_position.x
+	await frames(30)
+	check(p.global_position.x - x0 > 10.0, "p9 conveyor belt drags Sera (dx %.0f)" % (p.global_position.x - x0))
+	# Ferro fundido mata, mesmo rolando
+	var lava = get_tree().get_nodes_in_group("lava")[0]
+	await place(Vector2(lava.rect.get_center().x, lava.rect.position.y - 20.0), 1)
+	await frames(30)
+	check(p.is_dead(), "p9 molten iron kills Sera")
+	await load_phase(9)
+	Game.hp = 99
+	p = g.player
+	# Registro de resfriamento faz crosta
+	var valves := get_tree().get_nodes_in_group("cooling_valve")
+	check(valves.size() == 1, "p9 cooling valve spawned")
+	var v = valves[0]
+	await place(v.global_position + Vector2(0, -0.5), 1)
+	await tap("interact")
+	await frames(20)
+	var crusted := false
+	for l in get_tree().get_nodes_in_group("lava"):
+		if l.is_crusted():
+			crusted = true
+			# Anda por cima da crosta
+			await place(Vector2(l.rect.get_center().x, l.rect.position.y - 2.0), 1)
+			await frames(20)
+			check(not p.is_dead() and p.is_on_floor(), "p9 Sera walks on the crust")
+	check(crusted, "p9 water crusts the molten iron")
+	# Botas de Pressão: impulso no ar
+	Game.grant_upgrade("botas")
+	await place(Vector2(80, 299.5), 1)
+	await frames(3)
+	Input.action_press("jump")
+	await frames(6)
+	Input.action_release("jump")
+	await frames(4)
+	var ax: float = p.global_position.x
+	await tap("roll")
+	await frames(10)
+	check(p.global_position.x - ax > 30.0 and p.state != p.S.ROLL, "pressure boots air dash (dx %.0f)" % (p.global_position.x - ax))
+	# ---------------- Fase 12: Fornalha-Mãe
+	await load_phase(11)
+	Game.hp = 99
+	p = g.player
+	var gol = g.boss
+	check(gol != null and gol.exit_lift != null and gol.exit_lift.locked, "p11 forge golem locks exit")
+	await place(Vector2(640 + 60, 299.5), 1)
+	await frames(10)
+	check(g.dialog.active, "p11 golem intro dialog")
+	for i in 30:
+		await tap("interact")
+		await frames(4)
+		if not g.dialog.active:
+			break
+	check(gol.bar_visible and gol.state == gol.S.WADE, "p11 golem fight started")
+	await frames(30)
+	# Água fria em cima do golem
+	var gv = null
+	var best := INF
+	for vv in get_tree().get_nodes_in_group("cooling_valve"):
+		var d: float = absf(vv.nozzle.x - gol.global_position.x)
+		if d < best:
+			best = d
+			gv = vv
+	gol.position.x = gv.nozzle.x
+	gol.target_x = gv.nozzle.x
+	gol.state = gol.S.THROW
+	gol.throws_left = 0
+	gol.t = 99.0
+	var hp0: int = gol.hp
+	await place(gv.global_position + Vector2(0, -0.5), 1)
+	await tap("interact")
+	await frames(10)
+	check(gol.state == gol.S.COOLED and gol.hp == hp0 - gol.COOL_DMG, "p11 water cools the golem (hp %d)" % gol.hp)
+	# Rebites no núcleo exposto
+	var side := -1 if gv.global_position.x < gol.global_position.x else 1
+	await place(Vector2(gv.global_position.x, 299.5), -side)
+	await frames(6)
+	for i in 3:
+		await tap("shoot")
+		await frames(20)
+	check(gol.hp == hp0 - gol.COOL_DMG - 3, "p11 rivets hit the cooled core (hp %d)" % gol.hp)
+	gol._damage(gol.hp)
+	await frames(260)
+	check(gol.state == gol.S.DEAD and not gol.exit_lift.locked, "p11 golem defeated, exit unlocked")
+	check(get_tree().get_nodes_in_group("upgrade").size() == 1, "p11 golem drops the pressure boots")
+	# ---------------- Fase 13: vento
+	await load_phase(12)
+	Game.hp = 99
+	p = g.player
+	check(g.wind != null and g.wind.strength > 0.0, "p12 wind phase")
+	g.wind.state = 2
+	g.wind.t = 5.0
+	g.wind.dir = 1
+	await place(Vector2(120, 299.5), 1)
+	p.velocity = Vector2.ZERO
+	p.global_position.y = 200.0
+	await frames(10)
+	check(p.velocity.x > 20.0, "p12 gust pushes Sera in the air (vx %.0f)" % p.velocity.x)
+	# ---------------- Fase 15: o Tecelão
+	await load_phase(14)
+	Game.hp = 99
+	p = g.player
+	var wv = g.boss
+	check(wv != null and wv.exit_lift.locked, "p14 weaver locks exit")
+	await place(Vector2(640 + 60, 299.5), 1)
+	await frames(10)
+	for i in 40:
+		await tap("interact")
+		await frames(4)
+		if not g.dialog.active:
+			break
+	check(wv.bar_visible and wv.state == wv.S.WAIT, "p14 weaver fight started")
+	# Lançadeira atravessa e fere quem estiver em pé
+	wv.seq_i = 0
+	wv._next_attack(p)
+	wv.sh_y = wv.floor_y - 22.0
+	var hp1: int = Game.hp
+	for i in 120:
+		await frames(1)
+		p.global_position = Vector2(640 + 320, 299.5)
+		if Game.hp < hp1:
+			break
+	check(Game.hp < hp1, "p14 shuttle hits standing Sera")
+	for i in 60:
+		await frames(1)
+		if wv.state == wv.S.OPEN:
+			break
+	check(wv.state == wv.S.OPEN, "p14 the loom eye opens after an attack")
+	# Da plataforma da esquerda, rebites no olho
+	await place(Vector2(640 + 150, 179.5), 1)
+	p.invuln = 99.0
+	await frames(5)
+	var whp: int = wv.hp
+	for i in 3:
+		await tap("shoot")
+		await frames(20)
+	check(wv.hp < whp, "p14 rivets hit the loom eye (hp %d)" % wv.hp)
+	wv._damage(wv.hp - 12)
+	check(wv.stage == 3 and g.wind.strength > 0.0, "p14 stage 3 brings the wind")
+	wv._damage(wv.hp)
+	await frames(300)
+	check(wv.state == wv.S.DEAD and not wv.exit_lift.locked and g.wind.strength == 0.0, "p14 weaver destroyed, exit unlocked")
+	# ---------------- Mapa e saves
+	release_all()
+	var f := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
+	f.store_string(JSON.stringify({"phase": 8, "hp": 5, "boss": true, "boss_seen": true, "inv": {"charge": 2},
+		"progress": {"completed": [0, 1, 2, 3, 4, 5, 6, 7, 8], "acts_complete": [0, 1, 2]}, "settings": {"gore": true}}))
+	f.close()
+	Game.load_save()
+	check(int(Game.checkpoint.get("phase", -1)) == 9 and Game.has_upgrade("couraca"), "end-of-act-3 save continues into Act 4")
+	var map = load("res://scenes/progress_map.tscn").instantiate()
+	add_child(map)
+	await frames(5)
+	check(map.NODES.size() == Game.PHASE_COUNT and map.sel == 9, "map has 15 phases and opens on Act 4")
+	map.queue_free()
+	for act in [2, 3, 4]:
+		var es = load("res://scenes/end_screen.tscn").instantiate()
+		Game.end_act = act
+		add_child(es)
+		await frames(3)
+		es.queue_free()
+		await frames(2)
+	check(true, "end screens for acts 3-5 load")
+	Game.checkpoint = saved_cp
+	Game.progress = saved_prog
+	if backup != "":
+		var f2 := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
+		f2.store_string(backup)
+		f2.close()

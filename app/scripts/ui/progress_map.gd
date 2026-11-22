@@ -4,14 +4,21 @@ extends Control
 ## Modo "travel" (entre fases): Sera anda no mapa até a próxima fase.
 
 const NODES := [
-	Vector2(84, 318), Vector2(176, 296), Vector2(262, 252),
-	Vector2(184, 192), Vector2(92, 152), Vector2(204, 116),
-	Vector2(318, 92), Vector2(318, 60), Vector2(318, 28),
+	Vector2(60, 288), Vector2(140, 272), Vector2(220, 256),
+	Vector2(170, 224), Vector2(80, 202), Vector2(180, 178),
+	Vector2(330, 146), Vector2(330, 118), Vector2(330, 90),
+	Vector2(372, 296), Vector2(300, 330), Vector2(190, 342),
+	Vector2(70, 52), Vector2(170, 36), Vector2(262, 22),
 ]
-## Fases com o nome escrito à esquerda do nó (as da Torre, perto do painel).
-const LABEL_LEFT := [6, 7, 8]
-const TOWER := Vector2(318, 40)
-const BOSSES := {2: "Martelo-de-Vapor", 5: "Dirigível Vigília", 8: "O Regulador"}
+## Fases com o nome escrito à esquerda do nó (perto do painel).
+const LABEL_LEFT := [6, 7, 8, 9]
+const TOWER := Vector2(330, 110)
+const BOSSES := {2: "Martelo-de-Vapor", 5: "Dirigível Vigília", 8: "O Regulador", 11: "A Fornalha-Mãe", 14: "O Tecelão"}
+## Caminhos que dão a volta (descida às Fundições e subida ao Véu).
+const DETOURS := {
+	8: [Vector2(392, 90), Vector2(392, 290)],
+	11: [Vector2(14, 340), Vector2(14, 66)],
+}
 const DESCRIPTIONS := [
 	"Tutorial nas caldeiras: bordas, reentrâncias, válvulas e a primeira carga de vapor.",
 	"Elevador de carga, caixa de força, painel, cartão de acesso e rebite de escalada.",
@@ -22,6 +29,12 @@ const DESCRIPTIONS := [
 	"A base da Torre: torretas-sentinela, pistões esmagadores e o primeiro autômato. Hora de aprender a rolar.",
 	"O coração do relógio: plataformas de engrenagem, guardas, torretas e pistões trabalhando juntos.",
 	"O Diretor Halvard Maar espera no alto, no comando do Regulador e seu pêndulo.",
+	"Abaixo das Caldeiras: esteiras que arrastam para o ferro fundido e um poço para descer.",
+	"Martelos-pilão, rios de ferro e registros de água que endurecem a superfície por alguns segundos.",
+	"A Fornalha-Mãe, o golem que gera a pressão do Véu, e a Conselheira Ívora.",
+	"Sobre a cúpula: vento em rajadas, tábuas soltas e uma tirolesa sobre o vazio.",
+	"A doca onde a frota do Conselho troca as placas: esteiras, prensas e uma plataforma de carga.",
+	"A Coroa do Véu. O Tecelão e o Conselho das Válvulas — o fim da história.",
 ]
 
 var t := 0.0
@@ -39,6 +52,7 @@ var footer: Label
 
 
 func _ready() -> void:
+	Music.play("menu")
 	get_tree().paused = false
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -187,49 +201,54 @@ func _sera_pos() -> Vector2:
 func _draw() -> void:
 	var font := ThemeDB.fallback_font
 	draw_rect(Rect2(0, 0, 640, 360), Color("100d0e"))
-	# Céu / névoa no alto, brilho das caldeiras embaixo
-	for i in 10:
-		draw_rect(Rect2(0, i * 10.0, 400, 10), Color(0.35, 0.3, 0.4, 0.06 - i * 0.005))
-	for i in 10:
-		draw_rect(Rect2(0, 270 + i * 9.0, 400, 9), Color(0.85, 0.32, 0.1, 0.02 + i * 0.022))
 	# Silhueta da montanha
-	var mount := PackedVector2Array([Vector2(0, 360), Vector2(0, 130), Vector2(40, 90), Vector2(120, 70),
-		Vector2(200, 30), Vector2(260, 0), Vector2(380, 0), Vector2(400, 60), Vector2(400, 360)])
+	var mount := PackedVector2Array([Vector2(0, 360), Vector2(0, 90), Vector2(60, 70), Vector2(160, 60),
+		Vector2(260, 64), Vector2(400, 70), Vector2(400, 360)])
 	draw_colored_polygon(mount, Color("1c1718"))
-	# Faixa do Mercado Suspenso (plataformas penduradas)
-	for i in 8:
-		var x := 20.0 + i * 46.0
-		var y := 130.0 + float((i * 31) % 70)
-		draw_line(Vector2(x + 14, 60), Vector2(x + 14, y), Color(0.45, 0.4, 0.36, 0.35), 1.0)
-		draw_rect(Rect2(x, y, 30, 8), Color("2c2420"))
-		draw_rect(Rect2(x + 6, y - 6, 8, 6), Color("3a2c22"))
+	# Ato 5: o Véu de Ferro, cúpula de placas sobre a montanha
+	for i in 10:
+		var x0 := i * 42.0 - 10.0
+		var y0 := 8.0 + absf(i - 4.5) * 6.0
+		draw_colored_polygon(PackedVector2Array([Vector2(x0, y0), Vector2(x0 + 42, y0 - 4), Vector2(x0 + 44, y0 + 40), Vector2(x0 + 2, y0 + 44)]), Color(0.16, 0.17, 0.21))
+		draw_line(Vector2(x0, y0), Vector2(x0 + 42, y0 - 4), Color(0.45, 0.5, 0.58, 0.4), 1.0)
+	# Ato 2: plataformas do Mercado penduradas
+	for i in 7:
+		var x := 20.0 + i * 40.0
+		var y := 160.0 + float((i * 31) % 60)
+		draw_line(Vector2(x + 14, 100), Vector2(x + 14, y), Color(0.45, 0.4, 0.36, 0.3), 1.0)
+		draw_rect(Rect2(x, y, 28, 7), Color("2c2420"))
 		var on := int(t * 0.8 + i) % 4 != 0
 		draw_rect(Rect2(x + 8, y - 4, 3, 2), Color(1.0, 0.8, 0.4, 0.6 if on else 0.2))
-	# Caldeiras: canos e janelas
+	# Ato 1: Caldeiras
 	for i in 6:
 		var x := 20.0 + i * 64.0
-		draw_rect(Rect2(x, 280, 40, 80), Color("221b19"))
-		draw_rect(Rect2(x + 10, 300, 18, 8), Color(0.9, 0.4, 0.15, 0.35 + 0.1 * sin(t * 2.0 + i)))
-	# Separadores de ato
-	draw_string(font, Vector2(14, 352), "ATO 1 — AS CALDEIRAS", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.95, 0.55, 0.3, 0.8))
-	draw_string(font, Vector2(14, 232), "ATO 2 — O MERCADO SUSPENSO", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(1.0, 0.82, 0.45, 0.8))
-	draw_line(Vector2(10, 238), Vector2(390, 238), Color(1, 0.82, 0.45, 0.15), 1.0)
-	# Torre do Diretório (Ato 3)
-	draw_rect(Rect2(TOWER.x - 22, 0, 44, 104), Color("252027"))
-	draw_rect(Rect2(TOWER.x - 30, 40, 60, 6), Color("2c262e"))
-	draw_rect(Rect2(TOWER.x - 28, 72, 56, 5), Color("2c262e"))
-	draw_rect(Rect2(TOWER.x - 22, 0, 2, 104), Color(0.62, 0.48, 0.24, 0.35))
-	for i in 5:
-		var on := int(t * 0.6 + i * 1.7) % 3 != 0
-		draw_rect(Rect2(TOWER.x - 18 + (i % 2) * 32, 10 + i * 18, 4, 5), Color(1.0, 0.72, 0.32, 0.55 if on else 0.18))
-	draw_string(font, Vector2(14, 22), "ATO 3 — A TORRE DO DIRETÓRIO", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 1.0, 0.75))
+		draw_rect(Rect2(x, 262, 40, 40), Color("221b19"))
+		draw_rect(Rect2(x + 10, 276, 18, 7), Color(0.9, 0.4, 0.15, 0.3 + 0.1 * sin(t * 2.0 + i)))
+	# Ato 4: Fundições, o ferro fundido no fundo da montanha
+	for i in 8:
+		draw_rect(Rect2(0, 312 + i * 6.0, 400, 6), Color(0.9, 0.32, 0.08, 0.03 + i * 0.03))
+	# Ato 3: a Torre
+	draw_rect(Rect2(TOWER.x - 22, 62, 44, 98), Color("252027"))
+	draw_rect(Rect2(TOWER.x - 30, 100, 60, 5), Color("2c262e"))
+	draw_rect(Rect2(TOWER.x - 22, 62, 2, 98), Color(0.62, 0.48, 0.24, 0.35))
+	for i in 4:
+		var on2 := int(t * 0.6 + i * 1.7) % 3 != 0
+		draw_rect(Rect2(TOWER.x - 18 + (i % 2) * 32, 70 + i * 22, 4, 5), Color(1.0, 0.72, 0.32, 0.55 if on2 else 0.18))
+	# Nomes dos atos
+	draw_string(font, Vector2(24, 80), "ATO 5 — O VÉU DE FERRO", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.75, 0.82, 1.0, 0.75))
+	draw_string(font, Vector2(24, 150), "ATO 2 — O MERCADO SUSPENSO", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.82, 0.45, 0.75))
+	draw_string(font, Vector2(282, 172), "ATO 3 — A TORRE", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.85, 0.75, 1.0, 0.75))
+	draw_string(font, Vector2(24, 308), "ATO 1 — AS CALDEIRAS", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.95, 0.55, 0.3, 0.75))
+	draw_string(font, Vector2(24, 356), "ATO 4 — AS FUNDIÇÕES", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.5, 0.2, 0.75))
 	# Caminhos
 	var path := NODES.duplicate()
 	for i in path.size() - 1:
-		var a: Vector2 = path[i]
-		var b: Vector2 = path[i + 1]
+		var pts: Array = [path[i]]
+		pts.append_array(DETOURS.get(i, []))
+		pts.append(path[i + 1])
 		var done := i < NODES.size() and Game.is_phase_complete(i)
-		_dashed(a, b, Color("c07a3a") if done else Color(0.5, 0.45, 0.42, 0.5), 2.0 if done else 1.0, not done)
+		for k in pts.size() - 1:
+			_dashed(pts[k], pts[k + 1], Color("c07a3a") if done else Color(0.5, 0.45, 0.42, 0.5), 2.0 if done else 1.0, not done)
 	# Nós
 	for i in NODES.size():
 		var p: Vector2 = NODES[i]
@@ -275,9 +294,9 @@ func _draw() -> void:
 	# Contagem
 	var done_n := (Game.progress.get("completed", []) as Array).size()
 	draw_string(font, Vector2(410, 296), "Fases concluídas: %d/%d" % [done_n, Game.PHASE_COUNT], HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
-	var stars := ""
+	var stars := "Atos  "
 	for a in Game.ACTS.size():
-		stars += ("★ " if Game.is_act_complete(a) else "☆ ") + "Ato %d   " % (a + 1)
+		stars += ("★" if Game.is_act_complete(a) else "☆") + "%d  " % (a + 1)
 	draw_string(font, Vector2(410, 284), stars, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color("ffd27a"))
 
 
@@ -297,6 +316,14 @@ func _boss_icon(p: Vector2, i: int, complete: bool) -> void:
 		# Martelo
 		draw_line(p + Vector2(-3, 4), p + Vector2(2, -2), c, 1.6)
 		draw_rect(Rect2(p + Vector2(0, -5), Vector2(5, 4)), c)
+	elif i == 11:
+		# Golem
+		draw_rect(Rect2(p + Vector2(-4, -4), Vector2(8, 8)), c)
+		draw_rect(Rect2(p + Vector2(-2, -2), Vector2(4, 1.5)), Color("1a1616"))
+	elif i == 14:
+		# Tear / olho
+		draw_arc(p, 4.0, 0, TAU, 12, c, 1.4)
+		draw_circle(p, 1.5, c)
 	elif i == 8:
 		# Relógio com pêndulo
 		draw_arc(p + Vector2(0, -1.5), 3.5, 0, TAU, 12, c, 1.3)

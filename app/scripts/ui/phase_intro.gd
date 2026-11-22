@@ -13,6 +13,12 @@ const FLAVOR := [
 	"A Torre. Latão polido, pedra fria — e olhos por toda parte.",
 	"O coração do relógio. Cada engrenagem aqui trabalha para o Diretor.",
 	"No alto, o Regulador marca o tempo da cidade. E Halvard Maar espera.",
+	"Abaixo das Caldeiras, onde a montanha ainda queima. Tomé conhece o caminho.",
+	"Cadinhos do tamanho de casas. Quem trabalha aqui nunca viu a luz do dia.",
+	"A Fornalha-Mãe empurra a pressão que segura o Véu. Ela nunca parou.",
+	"Sobre a cúpula, o vento uiva entre as placas. Do outro lado do ferro, o céu.",
+	"A frota do Conselho troca as placas do Véu toda noite.",
+	"A Coroa. O Tecelão costura o céu fechado — e o Conselho assiste.",
 ]
 
 var on_start: Callable = Callable()

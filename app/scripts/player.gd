@@ -96,6 +96,10 @@ var entering := false
 var enter_to := 0.0
 ## Upgrades: carga do arpão de mão e placa da couraça.
 var charge := 0.0
+## Botas de Pressão: um impulso no ar por pulo.
+var dash_ready := true
+var dash_t := 0.0
+const DASH_SPEED := 300.0
 var armor := 0
 var armor_t := 0.0
 ## Esticar e achatar (só visual): pulo estica, pouso achata.
@@ -135,6 +139,12 @@ func _ready() -> void:
 	armor = 1 if Game.has_upgrade("couraca") else 0
 	# Luz de preenchimento: Sera sempre legível no escuro.
 	var fill = Light.make(self, Vector2(0, -16), Color(1.0, 0.92, 0.82), 72.0, 0.42)
+	# Nas Fundições, escuras, a luz vira a lanterna de Sera.
+	if Game.world != null and Game.world.level != null and Game.world.level.theme == "foundry":
+		fill.texture_scale = 160.0 / 64.0
+		fill.energy = 0.95
+		fill.base_energy = 0.95
+		fill.color = Color(1.0, 0.85, 0.6)
 	fill.z_index = 20
 	_build_wounds()
 	grime = _damage_ratio()
@@ -325,6 +335,7 @@ func _process_normal(delta: float, locked: bool) -> void:
 
 	if on_floor:
 		coyote = 0.1
+		dash_ready = true
 		if not was_on_floor:
 			_on_land()
 			if state != S.NORMAL:
@@ -404,6 +415,23 @@ func _process_normal(delta: float, locked: bool) -> void:
 		if ix != 0.0:
 			var cap := maxf(absf(velocity.x), WALK)
 			velocity.x = move_toward(velocity.x, ix * cap, AIR_ACCEL * delta)
+		if not locked and dash_ready and Game.has_upgrade("botas") and Input.is_action_just_pressed("roll"):
+			dash_ready = false
+			dash_t = 0.2
+			if ix != 0.0:
+				facing = int(ix)
+				vis_scale = float(facing)
+			Sfx.play("steam", -4.0, 1.5)
+			Fx.steam_puff(get_parent(), global_position + Vector2(-facing * 4, -6), 8)
+		if dash_t > 0.0:
+			dash_t -= delta
+			velocity.x = facing * DASH_SPEED
+			velocity.y = minf(velocity.y, 10.0)
+	# Vento do Véu: empurra (bem menos agachada).
+	if Game.world != null and Game.world.wind != null:
+		var wf: float = Game.world.wind.force()
+		if wf != 0.0:
+			velocity.x += wf * delta * (0.3 if crouching else 1.0)
 		if not locked and coyote > 0.0 and Input.is_action_just_pressed("jump"):
 			_do_jump(ix)
 		elif velocity.y > -40.0 and grab_cd <= 0.0 and _try_grab():
@@ -961,15 +989,16 @@ func _find_security_door():
 # ---------------------------------------------------------------- dano
 
 func hurt(amount: int, kind: String = "generic") -> void:
-	if state == S.DEAD or invuln > 0.0:
+	# Ferro fundido não perdoa: ignora rolamento, couraça e invencibilidade.
+	if state == S.DEAD or (invuln > 0.0 and kind != "lava"):
 		return
 	if in_cover and kind == "bullet":
 		return
 	# Rolando, Sera escapa de tiros, ondas de choque, estilhaços e vapor.
-	if state == S.ROLL and kind != "fall" and kind != "crush":
+	if state == S.ROLL and kind != "fall" and kind != "crush" and kind != "lava":
 		return
 	# Couraça (upgrade): a placa absorve um golpe e se recarrega com o tempo.
-	if armor > 0 and kind != "fall" and kind != "crush":
+	if armor > 0 and kind != "fall" and kind != "crush" and kind != "lava":
 		armor = 0
 		armor_t = 0.0
 		invuln = 0.8

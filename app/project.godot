@@ -20,6 +20,7 @@ config/version="1.0.0"
 [autoload]
 
 Game="*res://scripts/autoload/game_state.gd"
+Music="*res://scripts/autoload/music.gd"
 Sfx="*res://scripts/autoload/sfx.gd"
 
 [display]

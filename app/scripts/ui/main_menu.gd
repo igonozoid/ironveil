@@ -11,6 +11,8 @@ var controls: Label
 func _ready() -> void:
 	get_tree().paused = false
 	Sfx.start_ambient()
+	Music.play("menu")
+	Music.preload_all()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
 
 	var title := Label.new()
@@ -23,7 +25,7 @@ func _ready() -> void:
 	add_child(title)
 
 	var sub := Label.new()
-	sub.text = "As Caldeiras  ·  O Mercado Suspenso  ·  A Torre do Diretório"
+	sub.text = "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
 	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sub.position = Vector2(0, 116)
 	sub.size = Vector2(640, 20)

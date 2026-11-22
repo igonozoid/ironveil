@@ -1,7 +1,11 @@
 # IRONVEIL — Plano até o ato final
 
-Proposta de direção para as próximas versões: melhorias nas 9 fases atuais e um plano de
-**5 atos** para fechar a história no nome do jogo — o **Véu de Ferro**.
+> **Status (v1.2):** os Atos 4 e 5, a revelação do Conselho no fim do Ato 3, o mapa com 15 fases e
+> a trilha sonora procedural já estão no jogo. Ficam em aberto: as melhorias das fases abaixo,
+> Novo Jogo+, segredos, tempo/medalhas e sprites com normal map.
+
+Proposta de direção: melhorias nas fases e um plano de **5 atos** para fechar a história no nome
+do jogo — o **Véu de Ferro**.
 
 ---
 

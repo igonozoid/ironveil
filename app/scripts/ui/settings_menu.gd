@@ -13,6 +13,8 @@ const DESCRIPTIONS := {
 	"gore": "Sangue que voa, mancha o cenário, gruda nas pessoas e espirra na tela. Desligado, vira faíscas e destroços.",
 	"fx": "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado ao entardecer, Torre fria), brilho em volta das luzes, cantos escurecidos, grão de filme e a imagem separando em cores ao levar dano. Desligado: imagem limpa e um pouco mais leve para o computador. As luzes do cenário e a borda de vida continuam.",
 	"fs": "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento.",
+	"music": "Volume da trilha sonora (cada clique sobe 10%; depois de 100% volta a 0, que desliga a música).",
+	"sfx": "Volume dos efeitos sonoros: tiros, vapor, passos, explosões.",
 	"keys": "Clique (ou Enter) numa ação e aperte a nova tecla. Se outra ação usava essa tecla, as duas trocam. Esc cancela. O controle de videogame não muda.",
 	"reset": "Volta todas as teclas para o padrão: setas, Z, X, C, Shift, A, S, Q e Esc.",
 	"back": "Voltar.",
@@ -42,7 +44,7 @@ func _ready() -> void:
 	var left := VBoxContainer.new()
 	left.position = Vector2(36, 54)
 	left.custom_minimum_size = Vector2(240, 0)
-	left.add_theme_constant_override("separation", 6)
+	left.add_theme_constant_override("separation", 3)
 	add_child(left)
 	var head := _head(left, "JOGO")
 	head.custom_minimum_size = Vector2(0, 14)
@@ -59,7 +61,16 @@ func _ready() -> void:
 	fs.pressed.connect(func():
 		Game.toggle_fullscreen()
 		_refresh())
-	left.add_child(_spacer(10))
+	var mus := _button(left, "", "music")
+	mus.pressed.connect(func():
+		Game.cycle_volume("music")
+		_refresh())
+	var sfx := _button(left, "", "sfx")
+	sfx.pressed.connect(func():
+		Game.cycle_volume("sfx")
+		Sfx.play("shot", -3.0)
+		_refresh())
+	left.add_child(_spacer(6))
 	var reset := _button(left, "Restaurar teclas padrão", "reset")
 	reset.pressed.connect(func():
 		Game.reset_keys()
@@ -152,6 +163,10 @@ func _refresh() -> void:
 				c.text = "Efeitos de tela: " + ("Ligados" if Game.fx_enabled() else "Desligados")
 			"fs":
 				c.text = "Tela cheia (F11): " + ("Ligada" if bool(Game.settings.get("fullscreen", false)) else "Desligada")
+			"music":
+				c.text = "Música: %d%%" % int(round(float(Game.settings.get("music", 0.7)) * 100.0))
+			"sfx":
+				c.text = "Efeitos sonoros: %d%%" % int(round(float(Game.settings.get("sfx", 1.0)) * 100.0))
 	for a in key_buttons.keys():
 		var b: Button = key_buttons[a]
 		b.text = Game.key_name(a) if waiting != a else "Aperte uma tecla…"
