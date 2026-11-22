@@ -876,7 +876,7 @@ static func _phase_10() -> Dictionary:
 		"hints": {
 			"0,0": [
 				"Tomé|Sera?! Achei que tinha morrido lá na Torre. Bem-vinda às Fundições: aqui embaixo é que se faz a pressão da cidade.||Tomé|Olho nas esteiras. Elas arrastam tudo para o ferro fundido. Ferro fundido não perdoa — nem rolando, nem com couraça.",
-				"Fundidor|O poço desce para os cadinhos. Desça devagar, de parapeito em parapeito.",
+				"Fundidor|Esse poço desce até os cadinhos — os caldeirões gigantes onde o ferro é derretido. Desça devagar, de parapeito em parapeito.",
 			],
 			"0,1": [
 				"Tomé|Essa poça é larga demais para pular. Mas a água fria faz casca no ferro...||Tomé|O registro abre o bico lá em cima. A casca dura pouco: atravessa rápido.",

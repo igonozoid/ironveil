@@ -70,7 +70,7 @@ func interact(_p) -> void:
 	talked = true
 	var out: Array = []
 	for l in lines:
-		out.append([String(l[0]), Game.fmt(String(l[1]))])
+		out.append([tr(String(l[0])), Game.fmt(tr(String(l[1])))])
 	Sfx.play("blip", -6.0)
 	Game.world.dialog.start(out, func(): pass)
 
@@ -79,8 +79,7 @@ func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	var p = Game.world.player if Game.world else null
 	near = p != null and absf(p.global_position.x - global_position.x) < 70.0 and absf(p.global_position.y - global_position.y) < 40.0
-	prompt = "A: conversar com " + npc_name if can_interact() else ""
-	prompt = Game.fmt(prompt.replace("A:", "[interact]:"))
+	prompt = (tr("A: conversar com %s") % tr(npc_name)) if can_interact() else ""
 
 
 func _draw() -> void:

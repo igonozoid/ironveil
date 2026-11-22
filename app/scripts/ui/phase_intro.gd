@@ -43,10 +43,10 @@ func _ready() -> void:
 	canvas.draw.connect(_paint)
 	add_child(canvas)
 	var i := clampi(Game.phase, 0, Game.PHASE_COUNT - 1)
-	act_label = _label(String(Game.ACTS[Game.act_of(i)]["title"]).to_upper(), 10, 112, Color(0.95, 0.7, 0.45))
-	title_label = _label(String(Game.world.phase_data.get("title", Game.PHASE_NAMES[i])) if Game.world else Game.PHASE_NAMES[i], 24, 128, Color(0.98, 0.93, 0.85))
-	flavor_label = _label(FLAVOR[i] if i < FLAVOR.size() else "", 10, 166, Color(0.9, 0.84, 0.78))
-	press_label = _label("Aperte qualquer tecla para começar", 10, 300, Color(1.0, 0.85, 0.55))
+	act_label = _label(tr(String(Game.ACTS[Game.act_of(i)]["title"])).to_upper(), 10, 112, Color(0.95, 0.7, 0.45))
+	title_label = _label(tr(String(Game.world.phase_data.get("title", Game.PHASE_NAMES[i])) if Game.world else Game.PHASE_NAMES[i]), 24, 128, Color(0.98, 0.93, 0.85))
+	flavor_label = _label(tr(FLAVOR[i]) if i < FLAVOR.size() else "", 10, 166, Color(0.9, 0.84, 0.78))
+	press_label = _label(tr("Aperte qualquer tecla para começar"), 10, 300, Color(1.0, 0.85, 0.55))
 	for l in [act_label, title_label, flavor_label, press_label]:
 		l.modulate.a = 0.0
 

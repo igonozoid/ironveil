@@ -1,6 +1,8 @@
 <div align="center">
 
-# ⚙️ IRONVEIL
+<img src="app/icons/icon_192.png" width="112" alt="Emblema do IRONVEIL: engrenagem de latão com o Véu de Ferro rachado de luz">
+
+# IRONVEIL
 
 **Plataforma cinematográfico 2D em cinco atos — vapor, latão e uma conspiração que fecha o céu.**
 
@@ -92,8 +94,10 @@ despencam, pistões e cargas explosivas.
 | Usar / trocar ferramenta | **S** / **Q** | Y / RB | **S** / **Q** |
 | Pausa | Esc | Start | **II** |
 | Tela cheia | **F11** | — | — |
+| Console de testes | **=** | — | — |
 
-Todas as teclas podem ser trocadas em **Configurações**.
+Todas as teclas podem ser trocadas em **Configurações**, que também tem idioma (Português/English),
+volumes, gore, efeitos e tela cheia. Na primeira vez que o jogo abre, ele pergunta o idioma.
 
 ### Visual
 
@@ -128,6 +132,40 @@ cd ironveil && godot --path app
 ```
 
 Ou abra o Godot, clique em **Importar** e escolha `app/project.godot`.
+
+### Rodar no terminal
+
+Com o Godot instalado normalmente, a partir da pasta do repositório:
+
+```bash
+godot --path app
+```
+
+Com o Godot do Flatpak:
+
+```bash
+flatpak run org.godotengine.Godot --path app
+```
+
+Uma versão baixada dos Releases (Linux):
+
+```bash
+./ironveil.x86_64
+```
+
+### Console de testes
+
+Durante o jogo, **=** abre um console (o jogo pausa). Comandos: `god` (invencível), `vida`,
+`municao`, `escudo`, `upgrades`, `tudo` (todos esses juntos), `liberar` (todas as fases no mapa),
+`fase N` (vai para a fase N), `chefao` (vai para o chefão da fase), `matar` (inimigos da tela),
+`chefao_vida N`, `vento N`, `ajuda`.
+
+### Idiomas
+
+Os textos ficam em `app/i18n/` (formato gettext `.po`, um arquivo por idioma; o português é o
+idioma-fonte). `python3 app/tools/i18n.py` extrai os textos novos do código e atualiza os arquivos,
+mantendo as traduções existentes e avisando quantas faltam. Para um idioma novo: copie `en.po`,
+traduza os `msgstr` e acrescente o idioma em `Game.LANGUAGES` e no `project.godot`.
 
 ### Testes
 

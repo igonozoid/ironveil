@@ -13,6 +13,7 @@ const DESCRIPTIONS := {
 	"gore": "Sangue que voa, mancha o cenário, gruda nas pessoas e espirra na tela. Desligado, vira faíscas e destroços.",
 	"fx": "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado ao entardecer, Torre fria), brilho em volta das luzes, cantos escurecidos, grão de filme e a imagem separando em cores ao levar dano. Desligado: imagem limpa e um pouco mais leve para o computador. As luzes do cenário e a borda de vida continuam.",
 	"fs": "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento.",
+	"lang": "Idioma dos textos do jogo. Muda na hora.",
 	"music": "Volume da trilha sonora (cada clique sobe 10%; depois de 100% volta a 0, que desliga a música).",
 	"sfx": "Volume dos efeitos sonoros: tiros, vapor, passos, explosões.",
 	"keys": "Clique (ou Enter) numa ação e aperte a nova tecla. Se outra ação usava essa tecla, as duas trocam. Esc cancela. O controle de videogame não muda.",
@@ -61,6 +62,11 @@ func _ready() -> void:
 	fs.pressed.connect(func():
 		Game.toggle_fullscreen()
 		_refresh())
+	var lang := _button(left, "", "lang")
+	lang.pressed.connect(func():
+		Game.cycle_language()
+		_refresh()
+		_describe("lang"))
 	var mus := _button(left, "", "music")
 	mus.pressed.connect(func():
 		Game.cycle_volume("music")
@@ -151,22 +157,24 @@ func _button(parent: Node, txt: String, id: String) -> Button:
 
 func _describe(id: String) -> void:
 	if desc != null:
-		desc.text = String(DESCRIPTIONS.get(id, ""))
+		desc.text = tr(String(DESCRIPTIONS.get(id, "")))
 
 
 func _refresh() -> void:
 	for c in find_children("*", "Button", true, false):
 		match String(c.get_meta("id", "")):
 			"gore":
-				c.text = "Sangue e gore: " + ("Ligado" if Game.gore_enabled() else "Desligado")
+				c.text = tr("Sangue e gore: %s") % tr("Ligado" if Game.gore_enabled() else "Desligado")
 			"fx":
-				c.text = "Efeitos de tela: " + ("Ligados" if Game.fx_enabled() else "Desligados")
+				c.text = tr("Efeitos de tela: %s") % tr("Ligados" if Game.fx_enabled() else "Desligados")
 			"fs":
-				c.text = "Tela cheia (F11): " + ("Ligada" if bool(Game.settings.get("fullscreen", false)) else "Desligada")
+				c.text = tr("Tela cheia (F11): %s") % tr("Ligada" if bool(Game.settings.get("fullscreen", false)) else "Desligada")
+			"lang":
+				c.text = tr("Idioma: %s") % Game.language_name()
 			"music":
-				c.text = "Música: %d%%" % int(round(float(Game.settings.get("music", 0.7)) * 100.0))
+				c.text = tr("Música: %d%%") % int(round(float(Game.settings.get("music", 0.7)) * 100.0))
 			"sfx":
-				c.text = "Efeitos sonoros: %d%%" % int(round(float(Game.settings.get("sfx", 1.0)) * 100.0))
+				c.text = tr("Efeitos sonoros: %d%%") % int(round(float(Game.settings.get("sfx", 1.0)) * 100.0))
 	for a in key_buttons.keys():
 		var b: Button = key_buttons[a]
 		b.text = Game.key_name(a) if waiting != a else "Aperte uma tecla…"

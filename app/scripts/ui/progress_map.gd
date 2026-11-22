@@ -108,12 +108,12 @@ func _status(i: int) -> String:
 
 func _refresh() -> void:
 	var a := Game.act_of(sel)
-	info_act.text = String(Game.ACTS[a]["title"]).to_upper()
-	info_name.text = "%d. %s" % [sel + 1, Game.PHASE_NAMES[sel]]
-	info_status.text = _status(sel)
-	var d: String = DESCRIPTIONS[sel]
+	info_act.text = tr(String(Game.ACTS[a]["title"])).to_upper()
+	info_name.text = "%d. %s" % [sel + 1, tr(Game.PHASE_NAMES[sel])]
+	info_status.text = tr(_status(sel))
+	var d: String = tr(DESCRIPTIONS[sel])
 	if BOSSES.has(sel):
-		d += "\nChefão: " + String(BOSSES[sel]) + "."
+		d += "\n" + tr("Chefão: %s.") % tr(String(BOSSES[sel]))
 	info_desc.text = d
 	if travel_t >= 0.0:
 		info_action.text = "Sera segue para a próxima fase..."
@@ -134,7 +134,7 @@ func _process(delta: float) -> void:
 		travel_t += delta
 		if travel_t > 1.8 and footer.text != "Z / Enter: seguir":
 			footer.text = "Z / Enter: seguir"
-			info_action.text = "Próxima fase: " + String(Game.PHASE_NAMES[travel_to])
+			info_action.text = tr("Próxima fase: %s") % tr(String(Game.PHASE_NAMES[travel_to]))
 			Sfx.play("blip", -6.0)
 	queue_redraw()
 
@@ -235,11 +235,11 @@ func _draw() -> void:
 		var on2 := int(t * 0.6 + i * 1.7) % 3 != 0
 		draw_rect(Rect2(TOWER.x - 18 + (i % 2) * 32, 70 + i * 22, 4, 5), Color(1.0, 0.72, 0.32, 0.55 if on2 else 0.18))
 	# Nomes dos atos
-	draw_string(font, Vector2(24, 80), "ATO 5 — O VÉU DE FERRO", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.75, 0.82, 1.0, 0.75))
-	draw_string(font, Vector2(24, 150), "ATO 2 — O MERCADO SUSPENSO", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.82, 0.45, 0.75))
-	draw_string(font, Vector2(282, 172), "ATO 3 — A TORRE", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.85, 0.75, 1.0, 0.75))
-	draw_string(font, Vector2(24, 308), "ATO 1 — AS CALDEIRAS", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.95, 0.55, 0.3, 0.75))
-	draw_string(font, Vector2(24, 356), "ATO 4 — AS FUNDIÇÕES", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.5, 0.2, 0.75))
+	draw_string(font, Vector2(24, 80), tr("ATO 5 — O VÉU DE FERRO"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.75, 0.82, 1.0, 0.75))
+	draw_string(font, Vector2(24, 150), tr("ATO 2 — O MERCADO SUSPENSO"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.82, 0.45, 0.75))
+	draw_string(font, Vector2(282, 172), tr("ATO 3 — A TORRE"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.85, 0.75, 1.0, 0.75))
+	draw_string(font, Vector2(24, 308), tr("ATO 1 — AS CALDEIRAS"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.95, 0.55, 0.3, 0.75))
+	draw_string(font, Vector2(24, 356), tr("ATO 4 — AS FUNDIÇÕES"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.5, 0.2, 0.75))
 	# Caminhos
 	var path := NODES.duplicate()
 	for i in path.size() - 1:
@@ -274,7 +274,7 @@ func _draw() -> void:
 			draw_arc(p + Vector2(0, -1), 2.5, PI, TAU, 8, Color("6a6460"), 1.2)
 		else:
 			draw_string(font, p + Vector2(-3, 4), str(i + 1), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color("fff2d8"))
-		var label := String(Game.PHASE_NAMES[i])
+		var label := tr(String(Game.PHASE_NAMES[i]))
 		var lp := p + Vector2(13, 4)
 		if LABEL_LEFT.has(i):
 			lp = p + Vector2(-13.0 - font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x, 4)
@@ -293,8 +293,8 @@ func _draw() -> void:
 	draw_rect(Rect2(410, 44, 220, 1), Color("8a5a2b"))
 	# Contagem
 	var done_n := (Game.progress.get("completed", []) as Array).size()
-	draw_string(font, Vector2(410, 296), "Fases concluídas: %d/%d" % [done_n, Game.PHASE_COUNT], HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
-	var stars := "Atos  "
+	draw_string(font, Vector2(410, 296), tr("Fases concluídas: %d/%d") % [done_n, Game.PHASE_COUNT], HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
+	var stars := tr("Atos") + "  "
 	for a in Game.ACTS.size():
 		stars += ("★" if Game.is_act_complete(a) else "☆") + "%d  " % (a + 1)
 	draw_string(font, Vector2(410, 284), stars, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color("ffd27a"))

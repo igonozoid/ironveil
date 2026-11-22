@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 	if p.hitbox().grow(6.0).has_point(global_position):
 		Game.add_item(kind, amount)
 		var name_str: String = Game.TOOL_NAMES[kind]
-		Game.world.hud.message("%s +%d" % [name_str, amount])
+		Game.world.hud.message("%s +%d" % [tr(name_str), amount])
 		Sfx.play("pickup")
 		queue_free()
 

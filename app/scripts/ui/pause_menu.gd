@@ -37,7 +37,7 @@ func _ready() -> void:
 	_button(vb, "Menu principal", _menu)
 	_button(vb, "Sair", _quit)
 	controls = Label.new()
-	controls.text = Game.fmt("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia")
+	controls.text = Game.fmt(tr("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"))
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls.position = Vector2(0, 290)
 	controls.size = Vector2(640, 40)
@@ -59,7 +59,7 @@ func _button(parent: Node, label: String, cb: Callable) -> Button:
 func _settings() -> void:
 	var s = load("res://scripts/ui/settings_menu.gd").new()
 	s.on_close = func():
-		controls.text = Game.fmt("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia")
+		controls.text = Game.fmt(tr("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"))
 		cfg_button.grab_focus()
 	root.add_child(s)
 

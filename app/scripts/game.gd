@@ -16,6 +16,8 @@ const HealthBorderScript := preload("res://scripts/ui/health_border.gd")
 const PhaseIntroScript := preload("res://scripts/ui/phase_intro.gd")
 const UpgradeScript := preload("res://scripts/entities/upgrade_pickup.gd")
 const WindScript := preload("res://scripts/wind.gd")
+const MarkersScript := preload("res://scripts/interact_markers.gd")
+const ConsoleScript := preload("res://scripts/ui/cheat_console.gd")
 ## Escurecimento do mundo por tema (as luzes 2D clareiam por cima).
 const AMBIENT := {
 	"boiler": Color(0.86, 0.79, 0.77),
@@ -36,6 +38,8 @@ var trauma := 0.0
 var shake_t := 0.0
 var hitstop_id := 0
 var wind = null
+## Paredes que prendem Sera na arena enquanto o chefão estiver vivo.
+var arena_walls: StaticBody2D = null
 var ambient: Array = []
 var hitstop_left := 0.0
 var player = null
@@ -101,7 +105,11 @@ func _ready() -> void:
 	post_fx = PostFxScript.new()
 	add_child(post_fx)
 	post_fx.apply_theme(level.theme)
+	level.add_child(MarkersScript.new())
+	if at_boss_checkpoint():
+		_lock_arena()
 	add_child(HealthBorderScript.new())
+	add_child(ConsoleScript.new())
 	add_child(TouchScript.new())
 	dialog = DialogScript.new()
 	add_child(dialog)
@@ -299,6 +307,30 @@ func on_arena_reached() -> void:
 	if not Game.replay:
 		Game.write_save()
 	hud.message("Checkpoint salvo")
+	_lock_arena()
+
+
+## Fecha as bordas da tela do chefão: não dá para fugir da luta.
+func _lock_arena() -> void:
+	if boss == null or arena_walls != null or not boss.is_alive():
+		return
+	var scr: Vector2i = level.screen_of_pos(boss.global_position + Vector2(0, -10))
+	if level.boss_spawn != Vector2.INF:
+		scr = level.screen_of_pos(level.boss_spawn + Vector2(0, -10))
+	var r: Rect2 = level.screen_rect(scr)
+	arena_walls = StaticBody2D.new()
+	arena_walls.collision_layer = 1
+	arena_walls.collision_mask = 0
+	level.add_child(arena_walls)
+	for e in [Rect2(r.position - Vector2(20, 0), Vector2(20, r.size.y)), Rect2(Vector2(r.end.x, r.position.y), Vector2(20, r.size.y)),
+			Rect2(r.position - Vector2(0, 20), Vector2(r.size.x, 20)), Rect2(Vector2(r.position.x, r.end.y), Vector2(r.size.x, 20))]:
+		var rr: Rect2 = e
+		var cs := CollisionShape2D.new()
+		var sh := RectangleShape2D.new()
+		sh.size = rr.size
+		cs.shape = sh
+		cs.position = rr.get_center()
+		arena_walls.add_child(cs)
 
 
 ## Liga/desliga o vento (chefão final, estágio 3).
@@ -309,6 +341,9 @@ func set_wind(s: float) -> void:
 
 ## Chefão derrotado: deixa o prêmio (upgrade) no chão da arena.
 func on_boss_defeated(pos: Vector2) -> void:
+	if arena_walls != null:
+		arena_walls.queue_free()
+		arena_walls = null
 	for id in Game.UPGRADES.keys():
 		if int(Game.UPGRADES[id][0]) == Game.phase:
 			var u = UpgradeScript.new()

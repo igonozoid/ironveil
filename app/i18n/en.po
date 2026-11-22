@@ -1,0 +1,1400 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: en\n"
+
+msgid "Válvula do Martelo"
+msgstr "Hammer's Valve"
+
+msgid "+1 quadrado de vida"
+msgstr "+1 health block"
+
+msgid "Arpão de mão"
+msgstr "Hand Harpoon"
+
+msgid "Segure o tiro para carregar um arpão que atravessa escudos e inimigos"
+msgstr "Hold fire to charge a harpoon that pierces shields and enemies"
+
+msgid "Couraça do Regulador"
+msgstr "Regulator's Plate"
+
+msgid "Uma placa de latão absorve um golpe e se recarrega com o tempo"
+msgstr "A brass plate absorbs one hit and recharges over time"
+
+msgid "Botas de Pressão"
+msgstr "Pressure Boots"
+
+msgid "No ar, aperte [roll] para dar um impulso na direção em que está olhando"
+msgstr "In the air, press [roll] to dash in the direction you're facing"
+
+msgid "Mover para a esquerda"
+msgstr "Move left"
+
+msgid "Mover para a direita"
+msgstr "Move right"
+
+msgid "Cima / encostar"
+msgstr "Up / take cover"
+
+msgid "Agachar"
+msgstr "Crouch"
+
+msgid "Pular"
+msgstr "Jump"
+
+msgid "Atirar"
+msgstr "Shoot"
+
+msgid "Rolar"
+msgstr "Roll"
+
+msgid "Trotar / correr"
+msgstr "Jog / run"
+
+msgid "Interagir"
+msgstr "Interact"
+
+msgid "Usar ferramenta"
+msgstr "Use tool"
+
+msgid "Trocar ferramenta"
+msgstr "Swap tool"
+
+msgid "Pausa"
+msgstr "Pause"
+
+msgid "pt_BR"
+msgstr ""
+
+msgid "Português (Brasil)"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Ato 1 — As Caldeiras"
+msgstr "Act 1 — The Boilers"
+
+msgid "As Caldeiras"
+msgstr "The Boilers"
+
+msgid "Ato 2 — O Mercado Suspenso"
+msgstr "Act 2 — The Hanging Market"
+
+msgid "O Mercado Suspenso"
+msgstr "The Hanging Market"
+
+msgid "Ato 3 — A Torre do Diretório"
+msgstr "Act 3 — The Directorate Tower"
+
+msgid "A Torre do Diretório"
+msgstr "The Directorate Tower"
+
+msgid "Ato 4 — As Fundições Profundas"
+msgstr "Act 4 — The Deep Foundries"
+
+msgid "As Fundições Profundas"
+msgstr "The Deep Foundries"
+
+msgid "Ato 5 — O Véu de Ferro"
+msgstr "Act 5 — The Iron Veil"
+
+msgid "O Véu de Ferro"
+msgstr "The Iron Veil"
+
+msgid "Caldeira Norte"
+msgstr "North Boiler"
+
+msgid "Sala das Bombas"
+msgstr "Pump Room"
+
+msgid "Poço do Guindaste"
+msgstr "Crane Shaft"
+
+msgid "Docas de Carga"
+msgstr "Cargo Docks"
+
+msgid "Bazar das Correntes"
+msgstr "Chain Bazaar"
+
+msgid "Telhados do Diretório"
+msgstr "Directorate Rooftops"
+
+msgid "Átrio de Bronze"
+msgstr "Bronze Atrium"
+
+msgid "Engrenagem Mestra"
+msgstr "Master Gear"
+
+msgid "Gabinete do Diretor"
+msgstr "Director's Office"
+
+msgid "Poço de Escória"
+msgstr "Slag Shaft"
+
+msgid "Cadinhos"
+msgstr "Crucibles"
+
+msgid "Coração da Montanha"
+msgstr "Heart of the Mountain"
+
+msgid "Passarelas do Véu"
+msgstr "Veil Catwalks"
+
+msgid "Doca da Frota"
+msgstr "Fleet Dock"
+
+msgid "A Coroa"
+msgstr "The Crown"
+
+msgid "Carga de vapor"
+msgstr "Steam charge"
+
+msgid "Selante"
+msgstr "Sealant"
+
+msgid "Cartão de acesso"
+msgstr "Access card"
+
+msgid "Esc"
+msgstr ""
+
+msgid "[%s]"
+msgstr ""
+
+msgid "HOME"
+msgstr ""
+
+msgid "APPDATA"
+msgstr ""
+
+msgid "SFX"
+msgstr ""
+
+msgid "Comandante Vesk"
+msgstr "Commander Vesk"
+
+msgid "Sera Vael. Desça do telhado e entregue o livro, e o Diretório talvez lembre que você cooperou."
+msgstr "Sera Vael. Come down from the roof and hand over the logbook, and the Directorate may remember you cooperated."
+
+msgid "Sera"
+msgstr ""
+
+msgid "Esse livro diz que a ordem de abrir as válvulas saiu da Torre. Vinte e três pessoas morreram na Caldeira Sul."
+msgstr "This logbook says the order to open the valves came from the Tower. Twenty-three people died in the South Boiler."
+
+msgid "Então você entende por que ele não pode sair deste telhado. Vigília: soltar bombas."
+msgstr "Then you understand why it can't leave this roof. Vigil: drop bombs."
+
+msgid "Ainda de pé? Vigília, de novo."
+msgstr "Still standing? Vigil, again."
+
+msgid "DIRIGÍVEL VIGÍLIA · Comandante Vesk"
+msgstr "AIRSHIP VIGIL · Commander Vesk"
+
+msgid "AnchorShape"
+msgstr ""
+
+msgid "Vesk: Vigília, varrer o telhado!"
+msgstr "Vesk: Vigil, sweep the roof!"
+
+msgid "Vesk: Tropa, ao telhado!"
+msgstr "Vesk: Troops, to the roof!"
+
+msgid "Vesk: Soltem a âncora!"
+msgstr "Vesk: Drop the anchor!"
+
+msgid "Cabo cortado! O Vigília perdeu o prumo."
+msgstr "Cable cut! The Vigil lost its balance."
+
+msgid "Arpão no casco!"
+msgstr "Harpoon in the hull!"
+
+msgid "Vesk: Motores no máximo! Desçam o Vigília!"
+msgstr "Vesk: Full engines! Bring the Vigil down!"
+
+msgid "Vesk: Estamos caindo! Abandonar a..."
+msgstr "Vesk: We're going down! Abandon the..."
+
+msgid "O Vigília caiu. O elevador do arquivo está livre."
+msgstr "The Vigil is down. The archive lift is free."
+
+msgid "Lira"
+msgstr ""
+
+msgid "Você é a engenheira dos cartazes? Ha. Metade do Mercado acha que você é heroína."
+msgstr "You're the engineer from the posters? Ha. Half the Market thinks you're a hero."
+
+msgid "Eu não explodi nada. Preciso chegar aos telhados do Diretório."
+msgstr "I didn't blow anything up. I need to reach the Directorate rooftops."
+
+msgid "O livro de válvulas da Caldeira Sul está no arquivo deles. Se alguém mandou abrir as válvulas, está escrito lá."
+msgstr "The South Boiler's valve logbook is in their archive. If someone ordered the valves opened, it's written there."
+
+msgid "Atrás da minha barraca tem uma passagem dos contrabandistas. Vai. E fique no meio do povo: os guardas não atiram com gente na frente."
+msgstr "Behind my stall there's a smugglers' passage. Go. And stay in the crowd: the guards won't shoot with people in the way."
+
+msgid "A passagem está aberta. Os holofotes não enxergam quem está na multidão — nem quem está encostado."
+msgstr "The passage is open. Searchlights can't see anyone in the crowd — or anyone in cover."
+
+msgid "A: falar com a mulher de capuz"
+msgstr "A: talk to the hooded woman"
+
+msgid "A: falar com Lira"
+msgstr "A: talk to Lira"
+
+msgid "Lira abriu a passagem dos contrabandistas"
+msgstr "Lira opened the smugglers' passage"
+
+msgid "Capataz Ordo"
+msgstr "Foreman Ordo"
+
+msgid "Engenheira Vael. O Diretório quer você viva... mas ninguém disse inteira."
+msgstr "Engineer Vael. The Directorate wants you alive... but nobody said in one piece."
+
+msgid "Esse andador é da Caldeira Sul. Fui eu que calibrei as válvulas dele."
+msgstr "That walker is from the South Boiler. I calibrated its valves myself."
+
+msgid "Então sabe quanto ele aguenta. E eu sei quanto você aguenta."
+msgstr "Then you know how much it can take. And I know how much you can take."
+
+msgid "De volta? O martelo também voltou."
+msgstr "Back again? So is the hammer."
+
+msgid "MARTELO-DE-VAPOR · Capataz Ordo"
+msgstr "STEAM HAMMER · Foreman Ordo"
+
+msgid "Ordo: Sair daí ou virar sucata, Vael!"
+msgstr "Ordo: Get out of there or become scrap, Vael!"
+
+msgid "Ordo: Ninguém atravessa o Martelo!"
+msgstr "Ordo: Nobody gets past the Hammer!"
+
+msgid "O Martelo engasgou com o vapor!"
+msgstr "The Hammer choked on the steam!"
+
+msgid "Ordo: PRESSÃO MÁXIMA!"
+msgstr "Ordo: MAXIMUM PRESSURE!"
+
+msgid "Algo caiu de um cano estourado..."
+msgstr "Something fell out of a burst pipe..."
+
+msgid "Ordo: Não... a pressão... !"
+msgstr "Ordo: No... the pressure... !"
+
+msgid "O elevador para o Mercado está livre."
+msgstr "The lift to the Market is free."
+
+msgid "A: abrir o registro"
+msgstr "A: open the valve"
+
+msgid "Porta blindada sem energia"
+msgstr "Blast door without power"
+
+msgid "Porta de segurança — S: usar cartão"
+msgstr "Security door — S: use card"
+
+msgid "Sem energia. Um painel de controle pode religá-la."
+msgstr "No power. A control panel can turn it back on."
+
+msgid "Selecione o Cartão de acesso (Q) e use com S."
+msgstr "Select the Access card (Q) and use it with S."
+
+msgid "Conselheira Ívora"
+msgstr "Councilor Ívora"
+
+msgid "Então foi você quem parou o relógio do pobre Halvard. Ele sempre foi sentimental."
+msgstr "So you're the one who stopped poor Halvard's clock. He was always sentimental."
+
+msgid "A Fornalha alimenta o Véu. Se ela apagar, a cúpula abre."
+msgstr "The Furnace feeds the Veil. If it goes out, the dome opens."
+
+msgid "Se ela apagar, Ironveil congela no escuro. Mas você não vai viver para ver. Mãe, acorde."
+msgstr "If it goes out, Ironveil freezes in the dark. But you won't live to see it. Mother, wake up."
+
+msgid "De volta ao forno, engenheira?"
+msgstr "Back to the oven, engineer?"
+
+msgid "A FORNALHA-MÃE · Conselheira Ívora"
+msgstr "THE MOTHER FURNACE · Councilor Ívora"
+
+msgid "CoreShape"
+msgstr ""
+
+msgid "Ívora: Queime-a, Mãe."
+msgstr "Ívora: Burn her, Mother."
+
+msgid "Ívora: Não! Fechem a água!"
+msgstr "Ívora: No! Shut off the water!"
+
+msgid "Ívora: Mais calor, Mãe! MAIS!"
+msgstr "Ívora: More heat, Mother! MORE!"
+
+msgid "Ívora: A Fornalha... está esfriando..."
+msgstr "Ívora: The Furnace... is cooling..."
+
+msgid "A Fornalha-Mãe apagou. O elevador para cima está livre."
+msgstr "The Mother Furnace is out. The lift up is free."
+
+msgid "A: disparar arpão"
+msgstr "A: fire harpoon"
+
+msgid "A: cortar a corrente"
+msgstr "A: cut the chain"
+
+msgid "A: acionar alavanca"
+msgstr "A: pull lever"
+
+msgid "A: subir"
+msgstr "A: go up"
+
+msgid "Subindo..."
+msgstr "Going up..."
+
+msgid "O elevador está travado pelo Martelo-de-Vapor."
+msgstr "The lift is locked by the Steam Hammer."
+
+msgid "O gancho está travado. Fale com o operador."
+msgstr "The hook is locked. Talk to the operator."
+
+msgid "Livro de válvulas"
+msgstr "Valve logbook"
+
+msgid "Caldeira Sul — noite do acidente. 23h40: válvulas 4 a 9 abertas por ordem remota. Autorização: TORRE / Conselho do Diretório."
+msgstr "South Boiler — night of the accident. 11:40 PM: valves 4 to 9 opened by remote order. Authorization: TOWER / Directorate Council."
+
+msgid "Observação a lápis: \"Culpar a manutenção. Engenheira V. de plantão.\""
+msgstr "Pencil note: \"Blame maintenance. Engineer V. on duty.\""
+
+msgid "Eles abriram as válvulas da Torre... e escolheram a mim para levar a culpa."
+msgstr "They opened the valves from the Tower... and chose me to take the blame."
+
+msgid "A: abrir o armário do arquivo"
+msgstr "A: open the archive cabinet"
+
+msgid "Livro de válvulas guardado"
+msgstr "Valve logbook secured"
+
+msgid "Operário"
+msgstr "Worker"
+
+msgid "A: conversar"
+msgstr "A: talk"
+
+msgid "Feirante"
+msgstr "Vendor"
+
+msgid "Criado da Torre"
+msgstr "Tower servant"
+
+msgid "A: conversar com %s"
+msgstr "A: talk to %s"
+
+msgid "A: religar painel"
+msgstr "A: restore panel"
+
+msgid "Energia restaurada: porta blindada aberta"
+msgstr "Power restored: blast door open"
+
+msgid "A: puxar o freio"
+msgstr "A: pull the brake"
+
+msgid "%s +%d"
+msgstr ""
+
+msgid "Diretor Maar"
+msgstr "Director Maar"
+
+msgid "A engenheira das Caldeiras. Você trouxe meu livro de válvulas até a minha porta. Que gentileza."
+msgstr "The engineer from the Boilers. You brought my valve logbook to my door. How kind."
+
+msgid "Vinte e três pessoas morreram na Caldeira Sul. Por quê?"
+msgstr "Twenty-three people died in the South Boiler. Why?"
+
+msgid "Pressão, senhorita Vael. Uma cidade é uma caldeira: de tempos em tempos é preciso aliviar. As Caldeiras estavam se organizando. Agora estão de luto — e quietas."
+msgstr "Pressure, Miss Vael. A city is a boiler: every so often it needs venting. The Boilers were organizing. Now they're in mourning — and quiet."
+
+msgid "Então eu vou abrir as válvulas desta Torre."
+msgstr "Then I'll open the valves of this Tower."
+
+msgid "O Regulador marca o tempo de Ironveil há cem anos. Hoje ele marca o seu fim."
+msgstr "The Regulator has kept Ironveil's time for a hundred years. Today it marks your end."
+
+msgid "O pêndulo nunca se atrasa, senhorita Vael."
+msgstr "The pendulum is never late, Miss Vael."
+
+msgid "O REGULADOR · Diretor Halvard Maar"
+msgstr "THE REGULATOR · Director Halvard Maar"
+
+msgid "Maar: Deem corda ao Regulador."
+msgstr "Maar: Wind up the Regulator."
+
+msgid "O Regulador soltou o pêndulo!"
+msgstr "The Regulator released the pendulum!"
+
+msgid "O freio range, mas não pega."
+msgstr "The brake creaks, but doesn't catch."
+
+msgid "Maar: O que... o pêndulo travou!"
+msgstr "Maar: What... the pendulum jammed!"
+
+msgid "Maar: Blindagem! Subam a cabine!"
+msgstr "Maar: Shields! Raise the cabin!"
+
+msgid "Maar: Autômatos, recolham a engenheira!"
+msgstr "Maar: Automatons, collect the engineer!"
+
+msgid "Maar: Acelerem o Regulador! Pressão total!"
+msgstr "Maar: Speed up the Regulator! Full pressure!"
+
+msgid "Maar: Tolinha... o relógio nunca foi meu. Pergunte ao Conselho... lá embaixo, na Fornalha..."
+msgstr "Maar: Foolish girl... the clock was never mine. Ask the Council... down below, at the Furnace..."
+
+msgid "O Regulador parou. O elevador para o alto da Torre está livre."
+msgstr "The Regulator stopped. The lift to the top of the Tower is free."
+
+msgid "Holofote: ALARME!"
+msgstr "Searchlight: ALARM!"
+
+msgid "Reforço do Diretório!"
+msgstr "Directorate reinforcements!"
+
+msgid "A: falar com Tomé"
+msgstr "A: talk to Tomé"
+
+msgid "Tomé"
+msgstr ""
+
+msgid "Sera? Pelos canos de Ironveil... dizem que foi você que explodiu a Caldeira Sul."
+msgstr "Sera? By Ironveil's pipes... they say you blew up the South Boiler."
+
+msgid "Eu estava tentando impedir. Alguém no Diretório quer a culpa nas minhas costas."
+msgstr "I was trying to stop it. Someone in the Directorate wants the blame on my back."
+
+msgid "Trinta anos neste guindaste e nunca vi engenheira sabotar a própria máquina."
+msgstr "Thirty years on this crane and I've never seen an engineer sabotage her own machine."
+
+msgid "Sobe no gancho. Eu te levo até o topo do poço — de lá, o elevador velho chega ao Mercado Suspenso."
+msgstr "Get on the hook. I'll take you to the top of the shaft — from there, the old lift reaches the Hanging Market."
+
+msgid "Obrigada, Tomé. Não vou esquecer."
+msgstr "Thank you, Tomé. I won't forget."
+
+msgid "Vai logo, antes que a ronda volte."
+msgstr "Go, before the patrol comes back."
+
+msgid "O gancho está pronto. Fica parada em cima dele que eu cuido do resto."
+msgstr "The hook is ready. Stand still on it and I'll handle the rest."
+
+msgid "O guindaste foi destravado: suba no gancho"
+msgstr "The crane is unlocked: get on the hook"
+
+msgid "A: abrir válvula"
+msgstr "A: open valve"
+
+msgid "A válvula gira em falso."
+msgstr "The valve spins loose."
+
+msgid "Conselho"
+msgstr "Council"
+
+msgid "Sera Vael. A engenheira que apagou a Fornalha."
+msgstr "Sera Vael. The engineer who put out the Furnace."
+
+msgid "Sem pressão, o Véu não fica de pé. Vocês acabaram, todos vocês."
+msgstr "Without pressure, the Veil can't stand. You're finished, all of you."
+
+msgid "Lá fora não há nada para essa gente. Por isso tecemos o Véu: para que nunca precisem saber."
+msgstr "There is nothing out there for these people. That's why we wove the Veil: so they never have to know."
+
+msgid "Então que eles vejam com os próprios olhos."
+msgstr "Then let them see with their own eyes."
+
+msgid "Tecelão. Feche o céu."
+msgstr "Weaver. Close the sky."
+
+msgid "O Véu sempre se fecha de novo."
+msgstr "The Veil always closes again."
+
+msgid "O TECELÃO · O Conselho das Válvulas"
+msgstr "THE WEAVER · The Valve Council"
+
+msgid "Conselho: As placas! Segurem o Véu!"
+msgstr "Council: The plates! Hold the Veil!"
+
+msgid "Conselho: O céu... está entrando..."
+msgstr "Council: The sky... it's getting in..."
+
+msgid "Conselho: Não... a luz..."
+msgstr "Council: No... the light..."
+
+msgid "O Véu está se abrindo. O elevador para o topo está livre."
+msgstr "The Veil is opening. The lift to the top is free."
+
+msgid "Level"
+msgstr ""
+
+msgid "Blood"
+msgstr ""
+
+msgid "Plataforma do Elevador"
+msgstr "Lift Platform"
+
+msgid "Checkpoint salvo"
+msgstr "Checkpoint saved"
+
+msgid "Sera caiu..."
+msgstr "Sera fell..."
+
+msgid "%d,%d"
+msgstr ""
+
+msgid "Solids"
+msgstr ""
+
+msgid "OneWay"
+msgstr ""
+
+msgid "ScreenWalls"
+msgstr ""
+
+msgid "A: subir pelo poço"
+msgstr "A: ride up the shaft"
+
+msgid "Fase 1 — Caldeira Norte"
+msgstr "Stage 1 — North Boiler"
+
+msgid "A: subir para a Sala das Bombas"
+msgstr "A: go up to the Pump Room"
+
+msgid "Dora"
+msgstr ""
+
+msgid "Sera? Graças... Os guardas estão revirando as Caldeiras atrás de você."
+msgstr "Sera? Thank goodness... The guards are turning the Boilers upside down looking for you."
+
+msgid "Vai pela esquerda e pela direita com [move_left] e [move_right]. Se precisar fugir rápido, [run] alterna entre trotar e correr."
+msgstr "Move left and right with [move_left] and [move_right]. If you need to get away fast, [run] switches between jogging and running."
+
+msgid "Bento"
+msgstr ""
+
+msgid "Aquela parede? Pula com [jump] e agarra na beirada. Daí é só [move_up] ou [jump] de novo pra subir."
+msgstr "That wall? Jump with [jump] and grab the ledge. Then just [move_up] or [jump] again to climb."
+
+msgid "Correndo você pula bem mais longe."
+msgstr "You jump much farther when running."
+
+msgid "Velho Ilo"
+msgstr "Old Ilo"
+
+msgid "Esse túnel é baixo, menina. Agacha com [move_down] e vai de joelhos."
+msgstr "This tunnel is low, girl. Crouch with [move_down] and go on your knees."
+
+msgid "E pra descer de uma beirada sem quebrar a perna: agacha na ponta e aperta [jump]."
+msgstr "And to climb down a ledge without breaking a leg: crouch at the edge and press [jump]."
+
+msgid "Nina"
+msgstr ""
+
+msgid "Tá vendo a válvula? Gira com [interact] e o vapor sai pelos bocais. Queima guarda que é uma beleza."
+msgstr "See the valve? Turn it with [interact] and steam blasts out of the nozzles. Scalds guards beautifully."
+
+msgid "Só não fica embaixo, que queima você também."
+msgstr "Just don't stand under it, it'll burn you too."
+
+msgid "Caio"
+msgstr ""
+
+msgid "Essas reentrâncias na parede salvaram muito operário. Encosta com [move_up] e bala nenhuma te pega."
+msgstr "These alcoves in the wall have saved many workers. Press into one with [move_up] and no bullet will touch you."
+
+msgid "Os guardas desistem de atirar e ficam esperando você sair."
+msgstr "The guards stop shooting and wait for you to come out."
+
+msgid "Ainda tem o lança-rebites? [shoot] dispara."
+msgstr "Still got your rivet gun? [shoot] fires it."
+
+msgid "E se o tiro vier na sua direção, rola com [roll]. Rolando, nada te acerta."
+msgstr "And if shots come your way, roll with [roll]. While rolling, nothing hits you."
+
+msgid "Essa grade não abre na mão. Pega a carga de vapor ali, troca a ferramenta com [swap_tool] e joga com [use_tool]."
+msgstr "That grate won't open by hand. Grab the steam charge over there, switch tools with [swap_tool] and throw it with [use_tool]."
+
+msgid "Conta dois segundos e sai de perto!"
+msgstr "Count two seconds and get away from it!"
+
+msgid "Fase 2 — Sala das Bombas"
+msgstr "Stage 2 — Pump Room"
+
+msgid "A: subir para o Poço do Guindaste"
+msgstr "A: go up to the Crane Shaft"
+
+msgid "Marta"
+msgstr ""
+
+msgid "Aquela grade pendurada fica presa por uma caixa de força. Um rebite nela e... cabum, cai em quem estiver embaixo."
+msgstr "That hanging grate is held by a power box. One rivet in it and... boom, it drops on whoever's below."
+
+msgid "A alavanca chama o elevador de carga. É só puxar."
+msgstr "The lever calls the cargo lift. Just pull it."
+
+msgid "Teo"
+msgstr ""
+
+msgid "O painel ali religa a porta blindada."
+msgstr "That panel powers the blast door back on."
+
+msgid "E cuidado com os drones. Os que voam baixo você desvia agachada, ou derruba a rebite."
+msgstr "And watch out for the drones. Duck under the low ones, or knock them down with rivets."
+
+msgid "Tá vendo o anel amarelo lá em cima? Segura [move_up] e aperta [shoot] perto dele: o rebite de escalada crava ali e você se pendura."
+msgstr "See the yellow ring up there? Hold [move_up] and press [shoot] near it: the climbing rivet sticks there and you can hang from it."
+
+msgid "Porta de segurança só abre com cartão. Se você achou um, escolhe com [swap_tool] e usa com [use_tool]."
+msgstr "Security doors only open with a card. If you found one, pick it with [swap_tool] and use it with [use_tool]."
+
+msgid "Fase 3 — Poço do Guindaste"
+msgstr "Stage 3 — Crane Shaft"
+
+msgid "A: subir rumo ao Mercado Suspenso"
+msgstr "A: go up toward the Hanging Market"
+
+msgid "Encostada na parede você some pra eles. Espera o guarda desistir e passa."
+msgstr "Pressed against the wall, you vanish to them. Wait for the guard to give up and slip past."
+
+msgid "Os bocais do teto soltam vapor pra baixo. Espera o guarda passar embaixo e abre a válvula."
+msgstr "The ceiling nozzles blast steam downward. Wait for the guard to walk under them and open the valve."
+
+msgid "O Tomé opera o guindaste do poço. Fala com ele, que ele te ajuda a subir."
+msgstr "Tomé runs the shaft crane. Talk to him and he'll help you up."
+
+msgid "Fase 4 — Docas de Carga"
+msgstr "Stage 4 — Cargo Docks"
+
+msgid "A: subir para o Bazar das Correntes"
+msgstr "A: go up to the Chain Bazaar"
+
+msgid "Mãe Zélia"
+msgstr "Mother Zélia"
+
+msgid "Bem-vinda ao Mercado Suspenso, filha. Olha onde pisa: embaixo das plataformas é só o abismo."
+msgstr "Welcome to the Hanging Market, dear. Watch your step: below the platforms there's only the abyss."
+
+msgid "Rui"
+msgstr ""
+
+msgid "Essas tábuas tão podres. Rangeu, corre! Elas despencam logo depois que você pisa."
+msgstr "These planks are rotten. If it creaks, run! They give way right after you step on them."
+
+msgid "A gente atravessa pelo cabo. Sobe nas caixas e pula contra ele que o gancho prende."
+msgstr "We cross on the cable. Climb the crates and jump at it, the hook will catch."
+
+msgid "Quer soltar antes do fim? [jump] ou [move_down]."
+msgstr "Want to let go before the end? [jump] or [move_down]."
+
+msgid "Tito"
+msgstr ""
+
+msgid "Não deixa a luz te pegar, moça! Se pegar, toca o alarme e desce mais guarda."
+msgstr "Don't let the light catch you, miss! If it does, the alarm goes off and more guards come down."
+
+msgid "Encostada na parede a luz não te vê. E a lâmpada quebra com um rebite... por trás é mais fácil."
+msgstr "In cover, the light can't see you. And the lamp breaks with a rivet... easier from behind."
+
+msgid "Aqui também tem aqueles nichos nas paredes. Encosta neles quando começar o tiroteio."
+msgstr "There are wall alcoves here too. Get into one when the shooting starts."
+
+msgid "Graça"
+msgstr ""
+
+msgid "Aquele ali tem escudo. De frente não adianta atirar."
+msgstr "That one has a shield. No point shooting him from the front."
+
+msgid "Espera ele virar as costas... ou manda uma carga de vapor."
+msgstr "Wait for him to turn his back... or send a steam charge."
+
+msgid "Fase 5 — Bazar das Correntes"
+msgstr "Stage 5 — Chain Bazaar"
+
+msgid "A: subir aos telhados do Diretório"
+msgstr "A: go up to the Directorate rooftops"
+
+msgid "Quer passar pelos guardas? Anda no meio do povo, devagar, sem correr nem atirar. Ninguém repara em mais uma."
+msgstr "Want to get past the guards? Walk through the crowd, slowly, no running or shooting. Nobody notices one more face."
+
+msgid "Os guardas não atiram se tiver gente na frente. Pelo menos isso."
+msgstr "The guards won't shoot if there are people in the way. At least there's that."
+
+msgid "A de capuz ali na barraca é a Lira. Contrabandista. Se alguém sabe um atalho, é ela."
+msgstr "The hooded one at the stall is Lira. A smuggler. If anyone knows a shortcut, it's her."
+
+msgid "Sobe pelas caixas, agarra na sacada e pega o cabo até o elevador. É o jeito."
+msgstr "Climb the crates, grab the balcony and ride the cable to the lift. That's the way."
+
+msgid "Fase 6 — Telhados do Diretório"
+msgstr "Stage 6 — Directorate Rooftops"
+
+msgid "A: entrar no arquivo da Torre"
+msgstr "A: enter the Tower archive"
+
+msgid "Telhado do Arquivo"
+msgstr "Archive Roof"
+
+msgid "Varredor"
+msgstr "Sweeper"
+
+msgid "Telhados do Diretório. Ninguém sobe aqui sem ser chamado."
+msgstr "Directorate rooftops. Nobody comes up here unless summoned."
+
+msgid "As chaminés têm nicho, dá pra se encostar."
+msgstr "The chimneys have alcoves, you can take cover in them."
+
+msgid "Esses vãos são largos. Liga a corrida com [run] e pula com tudo."
+msgstr "These gaps are wide. Turn on running with [run] and jump with everything you've got."
+
+msgid "Escrivã"
+msgstr "Clerk"
+
+msgid "Você é a engenheira? O livro de válvulas da Caldeira Sul está naquele armário. Eu nunca te disse isso."
+msgstr "You're the engineer? The South Boiler valve logbook is in that cabinet. I never told you that."
+
+msgid "O muro é alto. Tem um anel de escalada lá em cima: [move_up] com [shoot] embaixo dele."
+msgstr "The wall is high. There's a climbing ring up there: [move_up] with [shoot] below it."
+
+msgid "Fase 7 — Átrio de Bronze"
+msgstr "Stage 7 — Bronze Atrium"
+
+msgid "A: subir para a Engrenagem Mestra"
+msgstr "A: go up to the Master Gear"
+
+msgid "Lúcia"
+msgstr ""
+
+msgid "Você... veio das Caldeiras? Aqui é o Átrio de Bronze. Daqui pra cima é só latão, pedra e vigilância."
+msgstr "You... came from the Boilers? This is the Bronze Atrium. From here up it's all brass, stone and surveillance."
+
+msgid "A grade só deixa uma frestinha embaixo. Rola por ela com [roll]."
+msgstr "The grate only leaves a small gap at the bottom. Roll under it with [roll]."
+
+msgid "Edmundo"
+msgstr ""
+
+msgid "Cuidado com a sentinela. Quando a luz vermelha te achar, ela dispara uma rajada."
+msgstr "Careful with the sentry. When the red light finds you, it fires a burst."
+
+msgid "Dizem que a carcaça é fina... alguns rebites resolvem."
+msgstr "They say the casing is thin... a few rivets will do."
+
+msgid "Os pistões batem no compasso do relógio. A luz vermelha pisca antes. Embaixo deles, nada te salva."
+msgstr "The pistons strike to the clock's beat. The red light blinks first. Under them, nothing can save you."
+
+msgid "Ferraz"
+msgstr ""
+
+msgid "Os autômatos são blindados na frente. Mas toda máquina de corda tem uma chave em algum lugar..."
+msgstr "The automatons are armored in front. But every wind-up machine has a key somewhere..."
+
+msgid "As plataformas vão e voltam sozinhas. Embaixo é o poço de vapor: se cair, sobe rápido."
+msgstr "The platforms move back and forth on their own. Below is the steam pit: if you fall, climb out fast."
+
+msgid "O elevador de serviço sobe até a Engrenagem Mestra."
+msgstr "The service lift goes up to the Master Gear."
+
+msgid "Fase 8 — Engrenagem Mestra"
+msgstr "Stage 8 — Master Gear"
+
+msgid "A: subir ao Gabinete do Diretor"
+msgstr "A: go up to the Director's Office"
+
+msgid "Trinta anos dando corda nesse relógio... A Engrenagem Mestra é a parte mais vigiada. Usa os nichos."
+msgstr "Thirty years winding this clock... The Master Gear is the most guarded part. Use the alcoves."
+
+msgid "Tem um autômato no corredor de baixo. Quando ele vem em disparada, ele não para nem vira..."
+msgstr "There's an automaton in the lower corridor. When it charges, it doesn't stop or turn..."
+
+msgid "Essa plataforma sobe pro corredor de cima."
+msgstr "This platform rises to the upper corridor."
+
+msgid "O elevador do fundo sobe direto pro Gabinete do Diretor. Que o relógio esteja do seu lado."
+msgstr "The lift at the back goes straight up to the Director's Office. May the clock be on your side."
+
+msgid "Fase 9 — Gabinete do Diretor"
+msgstr "Stage 9 — Director's Office"
+
+msgid "A: subir ao alto da Torre"
+msgstr "A: go up to the top of the Tower"
+
+msgid "O Regulador"
+msgstr "The Regulator"
+
+msgid "O Diretor está logo ali. Pega tudo o que puder antes de entrar. Lá dentro, o relógio não para."
+msgstr "The Director is right there. Take everything you can before going in. Inside, the clock never stops."
+
+msgid "Fase 10 — Poço de Escória"
+msgstr "Stage 10 — Slag Shaft"
+
+msgid "A: descer aos Cadinhos"
+msgstr "A: go down to the Crucibles"
+
+msgid "Sera?! Achei que tinha morrido lá na Torre. Bem-vinda às Fundições: aqui embaixo é que se faz a pressão da cidade."
+msgstr "Sera?! I thought you'd died up in the Tower. Welcome to the Foundries: down here is where the city's pressure is made."
+
+msgid "Olho nas esteiras. Elas arrastam tudo para o ferro fundido. Ferro fundido não perdoa — nem rolando, nem com couraça."
+msgstr "Watch the conveyor belts. They drag everything into the molten iron. Molten iron doesn't forgive — not rolling, not with armor."
+
+msgid "Fundidor"
+msgstr "Smelter"
+
+msgid "Esse poço desce até os cadinhos — os caldeirões gigantes onde o ferro é derretido. Desça devagar, de parapeito em parapeito."
+msgstr "This shaft goes down to the crucibles — the giant cauldrons where the iron is melted. Go down slowly, ledge by ledge."
+
+msgid "Essa poça é larga demais para pular. Mas a água fria faz casca no ferro..."
+msgstr "This pool is too wide to jump. But cold water makes a crust on the iron..."
+
+msgid "O registro abre o bico lá em cima. A casca dura pouco: atravessa rápido."
+msgstr "The valve opens the nozzle up there. The crust doesn't last: cross quickly."
+
+msgid "Fundidora"
+msgstr "Smelter"
+
+msgid "Cuidado com o autômato ali. Eles não sentem calor."
+msgstr "Careful with that automaton. They don't feel the heat."
+
+msgid "Fase 11 — Cadinhos"
+msgstr "Stage 11 — Crucibles"
+
+msgid "A: descer ao Coração da Montanha"
+msgstr "A: go down to the Heart of the Mountain"
+
+msgid "Os martelos-pilão batem no ritmo dos cadinhos. E a esteira anda contra você: corre ([run]) se quiser chegar."
+msgstr "The drop hammers pound to the rhythm of the crucibles. And the belt runs against you: run ([run]) if you want to get there."
+
+msgid "Esse rio de ferro atravessa a galeria inteira. O registro ali molha tudo de uma vez — mas a casca não espera ninguém."
+msgstr "This river of iron crosses the whole gallery. That valve soaks it all at once — but the crust waits for no one."
+
+msgid "Lá embaixo fica o Coração da Montanha. Ninguém que desceu até a Fornalha-Mãe voltou para contar."
+msgstr "Down there is the Heart of the Mountain. No one who went down to the Mother Furnace came back to tell."
+
+msgid "Fase 12 — Coração da Montanha"
+msgstr "Stage 12 — Heart of the Mountain"
+
+msgid "A: subir de volta à luz"
+msgstr "A: go back up to the light"
+
+msgid "A Fornalha-Mãe"
+msgstr "The Mother Furnace"
+
+msgid "Engenheira! Eu sabia que você ia descer atrás da Fornalha. Trouxe o que deu pra contrabandear."
+msgstr "Engineer! I knew you'd come down after the Furnace. I brought what I could smuggle."
+
+msgid "Lá dentro, o calor da Mãe derrete tudo. Já viu ferro quente levar um banho de água fria?"
+msgstr "Inside, the Mother's heat melts everything. Ever seen hot iron get a cold shower?"
+
+msgid "Fase 13 — Passarelas do Véu"
+msgstr "Stage 13 — Veil Catwalks"
+
+msgid "A: seguir para a Doca da Frota"
+msgstr "A: head for the Fleet Dock"
+
+msgid "Vigia"
+msgstr "Lookout"
+
+msgid "Você subiu pelo Véu?! Daqui de cima dá pra ver a cidade inteira... e nada do céu."
+msgstr "You climbed the Veil?! From up here you can see the whole city... and none of the sky."
+
+msgid "O vento aqui não avisa duas vezes. Quando ouvir o assobio, agacha ([move_down]) e segura firme."
+msgstr "The wind up here doesn't warn twice. When you hear the whistle, crouch ([move_down]) and hold on."
+
+msgid "O cabo atravessa até a outra passarela. Com rajada, o salto fica curto ou longo demais: escolha a hora."
+msgstr "The cable crosses to the other catwalk. With a gust, your jump falls short or overshoots: pick your moment."
+
+msgid "Depois desse posto fica a doca da frota do Conselho."
+msgstr "Past this post is the Council's fleet dock."
+
+msgid "Fase 14 — Doca da Frota"
+msgstr "Stage 14 — Fleet Dock"
+
+msgid "A: subir à Coroa"
+msgstr "A: go up to the Crown"
+
+msgid "Os dirigíveis do Conselho atracam aqui para trocar as placas do Véu. As esteiras levam a carga até as prensas."
+msgstr "The Council's airships dock here to swap the Veil's plates. The belts carry cargo to the presses."
+
+msgid "Estivador"
+msgstr "Dockhand"
+
+msgid "A plataforma de carga atravessa o vão sozinha. Com vento, segura firme lá em cima."
+msgstr "The cargo platform crosses the gap on its own. With the wind, hold on tight up there."
+
+msgid "O elevador do fundo sobe até a Coroa, onde o Tecelão costura o Véu. É lá que o Conselho se esconde."
+msgstr "The lift at the back goes up to the Crown, where the Weaver stitches the Veil. That's where the Council hides."
+
+msgid "Fase 15 — A Coroa"
+msgstr "Stage 15 — The Crown"
+
+msgid "A: subir ao topo do Véu"
+msgstr "A: go up to the top of the Veil"
+
+msgid "O Tecelão"
+msgstr "The Weaver"
+
+msgid "Chegamos até aqui, menina. Toda Ironveil está olhando para cima esperando."
+msgstr "We made it this far, girl. All of Ironveil is looking up, waiting."
+
+msgid "Sem a Fornalha, o Véu está frouxo. O Tecelão é a última coisa segurando o céu fechado."
+msgstr "Without the Furnace, the Veil is loose. The Weaver is the last thing holding the sky shut."
+
+msgid "Correndo"
+msgstr "Running"
+
+msgid "Trotando"
+msgstr "Jogging"
+
+msgid "A:"
+msgstr ""
+
+msgid "%s: encostar"
+msgstr "%s: take cover"
+
+msgid "Misturada na multidão"
+msgstr "Blending into the crowd"
+
+msgid "Z: soltar"
+msgstr "Z: let go"
+
+msgid "↑: subir · ↓: soltar"
+msgstr "↑: climb · ↓: let go"
+
+msgid "↓ / ← →: sair"
+msgstr "↓ / ← →: leave"
+
+msgid "Nenhuma ferramenta no inventário"
+msgstr "No tools in the inventory"
+
+msgid "A vida já está cheia"
+msgstr "Health is already full"
+
+msgid "Selante aplicado: +2 de vida"
+msgstr "Sealant applied: +2 health"
+
+msgid "Nenhuma porta de segurança por perto"
+msgstr "No security door nearby"
+
+msgid "Cartão de acesso usado"
+msgstr "Access card used"
+
+msgid "A couraça segurou o golpe"
+msgstr "The plate absorbed the hit"
+
+msgid "▼ A / Z"
+msgstr ""
+
+msgid "Ato 1 concluído"
+msgstr "Act 1 complete"
+
+msgid "Do alto do poço, Sera vê pela primeira vez o Mercado Suspenso: uma cidade inteira\npendurada por correntes sob a abóbada da montanha. Os guardas do Diretório não vão parar — mas Sera também não."
+msgstr "From the top of the shaft, Sera sees the Hanging Market for the first time: a whole city\nhanging by chains under the mountain's dome. The Directorate's guards won't stop — but neither will Sera."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 2"
+msgstr "Stages completed: %d/%d  ·  Progress saved\nZ / Enter: continue to Act 2"
+
+msgid "Ato 5 concluído — Fim"
+msgstr "Act 5 complete — The End"
+
+msgid "O Tecelão caiu e o Véu de Ferro se abre, placa por placa. Pela primeira vez, Ironveil vê o céu.\nDo alto da cúpula, Sera lê o livro de válvulas para a cidade inteira:\nninguém mais vai decidir quem respira e quem carrega a pressão."
+msgstr "The Weaver has fallen and the Iron Veil opens, plate by plate. For the first time, Ironveil sees the sky.\nFrom the top of the dome, Sera reads the valve logbook to the whole city:\nno one will ever again decide who breathes and who carries the pressure."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo  ·  Obrigado por jogar IRONVEIL\nZ / Enter: abrir o mapa (repita qualquer fase)"
+msgstr "Stages completed: %d/%d  ·  Progress saved  ·  Thanks for playing IRONVEIL\nZ / Enter: open the map (replay any stage)"
+
+msgid "Ato 4 concluído"
+msgstr "Act 4 complete"
+
+msgid "A Fornalha-Mãe esfriou. Pela primeira vez em cem anos, as Caldeiras silenciam.\nLá no alto, sem pressão, as placas do Véu rangem e começam a ceder.\nO Conselho ainda está lá em cima, dentro do Tecelão."
+msgstr "The Mother Furnace has cooled. For the first time in a hundred years, the Boilers fall silent.\nHigh above, without pressure, the Veil's plates creak and begin to give way.\nThe Council is still up there, inside the Weaver."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 5"
+msgstr "Stages completed: %d/%d  ·  Progress saved\nZ / Enter: continue to Act 5"
+
+msgid "Ato 3 concluído"
+msgstr "Act 3 complete"
+
+msgid "O Regulador parou. Antes de morrer, Maar riu: o relógio nunca foi dele.\nQuem mantém Ironveil fechada sob o Véu de Ferro é o Conselho das Válvulas —\ne a pressão que segura o Véu vem da Fornalha-Mãe, lá embaixo. Para chegar ao céu, é preciso descer."
+msgstr "The Regulator has stopped. Before dying, Maar laughed: the clock was never his.\nThe ones keeping Ironveil sealed under the Iron Veil are the Valve Council —\nand the pressure that holds the Veil up comes from the Mother Furnace, far below. To reach the sky, you must go down."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 4"
+msgstr "Stages completed: %d/%d  ·  Progress saved\nZ / Enter: continue to Act 4"
+
+msgid "Ato 2 concluído"
+msgstr "Act 2 complete"
+
+msgid "O livro de válvulas prova: a ordem que explodiu a Caldeira Sul saiu da Torre do Diretório.\nLá em cima, alguém já sabe que Sera tem o livro."
+msgstr "The valve logbook proves it: the order that blew up the South Boiler came from the Directorate Tower.\nUp there, someone already knows Sera has the logbook."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 3"
+msgstr "Stages completed: %d/%d  ·  Progress saved\nZ / Enter: continue to Act 3"
+
+msgid "NOVO: %s"
+msgstr "NEW: %s"
+
+msgid "VIDA"
+msgstr "HEALTH"
+
+msgid "CORRENDO"
+msgstr "RUNNING"
+
+msgid "x%d   %s trocar · %s usar"
+msgstr "x%d   %s swap · %s use"
+
+msgid "— sem ferramenta —"
+msgstr "— no tool —"
+
+msgid "Ironveil. Uma cidade vertical, lacrada dentro da montanha há duzentos anos."
+msgstr "Ironveil. A vertical city, sealed inside the mountain for two hundred years."
+
+msgid "No alto, o Mercado Suspenso vive na luz. Lá embaixo, as Caldeiras mantêm a cidade respirando."
+msgstr "Up high, the Hanging Market lives in the light. Down below, the Boilers keep the city breathing."
+
+msgid "Até a noite em que a Caldeira Sul explodiu."
+msgstr "Until the night the South Boiler exploded."
+
+msgid "O Diretório precisava de um culpado. Escolheu a engenheira-chefe de manutenção: Sera Vael."
+msgstr "The Directorate needed someone to blame. It chose the chief maintenance engineer: Sera Vael."
+
+msgid "Não há tempo para provar a inocência. Só para correr."
+msgstr "There's no time to prove her innocence. Only to run."
+
+msgid "A única saída é subir."
+msgstr "The only way out is up."
+
+msgid "Pular ▶▶"
+msgstr "Skip ▶▶"
+
+msgid "Esc / Start: pular · Z / A: avançar"
+msgstr "Esc / Start: skip · Z / A: next"
+
+msgid "MERCADO SUSPENSO"
+msgstr "HANGING MARKET"
+
+msgid "AS CALDEIRAS"
+msgstr "THE BOILERS"
+
+msgid "PROCURADA"
+msgstr "WANTED"
+
+msgid "SERA VAEL"
+msgstr ""
+
+msgid "Sabotagem da Caldeira Sul"
+msgstr "Sabotage of the South Boiler"
+
+msgid "Ordem do Diretório de Ironveil"
+msgstr "By order of the Ironveil Directorate"
+
+msgid "CULPADA"
+msgstr "GUILTY"
+
+msgid "IRONVEIL"
+msgstr ""
+
+msgid "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
+msgstr "Boilers · Hanging Market · Tower · Foundries · Iron Veil"
+
+msgid "Novo jogo"
+msgstr "New game"
+
+msgid "Continuar"
+msgstr "Continue"
+
+msgid "Mapa de fases"
+msgstr "Stage map"
+
+msgid "Introdução"
+msgstr "Intro"
+
+msgid "Configurações"
+msgstr "Settings"
+
+msgid "Sair"
+msgstr "Quit"
+
+msgid "Continuar — %s"
+msgstr "Continue — %s"
+
+msgid "%s Ato %d: %d/3 fases"
+msgstr "%s Act %d: %d/3 stages"
+
+msgid "[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"
+msgstr "[move_left] [move_right]: move · [jump]: jump · [shoot]: shoot · [roll]: roll · [run]: jog/run\n[move_up] at the wall: take cover · [interact]: interact · [use_tool]: use tool · [swap_tool]: swap · [pause]: pause · F11: fullscreen"
+
+msgid "Escolha o idioma  ·  Choose your language"
+msgstr ""
+
+msgid "Gore:"
+msgstr "Gore:"
+
+msgid "Ligado"
+msgstr "On"
+
+msgid "Desligado"
+msgstr "Off"
+
+msgid "Efeitos:"
+msgstr "Effects:"
+
+msgid "Ligados"
+msgstr "On"
+
+msgid "Desligados"
+msgstr "Off"
+
+msgid "PAUSA"
+msgstr "PAUSED"
+
+msgid "Reiniciar fase"
+msgstr "Restart stage"
+
+msgid "Menu principal"
+msgstr "Main menu"
+
+msgid "O apito da Caldeira Sul ainda ecoa. Os guardas já procuram pela engenheira."
+msgstr "The South Boiler's whistle still echoes. The guards are already hunting the engineer."
+
+msgid "As bombas que mantêm Ironveil respirando — e uma saída pelo elevador de carga."
+msgstr "The pumps that keep Ironveil breathing — and a way out through the cargo lift."
+
+msgid "Tomé guarda o guindaste. Lá no alto, algo enorme se move."
+msgstr "Tomé keeps the crane. High above, something enormous is moving."
+
+msgid "O Mercado Suspenso: madeira podre, correntes e um abismo que não devolve ninguém."
+msgstr "The Hanging Market: rotten wood, chains, and an abyss that gives no one back."
+
+msgid "Na multidão, um rosto a mais não chama atenção. Um tiro chama."
+msgstr "In a crowd, one more face draws no attention. A gunshot does."
+
+msgid "Os arquivos do Diretório ficam nos telhados. Algo ronda no céu."
+msgstr "The Directorate's archives are on the rooftops. Something prowls the sky."
+
+msgid "A Torre. Latão polido, pedra fria — e olhos por toda parte."
+msgstr "The Tower. Polished brass, cold stone — and eyes everywhere."
+
+msgid "O coração do relógio. Cada engrenagem aqui trabalha para o Diretor."
+msgstr "The heart of the clock. Every gear here works for the Director."
+
+msgid "No alto, o Regulador marca o tempo da cidade. E Halvard Maar espera."
+msgstr "At the top, the Regulator keeps the city's time. And Halvard Maar waits."
+
+msgid "Abaixo das Caldeiras, onde a montanha ainda queima. Tomé conhece o caminho."
+msgstr "Beneath the Boilers, where the mountain still burns. Tomé knows the way."
+
+msgid "Cadinhos do tamanho de casas. Quem trabalha aqui nunca viu a luz do dia."
+msgstr "Crucibles the size of houses. Those who work here have never seen daylight."
+
+msgid "A Fornalha-Mãe empurra a pressão que segura o Véu. Ela nunca parou."
+msgstr "The Mother Furnace pushes the pressure that holds up the Veil. It has never stopped."
+
+msgid "Sobre a cúpula, o vento uiva entre as placas. Do outro lado do ferro, o céu."
+msgstr "Atop the dome, the wind howls between the plates. On the other side of the iron, the sky."
+
+msgid "A frota do Conselho troca as placas do Véu toda noite."
+msgstr "The Council's fleet replaces the Veil's plates every night."
+
+msgid "A Coroa. O Tecelão costura o céu fechado — e o Conselho assiste."
+msgstr "The Crown. The Weaver stitches the sky shut — and the Council watches."
+
+msgid "Aperte qualquer tecla para começar"
+msgstr "Press any key to begin"
+
+msgid "Martelo-de-Vapor"
+msgstr "Steam Hammer"
+
+msgid "Dirigível Vigília"
+msgstr "Airship Vigil"
+
+msgid "Tutorial nas caldeiras: bordas, reentrâncias, válvulas e a primeira carga de vapor."
+msgstr "Boiler tutorial: ledges, alcoves, valves and the first steam charge."
+
+msgid "Elevador de carga, caixa de força, painel, cartão de acesso e rebite de escalada."
+msgstr "Cargo lift, power box, panel, access card and climbing rivet."
+
+msgid "Tomé e o guindaste. No alto do poço espera o Martelo-de-Vapor."
+msgstr "Tomé and the crane. At the top of the shaft, the Steam Hammer waits."
+
+msgid "Chegada ao Mercado pelas docas: tábuas podres sobre o abismo, tirolesas e o primeiro holofote."
+msgstr "Arriving at the Market through the docks: rotten planks over the abyss, ziplines and the first searchlight."
+
+msgid "Multidão, holofotes e guardas com escudo. Lira, a contrabandista, conhece um atalho."
+msgstr "Crowds, searchlights and shield guards. Lira the smuggler knows a shortcut."
+
+msgid "Pelos telhados até o livro de válvulas. No céu, o dirigível Vigília caça Sera."
+msgstr "Over the rooftops to the valve logbook. In the sky, the airship Vigil hunts Sera."
+
+msgid "A base da Torre: torretas-sentinela, pistões esmagadores e o primeiro autômato. Hora de aprender a rolar."
+msgstr "The base of the Tower: sentry turrets, crushing pistons and the first automaton. Time to learn to roll."
+
+msgid "O coração do relógio: plataformas de engrenagem, guardas, torretas e pistões trabalhando juntos."
+msgstr "The heart of the clock: gear platforms, guards, turrets and pistons working together."
+
+msgid "O Diretor Halvard Maar espera no alto, no comando do Regulador e seu pêndulo."
+msgstr "Director Halvard Maar waits at the top, commanding the Regulator and its pendulum."
+
+msgid "Abaixo das Caldeiras: esteiras que arrastam para o ferro fundido e um poço para descer."
+msgstr "Beneath the Boilers: belts that drag you into molten iron, and a shaft to descend."
+
+msgid "Martelos-pilão, rios de ferro e registros de água que endurecem a superfície por alguns segundos."
+msgstr "Drop hammers, rivers of iron and water valves that harden the surface for a few seconds."
+
+msgid "A Fornalha-Mãe, o golem que gera a pressão do Véu, e a Conselheira Ívora."
+msgstr "The Mother Furnace, the golem that powers the Veil, and Councilor Ívora."
+
+msgid "Sobre a cúpula: vento em rajadas, tábuas soltas e uma tirolesa sobre o vazio."
+msgstr "Atop the dome: gusting wind, loose planks and a zipline over the void."
+
+msgid "A doca onde a frota do Conselho troca as placas: esteiras, prensas e uma plataforma de carga."
+msgstr "The dock where the Council's fleet swaps plates: belts, presses and a cargo platform."
+
+msgid "A Coroa do Véu. O Tecelão e o Conselho das Válvulas — o fim da história."
+msgstr "The Crown of the Veil. The Weaver and the Valve Council — the end of the story."
+
+msgid "MAPA DE IRONVEIL"
+msgstr "MAP OF IRONVEIL"
+
+msgid "✓ Concluída"
+msgstr "✓ Completed"
+
+msgid "● Checkpoint aqui"
+msgstr "● Checkpoint here"
+
+msgid "Liberada"
+msgstr "Unlocked"
+
+msgid "Bloqueada"
+msgstr "Locked"
+
+msgid "%d. %s"
+msgstr ""
+
+msgid "Chefão: %s."
+msgstr "Boss: %s."
+
+msgid "Sera segue para a próxima fase..."
+msgstr "Sera heads to the next stage..."
+
+msgid "Conclua a fase anterior para liberar."
+msgstr "Complete the previous stage to unlock."
+
+msgid "Z / A / Enter: repetir a fase\n(o checkpoint salvo não muda)"
+msgstr "Z / A / Enter: replay the stage\n(your saved checkpoint stays the same)"
+
+msgid "Z / A / Enter: continuar do checkpoint"
+msgstr "Z / A / Enter: continue from checkpoint"
+
+msgid "Z / A / Enter: começar a fase"
+msgstr "Z / A / Enter: start the stage"
+
+msgid "←/→ ou ↑/↓: escolher fase · Esc: menu"
+msgstr "←/→ or ↑/↓: choose stage · Esc: menu"
+
+msgid "Z / Enter: seguir"
+msgstr "Z / Enter: continue"
+
+msgid "Próxima fase: %s"
+msgstr "Next stage: %s"
+
+msgid "ATO 5 — O VÉU DE FERRO"
+msgstr "ACT 5 — THE IRON VEIL"
+
+msgid "ATO 2 — O MERCADO SUSPENSO"
+msgstr "ACT 2 — THE HANGING MARKET"
+
+msgid "ATO 3 — A TORRE"
+msgstr "ACT 3 — THE TOWER"
+
+msgid "ATO 1 — AS CALDEIRAS"
+msgstr "ACT 1 — THE BOILERS"
+
+msgid "ATO 4 — AS FUNDIÇÕES"
+msgstr "ACT 4 — THE FOUNDRIES"
+
+msgid "Fases concluídas: %d/%d"
+msgstr "Stages completed: %d/%d"
+
+msgid "Atos"
+msgstr "Acts"
+
+msgid "Sangue que voa, mancha o cenário, gruda nas pessoas e espirra na tela. Desligado, vira faíscas e destroços."
+msgstr "Blood that flies, stains the scenery, sticks to people and splashes the screen. When off, it becomes sparks and debris."
+
+msgid "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado ao entardecer, Torre fria), brilho em volta das luzes, cantos escurecidos, grão de filme e a imagem separando em cores ao levar dano. Desligado: imagem limpa e um pouco mais leve para o computador. As luzes do cenário e a borda de vida continuam."
+msgstr "Post-processing: each act's own color grade (warm Boilers, dusky Market, cold Tower), glow around lights, darkened corners, film grain and color splitting when you take damage. Off: a clean image, a bit lighter on your computer. Scene lights and the health border stay on."
+
+msgid "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento."
+msgstr "Toggle between window and fullscreen. Shortcut: F11 at any time."
+
+msgid "Idioma dos textos do jogo. Muda na hora."
+msgstr "Language of the game's text. Changes immediately."
+
+msgid "Volume da trilha sonora (cada clique sobe 10%; depois de 100% volta a 0, que desliga a música)."
+msgstr "Soundtrack volume (each click adds 10%; after 100% it goes back to 0, which turns the music off)."
+
+msgid "Volume dos efeitos sonoros: tiros, vapor, passos, explosões."
+msgstr "Sound effects volume: shots, steam, footsteps, explosions."
+
+msgid "Clique (ou Enter) numa ação e aperte a nova tecla. Se outra ação usava essa tecla, as duas trocam. Esc cancela. O controle de videogame não muda."
+msgstr "Click (or Enter) an action and press the new key. If another action used that key, the two swap. Esc cancels. Gamepad controls don't change."
+
+msgid "Volta todas as teclas para o padrão: setas, Z, X, C, Shift, A, S, Q e Esc."
+msgstr "Reset all keys to default: arrows, Z, X, C, Shift, A, S, Q and Esc."
+
+msgid "Voltar."
+msgstr "Back."
+
+msgid "CONFIGURAÇÕES"
+msgstr "SETTINGS"
+
+msgid "JOGO"
+msgstr "GAME"
+
+msgid "Restaurar teclas padrão"
+msgstr "Reset default keys"
+
+msgid "Voltar"
+msgstr "Back"
+
+msgid "TECLAS"
+msgstr "KEYS"
+
+msgid "Button"
+msgstr ""
+
+msgid "Sangue e gore: %s"
+msgstr "Blood and gore: %s"
+
+msgid "Efeitos de tela: %s"
+msgstr "Screen effects: %s"
+
+msgid "Tela cheia (F11): %s"
+msgstr "Fullscreen (F11): %s"
+
+msgid "Ligada"
+msgstr "On"
+
+msgid "Desligada"
+msgstr "Off"
+
+msgid "Idioma: %s"
+msgstr "Language: %s"
+
+msgid "Música: %d%%"
+msgstr "Music: %d%%"
+
+msgid "Efeitos sonoros: %d%%"
+msgstr "Sound effects: %d%%"
+
+msgid "Aperte uma tecla…"
+msgstr "Press a key…"
+
+msgid "II"
+msgstr ""
+

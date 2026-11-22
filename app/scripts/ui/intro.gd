@@ -81,7 +81,7 @@ func _start_shot(i: int) -> void:
 	typed = 0.0
 	flags.clear()
 	parts.clear()
-	label.text = String(SHOTS[i]["text"])
+	label.text = tr(String(SHOTS[i]["text"]))
 	label.visible_characters = 0
 	if i == 6:
 		Sfx.play("door", -4.0, 0.7)
@@ -316,7 +316,7 @@ func _draw_city() -> void:
 		draw_rect(Rect2(x + 38, y - 10, 5, 3), Color(1.0, 0.85, 0.4))
 		for j in 3:
 			draw_circle(Vector2(x + 12 + j * 14, y - 2), 1.3, Color(0.9, 0.8, 0.6))
-	draw_string(ThemeDB.fallback_font, Vector2(0, 250), "MERCADO SUSPENSO", HORIZONTAL_ALIGNMENT_CENTER, W, 14, Color(GOLD, 0.8))
+	draw_string(ThemeDB.fallback_font, Vector2(0, 250), tr("MERCADO SUSPENSO"), HORIZONTAL_ALIGNMENT_CENTER, W, 14, Color(GOLD, 0.8))
 	# Níveis intermediários
 	for lv in 10:
 		var y := 290.0 + lv * 45.0
@@ -340,7 +340,7 @@ func _draw_city() -> void:
 		draw_circle(Vector2(bx + 45, 830), 45.0, Color("4a2a1a"))
 		draw_rect(Rect2(bx + 25, 900, 40, 30), Color(1.0, 0.45, 0.1, 0.6 + 0.3 * sin(t * 6.0 + i)))
 		draw_rect(Rect2(bx, 960, 90, 4), COPPER)
-	draw_string(ThemeDB.fallback_font, Vector2(0, 790), "AS CALDEIRAS", HORIZONTAL_ALIGNMENT_CENTER, W, 14, Color(1.0, 0.6, 0.3, 0.8))
+	draw_string(ThemeDB.fallback_font, Vector2(0, 790), tr("AS CALDEIRAS"), HORIZONTAL_ALIGNMENT_CENTER, W, 14, Color(1.0, 0.6, 0.3, 0.8))
 	_draw_parts()
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
@@ -422,20 +422,20 @@ func _draw_accusation() -> void:
 		draw_rect(lr, Color("d9cba8"))
 		draw_rect(lr, Color("6a5a40"), false, 2.0)
 		var f := ThemeDB.fallback_font
-		draw_string(f, Vector2(-85, -82), "PROCURADA", HORIZONTAL_ALIGNMENT_CENTER, 170, 18, Color("7a1a14"))
+		draw_string(f, Vector2(-85, -82), tr("PROCURADA"), HORIZONTAL_ALIGNMENT_CENTER, 170, 18, Color("7a1a14"))
 		draw_rect(Rect2(-40, -70, 80, 80), Color("bcae8c"))
 		draw_circle(Vector2(0, -32), 22, Color("8a7a60"))
 		draw_circle(Vector2(-3, -40), 22, Color("4a4038"))
 		draw_circle(Vector2(2, -28), 17, Color("a89878"))
 		draw_line(Vector2(-22, -40), Vector2(-34, 8), Color("4a4038"), 5.0)
 		draw_rect(Rect2(-24, -6, 48, 16), Color("6a8aa0"))
-		draw_string(f, Vector2(-85, 30), "SERA VAEL", HORIZONTAL_ALIGNMENT_CENTER, 170, 15, Color("2a2018"))
-		draw_string(f, Vector2(-85, 50), "Sabotagem da Caldeira Sul", HORIZONTAL_ALIGNMENT_CENTER, 170, 9, Color("2a2018"))
-		draw_string(f, Vector2(-85, 66), "Ordem do Diretório de Ironveil", HORIZONTAL_ALIGNMENT_CENTER, 170, 8, Color("5a4a38"))
+		draw_string(f, Vector2(-85, 30), tr("SERA VAEL"), HORIZONTAL_ALIGNMENT_CENTER, 170, 15, Color("2a2018"))
+		draw_string(f, Vector2(-85, 50), tr("Sabotagem da Caldeira Sul"), HORIZONTAL_ALIGNMENT_CENTER, 170, 9, Color("2a2018"))
+		draw_string(f, Vector2(-85, 66), tr("Ordem do Diretório de Ironveil"), HORIZONTAL_ALIGNMENT_CENTER, 170, 8, Color("5a4a38"))
 		if t > 4.2:
 			draw_set_transform(Vector2(530, py + 192), -0.3, Vector2.ONE)
 			draw_rect(Rect2(-40, -12, 80, 24), Color(0.75, 0.1, 0.08, 0.85), false, 3.0)
-			draw_string(f, Vector2(-40, 6), "CULPADA", HORIZONTAL_ALIGNMENT_CENTER, 80, 14, Color(0.75, 0.1, 0.08, 0.85))
+			draw_string(f, Vector2(-40, 6), tr("CULPADA"), HORIZONTAL_ALIGNMENT_CENTER, 80, 14, Color(0.75, 0.1, 0.08, 0.85))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
@@ -498,10 +498,10 @@ func _draw_title() -> void:
 		draw_circle(Vector2(320, 175), 60.0 + i * 30.0, Color(1.0, 0.5, 0.2, 0.03 * a))
 	_draw_parts()
 	var f := ThemeDB.fallback_font
-	draw_string(f, Vector2(0, 190), "IRONVEIL", HORIZONTAL_ALIGNMENT_CENTER, W, 52, Color(0.85, 0.59, 0.35, a))
+	draw_string(f, Vector2(0, 190), tr("IRONVEIL"), HORIZONTAL_ALIGNMENT_CENTER, W, 52, Color(0.85, 0.59, 0.35, a))
 	draw_rect(Rect2(170, 200, 300 * a, 2), Color(0.55, 0.35, 0.17, a))
 	var b := clampf((t - 1.2) / 1.2, 0.0, 1.0)
-	draw_string(f, Vector2(0, 224), "Ato 1 — As Caldeiras", HORIZONTAL_ALIGNMENT_CENTER, W, 15, Color(0.9, 0.85, 0.8, b))
+	draw_string(f, Vector2(0, 224), tr("Ato 1 — As Caldeiras"), HORIZONTAL_ALIGNMENT_CENTER, W, 15, Color(0.9, 0.85, 0.8, b))
 
 
 # ---------------------------------------------------------------- personagens

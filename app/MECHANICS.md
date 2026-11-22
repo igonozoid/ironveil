@@ -713,3 +713,23 @@ entra luz do sol. Derrotado, o Véu se abre: **fim do jogo**.
 ### Legenda nova (formato das fases)
 `~` ferro fundido · `>` `<` esteira · `j` registro de resfriamento · `q` bico de água ·
 `U` Fornalha-Mãe · `I` Tecelão · opção de fase `"theme": "foundry"` / `"veil"` e `"wind": força`.
+
+---
+
+## 18. Idiomas, console de testes e ajustes
+
+- **Idiomas**: Português (Brasil) e English. Na primeira abertura o jogo pergunta o idioma antes
+  de tudo; depois dá para trocar em **Configurações → Idioma** (muda na hora). Textos em
+  `i18n/*.po`.
+- **Console de testes** (tecla **=**, pausa o jogo): `god`, `vida`, `municao`, `escudo`,
+  `upgrades`, `tudo`, `liberar`, `fase N`, `chefao`, `matar`, `chefao_vida N`, `vento N`, `ajuda`.
+  Com `god`, cair no abismo devolve Sera para cima em vez de matar.
+- **Indicadores de interação**: tudo o que pode ser usado agora (alavancas, válvulas, painéis,
+  elevadores, canhões, freios, registros, aliados) mostra um losango dourado pulsando; ao alcance,
+  ele vira a tecla de interagir. Moradores que dão dicas usam o próprio balão.
+- **Fresta (reentrância)**: encostada, Sera fica na sombra (a luz dela quase apaga e as cores
+  escurecem) e passa para trás de guardas, civis e autômatos, que andam na frente dela.
+- **Arena do chefão**: ao entrar, as bordas da tela se fecham até o chefão cair — não dá para
+  voltar à tela anterior. O elevador da arena do Martelo também não desce mais.
+- **Save entre versões**: se a versão baixada não encontra um save, ela procura e copia o de outra
+  instalação do jogo na mesma máquina (ex.: o jogo rodado pelo Godot Flatpak).

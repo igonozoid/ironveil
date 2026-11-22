@@ -1,0 +1,1400 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: pt_BR\n"
+
+msgid "Válvula do Martelo"
+msgstr "Válvula do Martelo"
+
+msgid "+1 quadrado de vida"
+msgstr "+1 quadrado de vida"
+
+msgid "Arpão de mão"
+msgstr "Arpão de mão"
+
+msgid "Segure o tiro para carregar um arpão que atravessa escudos e inimigos"
+msgstr "Segure o tiro para carregar um arpão que atravessa escudos e inimigos"
+
+msgid "Couraça do Regulador"
+msgstr "Couraça do Regulador"
+
+msgid "Uma placa de latão absorve um golpe e se recarrega com o tempo"
+msgstr "Uma placa de latão absorve um golpe e se recarrega com o tempo"
+
+msgid "Botas de Pressão"
+msgstr "Botas de Pressão"
+
+msgid "No ar, aperte [roll] para dar um impulso na direção em que está olhando"
+msgstr "No ar, aperte [roll] para dar um impulso na direção em que está olhando"
+
+msgid "Mover para a esquerda"
+msgstr "Mover para a esquerda"
+
+msgid "Mover para a direita"
+msgstr "Mover para a direita"
+
+msgid "Cima / encostar"
+msgstr "Cima / encostar"
+
+msgid "Agachar"
+msgstr "Agachar"
+
+msgid "Pular"
+msgstr "Pular"
+
+msgid "Atirar"
+msgstr "Atirar"
+
+msgid "Rolar"
+msgstr "Rolar"
+
+msgid "Trotar / correr"
+msgstr "Trotar / correr"
+
+msgid "Interagir"
+msgstr "Interagir"
+
+msgid "Usar ferramenta"
+msgstr "Usar ferramenta"
+
+msgid "Trocar ferramenta"
+msgstr "Trocar ferramenta"
+
+msgid "Pausa"
+msgstr "Pausa"
+
+msgid "pt_BR"
+msgstr "pt_BR"
+
+msgid "Português (Brasil)"
+msgstr "Português (Brasil)"
+
+msgid "English"
+msgstr "English"
+
+msgid "Ato 1 — As Caldeiras"
+msgstr "Ato 1 — As Caldeiras"
+
+msgid "As Caldeiras"
+msgstr "As Caldeiras"
+
+msgid "Ato 2 — O Mercado Suspenso"
+msgstr "Ato 2 — O Mercado Suspenso"
+
+msgid "O Mercado Suspenso"
+msgstr "O Mercado Suspenso"
+
+msgid "Ato 3 — A Torre do Diretório"
+msgstr "Ato 3 — A Torre do Diretório"
+
+msgid "A Torre do Diretório"
+msgstr "A Torre do Diretório"
+
+msgid "Ato 4 — As Fundições Profundas"
+msgstr "Ato 4 — As Fundições Profundas"
+
+msgid "As Fundições Profundas"
+msgstr "As Fundições Profundas"
+
+msgid "Ato 5 — O Véu de Ferro"
+msgstr "Ato 5 — O Véu de Ferro"
+
+msgid "O Véu de Ferro"
+msgstr "O Véu de Ferro"
+
+msgid "Caldeira Norte"
+msgstr "Caldeira Norte"
+
+msgid "Sala das Bombas"
+msgstr "Sala das Bombas"
+
+msgid "Poço do Guindaste"
+msgstr "Poço do Guindaste"
+
+msgid "Docas de Carga"
+msgstr "Docas de Carga"
+
+msgid "Bazar das Correntes"
+msgstr "Bazar das Correntes"
+
+msgid "Telhados do Diretório"
+msgstr "Telhados do Diretório"
+
+msgid "Átrio de Bronze"
+msgstr "Átrio de Bronze"
+
+msgid "Engrenagem Mestra"
+msgstr "Engrenagem Mestra"
+
+msgid "Gabinete do Diretor"
+msgstr "Gabinete do Diretor"
+
+msgid "Poço de Escória"
+msgstr "Poço de Escória"
+
+msgid "Cadinhos"
+msgstr "Cadinhos"
+
+msgid "Coração da Montanha"
+msgstr "Coração da Montanha"
+
+msgid "Passarelas do Véu"
+msgstr "Passarelas do Véu"
+
+msgid "Doca da Frota"
+msgstr "Doca da Frota"
+
+msgid "A Coroa"
+msgstr "A Coroa"
+
+msgid "Carga de vapor"
+msgstr "Carga de vapor"
+
+msgid "Selante"
+msgstr "Selante"
+
+msgid "Cartão de acesso"
+msgstr "Cartão de acesso"
+
+msgid "Esc"
+msgstr "Esc"
+
+msgid "[%s]"
+msgstr "[%s]"
+
+msgid "HOME"
+msgstr "HOME"
+
+msgid "APPDATA"
+msgstr "APPDATA"
+
+msgid "SFX"
+msgstr "SFX"
+
+msgid "Comandante Vesk"
+msgstr "Comandante Vesk"
+
+msgid "Sera Vael. Desça do telhado e entregue o livro, e o Diretório talvez lembre que você cooperou."
+msgstr "Sera Vael. Desça do telhado e entregue o livro, e o Diretório talvez lembre que você cooperou."
+
+msgid "Sera"
+msgstr "Sera"
+
+msgid "Esse livro diz que a ordem de abrir as válvulas saiu da Torre. Vinte e três pessoas morreram na Caldeira Sul."
+msgstr "Esse livro diz que a ordem de abrir as válvulas saiu da Torre. Vinte e três pessoas morreram na Caldeira Sul."
+
+msgid "Então você entende por que ele não pode sair deste telhado. Vigília: soltar bombas."
+msgstr "Então você entende por que ele não pode sair deste telhado. Vigília: soltar bombas."
+
+msgid "Ainda de pé? Vigília, de novo."
+msgstr "Ainda de pé? Vigília, de novo."
+
+msgid "DIRIGÍVEL VIGÍLIA · Comandante Vesk"
+msgstr "DIRIGÍVEL VIGÍLIA · Comandante Vesk"
+
+msgid "AnchorShape"
+msgstr "AnchorShape"
+
+msgid "Vesk: Vigília, varrer o telhado!"
+msgstr "Vesk: Vigília, varrer o telhado!"
+
+msgid "Vesk: Tropa, ao telhado!"
+msgstr "Vesk: Tropa, ao telhado!"
+
+msgid "Vesk: Soltem a âncora!"
+msgstr "Vesk: Soltem a âncora!"
+
+msgid "Cabo cortado! O Vigília perdeu o prumo."
+msgstr "Cabo cortado! O Vigília perdeu o prumo."
+
+msgid "Arpão no casco!"
+msgstr "Arpão no casco!"
+
+msgid "Vesk: Motores no máximo! Desçam o Vigília!"
+msgstr "Vesk: Motores no máximo! Desçam o Vigília!"
+
+msgid "Vesk: Estamos caindo! Abandonar a..."
+msgstr "Vesk: Estamos caindo! Abandonar a..."
+
+msgid "O Vigília caiu. O elevador do arquivo está livre."
+msgstr "O Vigília caiu. O elevador do arquivo está livre."
+
+msgid "Lira"
+msgstr "Lira"
+
+msgid "Você é a engenheira dos cartazes? Ha. Metade do Mercado acha que você é heroína."
+msgstr "Você é a engenheira dos cartazes? Ha. Metade do Mercado acha que você é heroína."
+
+msgid "Eu não explodi nada. Preciso chegar aos telhados do Diretório."
+msgstr "Eu não explodi nada. Preciso chegar aos telhados do Diretório."
+
+msgid "O livro de válvulas da Caldeira Sul está no arquivo deles. Se alguém mandou abrir as válvulas, está escrito lá."
+msgstr "O livro de válvulas da Caldeira Sul está no arquivo deles. Se alguém mandou abrir as válvulas, está escrito lá."
+
+msgid "Atrás da minha barraca tem uma passagem dos contrabandistas. Vai. E fique no meio do povo: os guardas não atiram com gente na frente."
+msgstr "Atrás da minha barraca tem uma passagem dos contrabandistas. Vai. E fique no meio do povo: os guardas não atiram com gente na frente."
+
+msgid "A passagem está aberta. Os holofotes não enxergam quem está na multidão — nem quem está encostado."
+msgstr "A passagem está aberta. Os holofotes não enxergam quem está na multidão — nem quem está encostado."
+
+msgid "A: falar com a mulher de capuz"
+msgstr "A: falar com a mulher de capuz"
+
+msgid "A: falar com Lira"
+msgstr "A: falar com Lira"
+
+msgid "Lira abriu a passagem dos contrabandistas"
+msgstr "Lira abriu a passagem dos contrabandistas"
+
+msgid "Capataz Ordo"
+msgstr "Capataz Ordo"
+
+msgid "Engenheira Vael. O Diretório quer você viva... mas ninguém disse inteira."
+msgstr "Engenheira Vael. O Diretório quer você viva... mas ninguém disse inteira."
+
+msgid "Esse andador é da Caldeira Sul. Fui eu que calibrei as válvulas dele."
+msgstr "Esse andador é da Caldeira Sul. Fui eu que calibrei as válvulas dele."
+
+msgid "Então sabe quanto ele aguenta. E eu sei quanto você aguenta."
+msgstr "Então sabe quanto ele aguenta. E eu sei quanto você aguenta."
+
+msgid "De volta? O martelo também voltou."
+msgstr "De volta? O martelo também voltou."
+
+msgid "MARTELO-DE-VAPOR · Capataz Ordo"
+msgstr "MARTELO-DE-VAPOR · Capataz Ordo"
+
+msgid "Ordo: Sair daí ou virar sucata, Vael!"
+msgstr "Ordo: Sair daí ou virar sucata, Vael!"
+
+msgid "Ordo: Ninguém atravessa o Martelo!"
+msgstr "Ordo: Ninguém atravessa o Martelo!"
+
+msgid "O Martelo engasgou com o vapor!"
+msgstr "O Martelo engasgou com o vapor!"
+
+msgid "Ordo: PRESSÃO MÁXIMA!"
+msgstr "Ordo: PRESSÃO MÁXIMA!"
+
+msgid "Algo caiu de um cano estourado..."
+msgstr "Algo caiu de um cano estourado..."
+
+msgid "Ordo: Não... a pressão... !"
+msgstr "Ordo: Não... a pressão... !"
+
+msgid "O elevador para o Mercado está livre."
+msgstr "O elevador para o Mercado está livre."
+
+msgid "A: abrir o registro"
+msgstr "A: abrir o registro"
+
+msgid "Porta blindada sem energia"
+msgstr "Porta blindada sem energia"
+
+msgid "Porta de segurança — S: usar cartão"
+msgstr "Porta de segurança — S: usar cartão"
+
+msgid "Sem energia. Um painel de controle pode religá-la."
+msgstr "Sem energia. Um painel de controle pode religá-la."
+
+msgid "Selecione o Cartão de acesso (Q) e use com S."
+msgstr "Selecione o Cartão de acesso (Q) e use com S."
+
+msgid "Conselheira Ívora"
+msgstr "Conselheira Ívora"
+
+msgid "Então foi você quem parou o relógio do pobre Halvard. Ele sempre foi sentimental."
+msgstr "Então foi você quem parou o relógio do pobre Halvard. Ele sempre foi sentimental."
+
+msgid "A Fornalha alimenta o Véu. Se ela apagar, a cúpula abre."
+msgstr "A Fornalha alimenta o Véu. Se ela apagar, a cúpula abre."
+
+msgid "Se ela apagar, Ironveil congela no escuro. Mas você não vai viver para ver. Mãe, acorde."
+msgstr "Se ela apagar, Ironveil congela no escuro. Mas você não vai viver para ver. Mãe, acorde."
+
+msgid "De volta ao forno, engenheira?"
+msgstr "De volta ao forno, engenheira?"
+
+msgid "A FORNALHA-MÃE · Conselheira Ívora"
+msgstr "A FORNALHA-MÃE · Conselheira Ívora"
+
+msgid "CoreShape"
+msgstr "CoreShape"
+
+msgid "Ívora: Queime-a, Mãe."
+msgstr "Ívora: Queime-a, Mãe."
+
+msgid "Ívora: Não! Fechem a água!"
+msgstr "Ívora: Não! Fechem a água!"
+
+msgid "Ívora: Mais calor, Mãe! MAIS!"
+msgstr "Ívora: Mais calor, Mãe! MAIS!"
+
+msgid "Ívora: A Fornalha... está esfriando..."
+msgstr "Ívora: A Fornalha... está esfriando..."
+
+msgid "A Fornalha-Mãe apagou. O elevador para cima está livre."
+msgstr "A Fornalha-Mãe apagou. O elevador para cima está livre."
+
+msgid "A: disparar arpão"
+msgstr "A: disparar arpão"
+
+msgid "A: cortar a corrente"
+msgstr "A: cortar a corrente"
+
+msgid "A: acionar alavanca"
+msgstr "A: acionar alavanca"
+
+msgid "A: subir"
+msgstr "A: subir"
+
+msgid "Subindo..."
+msgstr "Subindo..."
+
+msgid "O elevador está travado pelo Martelo-de-Vapor."
+msgstr "O elevador está travado pelo Martelo-de-Vapor."
+
+msgid "O gancho está travado. Fale com o operador."
+msgstr "O gancho está travado. Fale com o operador."
+
+msgid "Livro de válvulas"
+msgstr "Livro de válvulas"
+
+msgid "Caldeira Sul — noite do acidente. 23h40: válvulas 4 a 9 abertas por ordem remota. Autorização: TORRE / Conselho do Diretório."
+msgstr "Caldeira Sul — noite do acidente. 23h40: válvulas 4 a 9 abertas por ordem remota. Autorização: TORRE / Conselho do Diretório."
+
+msgid "Observação a lápis: \"Culpar a manutenção. Engenheira V. de plantão.\""
+msgstr "Observação a lápis: \"Culpar a manutenção. Engenheira V. de plantão.\""
+
+msgid "Eles abriram as válvulas da Torre... e escolheram a mim para levar a culpa."
+msgstr "Eles abriram as válvulas da Torre... e escolheram a mim para levar a culpa."
+
+msgid "A: abrir o armário do arquivo"
+msgstr "A: abrir o armário do arquivo"
+
+msgid "Livro de válvulas guardado"
+msgstr "Livro de válvulas guardado"
+
+msgid "Operário"
+msgstr "Operário"
+
+msgid "A: conversar"
+msgstr "A: conversar"
+
+msgid "Feirante"
+msgstr "Feirante"
+
+msgid "Criado da Torre"
+msgstr "Criado da Torre"
+
+msgid "A: conversar com %s"
+msgstr "A: conversar com %s"
+
+msgid "A: religar painel"
+msgstr "A: religar painel"
+
+msgid "Energia restaurada: porta blindada aberta"
+msgstr "Energia restaurada: porta blindada aberta"
+
+msgid "A: puxar o freio"
+msgstr "A: puxar o freio"
+
+msgid "%s +%d"
+msgstr "%s +%d"
+
+msgid "Diretor Maar"
+msgstr "Diretor Maar"
+
+msgid "A engenheira das Caldeiras. Você trouxe meu livro de válvulas até a minha porta. Que gentileza."
+msgstr "A engenheira das Caldeiras. Você trouxe meu livro de válvulas até a minha porta. Que gentileza."
+
+msgid "Vinte e três pessoas morreram na Caldeira Sul. Por quê?"
+msgstr "Vinte e três pessoas morreram na Caldeira Sul. Por quê?"
+
+msgid "Pressão, senhorita Vael. Uma cidade é uma caldeira: de tempos em tempos é preciso aliviar. As Caldeiras estavam se organizando. Agora estão de luto — e quietas."
+msgstr "Pressão, senhorita Vael. Uma cidade é uma caldeira: de tempos em tempos é preciso aliviar. As Caldeiras estavam se organizando. Agora estão de luto — e quietas."
+
+msgid "Então eu vou abrir as válvulas desta Torre."
+msgstr "Então eu vou abrir as válvulas desta Torre."
+
+msgid "O Regulador marca o tempo de Ironveil há cem anos. Hoje ele marca o seu fim."
+msgstr "O Regulador marca o tempo de Ironveil há cem anos. Hoje ele marca o seu fim."
+
+msgid "O pêndulo nunca se atrasa, senhorita Vael."
+msgstr "O pêndulo nunca se atrasa, senhorita Vael."
+
+msgid "O REGULADOR · Diretor Halvard Maar"
+msgstr "O REGULADOR · Diretor Halvard Maar"
+
+msgid "Maar: Deem corda ao Regulador."
+msgstr "Maar: Deem corda ao Regulador."
+
+msgid "O Regulador soltou o pêndulo!"
+msgstr "O Regulador soltou o pêndulo!"
+
+msgid "O freio range, mas não pega."
+msgstr "O freio range, mas não pega."
+
+msgid "Maar: O que... o pêndulo travou!"
+msgstr "Maar: O que... o pêndulo travou!"
+
+msgid "Maar: Blindagem! Subam a cabine!"
+msgstr "Maar: Blindagem! Subam a cabine!"
+
+msgid "Maar: Autômatos, recolham a engenheira!"
+msgstr "Maar: Autômatos, recolham a engenheira!"
+
+msgid "Maar: Acelerem o Regulador! Pressão total!"
+msgstr "Maar: Acelerem o Regulador! Pressão total!"
+
+msgid "Maar: Tolinha... o relógio nunca foi meu. Pergunte ao Conselho... lá embaixo, na Fornalha..."
+msgstr "Maar: Tolinha... o relógio nunca foi meu. Pergunte ao Conselho... lá embaixo, na Fornalha..."
+
+msgid "O Regulador parou. O elevador para o alto da Torre está livre."
+msgstr "O Regulador parou. O elevador para o alto da Torre está livre."
+
+msgid "Holofote: ALARME!"
+msgstr "Holofote: ALARME!"
+
+msgid "Reforço do Diretório!"
+msgstr "Reforço do Diretório!"
+
+msgid "A: falar com Tomé"
+msgstr "A: falar com Tomé"
+
+msgid "Tomé"
+msgstr "Tomé"
+
+msgid "Sera? Pelos canos de Ironveil... dizem que foi você que explodiu a Caldeira Sul."
+msgstr "Sera? Pelos canos de Ironveil... dizem que foi você que explodiu a Caldeira Sul."
+
+msgid "Eu estava tentando impedir. Alguém no Diretório quer a culpa nas minhas costas."
+msgstr "Eu estava tentando impedir. Alguém no Diretório quer a culpa nas minhas costas."
+
+msgid "Trinta anos neste guindaste e nunca vi engenheira sabotar a própria máquina."
+msgstr "Trinta anos neste guindaste e nunca vi engenheira sabotar a própria máquina."
+
+msgid "Sobe no gancho. Eu te levo até o topo do poço — de lá, o elevador velho chega ao Mercado Suspenso."
+msgstr "Sobe no gancho. Eu te levo até o topo do poço — de lá, o elevador velho chega ao Mercado Suspenso."
+
+msgid "Obrigada, Tomé. Não vou esquecer."
+msgstr "Obrigada, Tomé. Não vou esquecer."
+
+msgid "Vai logo, antes que a ronda volte."
+msgstr "Vai logo, antes que a ronda volte."
+
+msgid "O gancho está pronto. Fica parada em cima dele que eu cuido do resto."
+msgstr "O gancho está pronto. Fica parada em cima dele que eu cuido do resto."
+
+msgid "O guindaste foi destravado: suba no gancho"
+msgstr "O guindaste foi destravado: suba no gancho"
+
+msgid "A: abrir válvula"
+msgstr "A: abrir válvula"
+
+msgid "A válvula gira em falso."
+msgstr "A válvula gira em falso."
+
+msgid "Conselho"
+msgstr "Conselho"
+
+msgid "Sera Vael. A engenheira que apagou a Fornalha."
+msgstr "Sera Vael. A engenheira que apagou a Fornalha."
+
+msgid "Sem pressão, o Véu não fica de pé. Vocês acabaram, todos vocês."
+msgstr "Sem pressão, o Véu não fica de pé. Vocês acabaram, todos vocês."
+
+msgid "Lá fora não há nada para essa gente. Por isso tecemos o Véu: para que nunca precisem saber."
+msgstr "Lá fora não há nada para essa gente. Por isso tecemos o Véu: para que nunca precisem saber."
+
+msgid "Então que eles vejam com os próprios olhos."
+msgstr "Então que eles vejam com os próprios olhos."
+
+msgid "Tecelão. Feche o céu."
+msgstr "Tecelão. Feche o céu."
+
+msgid "O Véu sempre se fecha de novo."
+msgstr "O Véu sempre se fecha de novo."
+
+msgid "O TECELÃO · O Conselho das Válvulas"
+msgstr "O TECELÃO · O Conselho das Válvulas"
+
+msgid "Conselho: As placas! Segurem o Véu!"
+msgstr "Conselho: As placas! Segurem o Véu!"
+
+msgid "Conselho: O céu... está entrando..."
+msgstr "Conselho: O céu... está entrando..."
+
+msgid "Conselho: Não... a luz..."
+msgstr "Conselho: Não... a luz..."
+
+msgid "O Véu está se abrindo. O elevador para o topo está livre."
+msgstr "O Véu está se abrindo. O elevador para o topo está livre."
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Blood"
+msgstr "Blood"
+
+msgid "Plataforma do Elevador"
+msgstr "Plataforma do Elevador"
+
+msgid "Checkpoint salvo"
+msgstr "Checkpoint salvo"
+
+msgid "Sera caiu..."
+msgstr "Sera caiu..."
+
+msgid "%d,%d"
+msgstr "%d,%d"
+
+msgid "Solids"
+msgstr "Solids"
+
+msgid "OneWay"
+msgstr "OneWay"
+
+msgid "ScreenWalls"
+msgstr "ScreenWalls"
+
+msgid "A: subir pelo poço"
+msgstr "A: subir pelo poço"
+
+msgid "Fase 1 — Caldeira Norte"
+msgstr "Fase 1 — Caldeira Norte"
+
+msgid "A: subir para a Sala das Bombas"
+msgstr "A: subir para a Sala das Bombas"
+
+msgid "Dora"
+msgstr "Dora"
+
+msgid "Sera? Graças... Os guardas estão revirando as Caldeiras atrás de você."
+msgstr "Sera? Graças... Os guardas estão revirando as Caldeiras atrás de você."
+
+msgid "Vai pela esquerda e pela direita com [move_left] e [move_right]. Se precisar fugir rápido, [run] alterna entre trotar e correr."
+msgstr "Vai pela esquerda e pela direita com [move_left] e [move_right]. Se precisar fugir rápido, [run] alterna entre trotar e correr."
+
+msgid "Bento"
+msgstr "Bento"
+
+msgid "Aquela parede? Pula com [jump] e agarra na beirada. Daí é só [move_up] ou [jump] de novo pra subir."
+msgstr "Aquela parede? Pula com [jump] e agarra na beirada. Daí é só [move_up] ou [jump] de novo pra subir."
+
+msgid "Correndo você pula bem mais longe."
+msgstr "Correndo você pula bem mais longe."
+
+msgid "Velho Ilo"
+msgstr "Velho Ilo"
+
+msgid "Esse túnel é baixo, menina. Agacha com [move_down] e vai de joelhos."
+msgstr "Esse túnel é baixo, menina. Agacha com [move_down] e vai de joelhos."
+
+msgid "E pra descer de uma beirada sem quebrar a perna: agacha na ponta e aperta [jump]."
+msgstr "E pra descer de uma beirada sem quebrar a perna: agacha na ponta e aperta [jump]."
+
+msgid "Nina"
+msgstr "Nina"
+
+msgid "Tá vendo a válvula? Gira com [interact] e o vapor sai pelos bocais. Queima guarda que é uma beleza."
+msgstr "Tá vendo a válvula? Gira com [interact] e o vapor sai pelos bocais. Queima guarda que é uma beleza."
+
+msgid "Só não fica embaixo, que queima você também."
+msgstr "Só não fica embaixo, que queima você também."
+
+msgid "Caio"
+msgstr "Caio"
+
+msgid "Essas reentrâncias na parede salvaram muito operário. Encosta com [move_up] e bala nenhuma te pega."
+msgstr "Essas reentrâncias na parede salvaram muito operário. Encosta com [move_up] e bala nenhuma te pega."
+
+msgid "Os guardas desistem de atirar e ficam esperando você sair."
+msgstr "Os guardas desistem de atirar e ficam esperando você sair."
+
+msgid "Ainda tem o lança-rebites? [shoot] dispara."
+msgstr "Ainda tem o lança-rebites? [shoot] dispara."
+
+msgid "E se o tiro vier na sua direção, rola com [roll]. Rolando, nada te acerta."
+msgstr "E se o tiro vier na sua direção, rola com [roll]. Rolando, nada te acerta."
+
+msgid "Essa grade não abre na mão. Pega a carga de vapor ali, troca a ferramenta com [swap_tool] e joga com [use_tool]."
+msgstr "Essa grade não abre na mão. Pega a carga de vapor ali, troca a ferramenta com [swap_tool] e joga com [use_tool]."
+
+msgid "Conta dois segundos e sai de perto!"
+msgstr "Conta dois segundos e sai de perto!"
+
+msgid "Fase 2 — Sala das Bombas"
+msgstr "Fase 2 — Sala das Bombas"
+
+msgid "A: subir para o Poço do Guindaste"
+msgstr "A: subir para o Poço do Guindaste"
+
+msgid "Marta"
+msgstr "Marta"
+
+msgid "Aquela grade pendurada fica presa por uma caixa de força. Um rebite nela e... cabum, cai em quem estiver embaixo."
+msgstr "Aquela grade pendurada fica presa por uma caixa de força. Um rebite nela e... cabum, cai em quem estiver embaixo."
+
+msgid "A alavanca chama o elevador de carga. É só puxar."
+msgstr "A alavanca chama o elevador de carga. É só puxar."
+
+msgid "Teo"
+msgstr "Teo"
+
+msgid "O painel ali religa a porta blindada."
+msgstr "O painel ali religa a porta blindada."
+
+msgid "E cuidado com os drones. Os que voam baixo você desvia agachada, ou derruba a rebite."
+msgstr "E cuidado com os drones. Os que voam baixo você desvia agachada, ou derruba a rebite."
+
+msgid "Tá vendo o anel amarelo lá em cima? Segura [move_up] e aperta [shoot] perto dele: o rebite de escalada crava ali e você se pendura."
+msgstr "Tá vendo o anel amarelo lá em cima? Segura [move_up] e aperta [shoot] perto dele: o rebite de escalada crava ali e você se pendura."
+
+msgid "Porta de segurança só abre com cartão. Se você achou um, escolhe com [swap_tool] e usa com [use_tool]."
+msgstr "Porta de segurança só abre com cartão. Se você achou um, escolhe com [swap_tool] e usa com [use_tool]."
+
+msgid "Fase 3 — Poço do Guindaste"
+msgstr "Fase 3 — Poço do Guindaste"
+
+msgid "A: subir rumo ao Mercado Suspenso"
+msgstr "A: subir rumo ao Mercado Suspenso"
+
+msgid "Encostada na parede você some pra eles. Espera o guarda desistir e passa."
+msgstr "Encostada na parede você some pra eles. Espera o guarda desistir e passa."
+
+msgid "Os bocais do teto soltam vapor pra baixo. Espera o guarda passar embaixo e abre a válvula."
+msgstr "Os bocais do teto soltam vapor pra baixo. Espera o guarda passar embaixo e abre a válvula."
+
+msgid "O Tomé opera o guindaste do poço. Fala com ele, que ele te ajuda a subir."
+msgstr "O Tomé opera o guindaste do poço. Fala com ele, que ele te ajuda a subir."
+
+msgid "Fase 4 — Docas de Carga"
+msgstr "Fase 4 — Docas de Carga"
+
+msgid "A: subir para o Bazar das Correntes"
+msgstr "A: subir para o Bazar das Correntes"
+
+msgid "Mãe Zélia"
+msgstr "Mãe Zélia"
+
+msgid "Bem-vinda ao Mercado Suspenso, filha. Olha onde pisa: embaixo das plataformas é só o abismo."
+msgstr "Bem-vinda ao Mercado Suspenso, filha. Olha onde pisa: embaixo das plataformas é só o abismo."
+
+msgid "Rui"
+msgstr "Rui"
+
+msgid "Essas tábuas tão podres. Rangeu, corre! Elas despencam logo depois que você pisa."
+msgstr "Essas tábuas tão podres. Rangeu, corre! Elas despencam logo depois que você pisa."
+
+msgid "A gente atravessa pelo cabo. Sobe nas caixas e pula contra ele que o gancho prende."
+msgstr "A gente atravessa pelo cabo. Sobe nas caixas e pula contra ele que o gancho prende."
+
+msgid "Quer soltar antes do fim? [jump] ou [move_down]."
+msgstr "Quer soltar antes do fim? [jump] ou [move_down]."
+
+msgid "Tito"
+msgstr "Tito"
+
+msgid "Não deixa a luz te pegar, moça! Se pegar, toca o alarme e desce mais guarda."
+msgstr "Não deixa a luz te pegar, moça! Se pegar, toca o alarme e desce mais guarda."
+
+msgid "Encostada na parede a luz não te vê. E a lâmpada quebra com um rebite... por trás é mais fácil."
+msgstr "Encostada na parede a luz não te vê. E a lâmpada quebra com um rebite... por trás é mais fácil."
+
+msgid "Aqui também tem aqueles nichos nas paredes. Encosta neles quando começar o tiroteio."
+msgstr "Aqui também tem aqueles nichos nas paredes. Encosta neles quando começar o tiroteio."
+
+msgid "Graça"
+msgstr "Graça"
+
+msgid "Aquele ali tem escudo. De frente não adianta atirar."
+msgstr "Aquele ali tem escudo. De frente não adianta atirar."
+
+msgid "Espera ele virar as costas... ou manda uma carga de vapor."
+msgstr "Espera ele virar as costas... ou manda uma carga de vapor."
+
+msgid "Fase 5 — Bazar das Correntes"
+msgstr "Fase 5 — Bazar das Correntes"
+
+msgid "A: subir aos telhados do Diretório"
+msgstr "A: subir aos telhados do Diretório"
+
+msgid "Quer passar pelos guardas? Anda no meio do povo, devagar, sem correr nem atirar. Ninguém repara em mais uma."
+msgstr "Quer passar pelos guardas? Anda no meio do povo, devagar, sem correr nem atirar. Ninguém repara em mais uma."
+
+msgid "Os guardas não atiram se tiver gente na frente. Pelo menos isso."
+msgstr "Os guardas não atiram se tiver gente na frente. Pelo menos isso."
+
+msgid "A de capuz ali na barraca é a Lira. Contrabandista. Se alguém sabe um atalho, é ela."
+msgstr "A de capuz ali na barraca é a Lira. Contrabandista. Se alguém sabe um atalho, é ela."
+
+msgid "Sobe pelas caixas, agarra na sacada e pega o cabo até o elevador. É o jeito."
+msgstr "Sobe pelas caixas, agarra na sacada e pega o cabo até o elevador. É o jeito."
+
+msgid "Fase 6 — Telhados do Diretório"
+msgstr "Fase 6 — Telhados do Diretório"
+
+msgid "A: entrar no arquivo da Torre"
+msgstr "A: entrar no arquivo da Torre"
+
+msgid "Telhado do Arquivo"
+msgstr "Telhado do Arquivo"
+
+msgid "Varredor"
+msgstr "Varredor"
+
+msgid "Telhados do Diretório. Ninguém sobe aqui sem ser chamado."
+msgstr "Telhados do Diretório. Ninguém sobe aqui sem ser chamado."
+
+msgid "As chaminés têm nicho, dá pra se encostar."
+msgstr "As chaminés têm nicho, dá pra se encostar."
+
+msgid "Esses vãos são largos. Liga a corrida com [run] e pula com tudo."
+msgstr "Esses vãos são largos. Liga a corrida com [run] e pula com tudo."
+
+msgid "Escrivã"
+msgstr "Escrivã"
+
+msgid "Você é a engenheira? O livro de válvulas da Caldeira Sul está naquele armário. Eu nunca te disse isso."
+msgstr "Você é a engenheira? O livro de válvulas da Caldeira Sul está naquele armário. Eu nunca te disse isso."
+
+msgid "O muro é alto. Tem um anel de escalada lá em cima: [move_up] com [shoot] embaixo dele."
+msgstr "O muro é alto. Tem um anel de escalada lá em cima: [move_up] com [shoot] embaixo dele."
+
+msgid "Fase 7 — Átrio de Bronze"
+msgstr "Fase 7 — Átrio de Bronze"
+
+msgid "A: subir para a Engrenagem Mestra"
+msgstr "A: subir para a Engrenagem Mestra"
+
+msgid "Lúcia"
+msgstr "Lúcia"
+
+msgid "Você... veio das Caldeiras? Aqui é o Átrio de Bronze. Daqui pra cima é só latão, pedra e vigilância."
+msgstr "Você... veio das Caldeiras? Aqui é o Átrio de Bronze. Daqui pra cima é só latão, pedra e vigilância."
+
+msgid "A grade só deixa uma frestinha embaixo. Rola por ela com [roll]."
+msgstr "A grade só deixa uma frestinha embaixo. Rola por ela com [roll]."
+
+msgid "Edmundo"
+msgstr "Edmundo"
+
+msgid "Cuidado com a sentinela. Quando a luz vermelha te achar, ela dispara uma rajada."
+msgstr "Cuidado com a sentinela. Quando a luz vermelha te achar, ela dispara uma rajada."
+
+msgid "Dizem que a carcaça é fina... alguns rebites resolvem."
+msgstr "Dizem que a carcaça é fina... alguns rebites resolvem."
+
+msgid "Os pistões batem no compasso do relógio. A luz vermelha pisca antes. Embaixo deles, nada te salva."
+msgstr "Os pistões batem no compasso do relógio. A luz vermelha pisca antes. Embaixo deles, nada te salva."
+
+msgid "Ferraz"
+msgstr "Ferraz"
+
+msgid "Os autômatos são blindados na frente. Mas toda máquina de corda tem uma chave em algum lugar..."
+msgstr "Os autômatos são blindados na frente. Mas toda máquina de corda tem uma chave em algum lugar..."
+
+msgid "As plataformas vão e voltam sozinhas. Embaixo é o poço de vapor: se cair, sobe rápido."
+msgstr "As plataformas vão e voltam sozinhas. Embaixo é o poço de vapor: se cair, sobe rápido."
+
+msgid "O elevador de serviço sobe até a Engrenagem Mestra."
+msgstr "O elevador de serviço sobe até a Engrenagem Mestra."
+
+msgid "Fase 8 — Engrenagem Mestra"
+msgstr "Fase 8 — Engrenagem Mestra"
+
+msgid "A: subir ao Gabinete do Diretor"
+msgstr "A: subir ao Gabinete do Diretor"
+
+msgid "Trinta anos dando corda nesse relógio... A Engrenagem Mestra é a parte mais vigiada. Usa os nichos."
+msgstr "Trinta anos dando corda nesse relógio... A Engrenagem Mestra é a parte mais vigiada. Usa os nichos."
+
+msgid "Tem um autômato no corredor de baixo. Quando ele vem em disparada, ele não para nem vira..."
+msgstr "Tem um autômato no corredor de baixo. Quando ele vem em disparada, ele não para nem vira..."
+
+msgid "Essa plataforma sobe pro corredor de cima."
+msgstr "Essa plataforma sobe pro corredor de cima."
+
+msgid "O elevador do fundo sobe direto pro Gabinete do Diretor. Que o relógio esteja do seu lado."
+msgstr "O elevador do fundo sobe direto pro Gabinete do Diretor. Que o relógio esteja do seu lado."
+
+msgid "Fase 9 — Gabinete do Diretor"
+msgstr "Fase 9 — Gabinete do Diretor"
+
+msgid "A: subir ao alto da Torre"
+msgstr "A: subir ao alto da Torre"
+
+msgid "O Regulador"
+msgstr "O Regulador"
+
+msgid "O Diretor está logo ali. Pega tudo o que puder antes de entrar. Lá dentro, o relógio não para."
+msgstr "O Diretor está logo ali. Pega tudo o que puder antes de entrar. Lá dentro, o relógio não para."
+
+msgid "Fase 10 — Poço de Escória"
+msgstr "Fase 10 — Poço de Escória"
+
+msgid "A: descer aos Cadinhos"
+msgstr "A: descer aos Cadinhos"
+
+msgid "Sera?! Achei que tinha morrido lá na Torre. Bem-vinda às Fundições: aqui embaixo é que se faz a pressão da cidade."
+msgstr "Sera?! Achei que tinha morrido lá na Torre. Bem-vinda às Fundições: aqui embaixo é que se faz a pressão da cidade."
+
+msgid "Olho nas esteiras. Elas arrastam tudo para o ferro fundido. Ferro fundido não perdoa — nem rolando, nem com couraça."
+msgstr "Olho nas esteiras. Elas arrastam tudo para o ferro fundido. Ferro fundido não perdoa — nem rolando, nem com couraça."
+
+msgid "Fundidor"
+msgstr "Fundidor"
+
+msgid "Esse poço desce até os cadinhos — os caldeirões gigantes onde o ferro é derretido. Desça devagar, de parapeito em parapeito."
+msgstr "Esse poço desce até os cadinhos — os caldeirões gigantes onde o ferro é derretido. Desça devagar, de parapeito em parapeito."
+
+msgid "Essa poça é larga demais para pular. Mas a água fria faz casca no ferro..."
+msgstr "Essa poça é larga demais para pular. Mas a água fria faz casca no ferro..."
+
+msgid "O registro abre o bico lá em cima. A casca dura pouco: atravessa rápido."
+msgstr "O registro abre o bico lá em cima. A casca dura pouco: atravessa rápido."
+
+msgid "Fundidora"
+msgstr "Fundidora"
+
+msgid "Cuidado com o autômato ali. Eles não sentem calor."
+msgstr "Cuidado com o autômato ali. Eles não sentem calor."
+
+msgid "Fase 11 — Cadinhos"
+msgstr "Fase 11 — Cadinhos"
+
+msgid "A: descer ao Coração da Montanha"
+msgstr "A: descer ao Coração da Montanha"
+
+msgid "Os martelos-pilão batem no ritmo dos cadinhos. E a esteira anda contra você: corre ([run]) se quiser chegar."
+msgstr "Os martelos-pilão batem no ritmo dos cadinhos. E a esteira anda contra você: corre ([run]) se quiser chegar."
+
+msgid "Esse rio de ferro atravessa a galeria inteira. O registro ali molha tudo de uma vez — mas a casca não espera ninguém."
+msgstr "Esse rio de ferro atravessa a galeria inteira. O registro ali molha tudo de uma vez — mas a casca não espera ninguém."
+
+msgid "Lá embaixo fica o Coração da Montanha. Ninguém que desceu até a Fornalha-Mãe voltou para contar."
+msgstr "Lá embaixo fica o Coração da Montanha. Ninguém que desceu até a Fornalha-Mãe voltou para contar."
+
+msgid "Fase 12 — Coração da Montanha"
+msgstr "Fase 12 — Coração da Montanha"
+
+msgid "A: subir de volta à luz"
+msgstr "A: subir de volta à luz"
+
+msgid "A Fornalha-Mãe"
+msgstr "A Fornalha-Mãe"
+
+msgid "Engenheira! Eu sabia que você ia descer atrás da Fornalha. Trouxe o que deu pra contrabandear."
+msgstr "Engenheira! Eu sabia que você ia descer atrás da Fornalha. Trouxe o que deu pra contrabandear."
+
+msgid "Lá dentro, o calor da Mãe derrete tudo. Já viu ferro quente levar um banho de água fria?"
+msgstr "Lá dentro, o calor da Mãe derrete tudo. Já viu ferro quente levar um banho de água fria?"
+
+msgid "Fase 13 — Passarelas do Véu"
+msgstr "Fase 13 — Passarelas do Véu"
+
+msgid "A: seguir para a Doca da Frota"
+msgstr "A: seguir para a Doca da Frota"
+
+msgid "Vigia"
+msgstr "Vigia"
+
+msgid "Você subiu pelo Véu?! Daqui de cima dá pra ver a cidade inteira... e nada do céu."
+msgstr "Você subiu pelo Véu?! Daqui de cima dá pra ver a cidade inteira... e nada do céu."
+
+msgid "O vento aqui não avisa duas vezes. Quando ouvir o assobio, agacha ([move_down]) e segura firme."
+msgstr "O vento aqui não avisa duas vezes. Quando ouvir o assobio, agacha ([move_down]) e segura firme."
+
+msgid "O cabo atravessa até a outra passarela. Com rajada, o salto fica curto ou longo demais: escolha a hora."
+msgstr "O cabo atravessa até a outra passarela. Com rajada, o salto fica curto ou longo demais: escolha a hora."
+
+msgid "Depois desse posto fica a doca da frota do Conselho."
+msgstr "Depois desse posto fica a doca da frota do Conselho."
+
+msgid "Fase 14 — Doca da Frota"
+msgstr "Fase 14 — Doca da Frota"
+
+msgid "A: subir à Coroa"
+msgstr "A: subir à Coroa"
+
+msgid "Os dirigíveis do Conselho atracam aqui para trocar as placas do Véu. As esteiras levam a carga até as prensas."
+msgstr "Os dirigíveis do Conselho atracam aqui para trocar as placas do Véu. As esteiras levam a carga até as prensas."
+
+msgid "Estivador"
+msgstr "Estivador"
+
+msgid "A plataforma de carga atravessa o vão sozinha. Com vento, segura firme lá em cima."
+msgstr "A plataforma de carga atravessa o vão sozinha. Com vento, segura firme lá em cima."
+
+msgid "O elevador do fundo sobe até a Coroa, onde o Tecelão costura o Véu. É lá que o Conselho se esconde."
+msgstr "O elevador do fundo sobe até a Coroa, onde o Tecelão costura o Véu. É lá que o Conselho se esconde."
+
+msgid "Fase 15 — A Coroa"
+msgstr "Fase 15 — A Coroa"
+
+msgid "A: subir ao topo do Véu"
+msgstr "A: subir ao topo do Véu"
+
+msgid "O Tecelão"
+msgstr "O Tecelão"
+
+msgid "Chegamos até aqui, menina. Toda Ironveil está olhando para cima esperando."
+msgstr "Chegamos até aqui, menina. Toda Ironveil está olhando para cima esperando."
+
+msgid "Sem a Fornalha, o Véu está frouxo. O Tecelão é a última coisa segurando o céu fechado."
+msgstr "Sem a Fornalha, o Véu está frouxo. O Tecelão é a última coisa segurando o céu fechado."
+
+msgid "Correndo"
+msgstr "Correndo"
+
+msgid "Trotando"
+msgstr "Trotando"
+
+msgid "A:"
+msgstr "A:"
+
+msgid "%s: encostar"
+msgstr "%s: encostar"
+
+msgid "Misturada na multidão"
+msgstr "Misturada na multidão"
+
+msgid "Z: soltar"
+msgstr "Z: soltar"
+
+msgid "↑: subir · ↓: soltar"
+msgstr "↑: subir · ↓: soltar"
+
+msgid "↓ / ← →: sair"
+msgstr "↓ / ← →: sair"
+
+msgid "Nenhuma ferramenta no inventário"
+msgstr "Nenhuma ferramenta no inventário"
+
+msgid "A vida já está cheia"
+msgstr "A vida já está cheia"
+
+msgid "Selante aplicado: +2 de vida"
+msgstr "Selante aplicado: +2 de vida"
+
+msgid "Nenhuma porta de segurança por perto"
+msgstr "Nenhuma porta de segurança por perto"
+
+msgid "Cartão de acesso usado"
+msgstr "Cartão de acesso usado"
+
+msgid "A couraça segurou o golpe"
+msgstr "A couraça segurou o golpe"
+
+msgid "▼ A / Z"
+msgstr "▼ A / Z"
+
+msgid "Ato 1 concluído"
+msgstr "Ato 1 concluído"
+
+msgid "Do alto do poço, Sera vê pela primeira vez o Mercado Suspenso: uma cidade inteira\npendurada por correntes sob a abóbada da montanha. Os guardas do Diretório não vão parar — mas Sera também não."
+msgstr "Do alto do poço, Sera vê pela primeira vez o Mercado Suspenso: uma cidade inteira\npendurada por correntes sob a abóbada da montanha. Os guardas do Diretório não vão parar — mas Sera também não."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 2"
+msgstr "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 2"
+
+msgid "Ato 5 concluído — Fim"
+msgstr "Ato 5 concluído — Fim"
+
+msgid "O Tecelão caiu e o Véu de Ferro se abre, placa por placa. Pela primeira vez, Ironveil vê o céu.\nDo alto da cúpula, Sera lê o livro de válvulas para a cidade inteira:\nninguém mais vai decidir quem respira e quem carrega a pressão."
+msgstr "O Tecelão caiu e o Véu de Ferro se abre, placa por placa. Pela primeira vez, Ironveil vê o céu.\nDo alto da cúpula, Sera lê o livro de válvulas para a cidade inteira:\nninguém mais vai decidir quem respira e quem carrega a pressão."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo  ·  Obrigado por jogar IRONVEIL\nZ / Enter: abrir o mapa (repita qualquer fase)"
+msgstr "Fases concluídas: %d/%d  ·  Progresso salvo  ·  Obrigado por jogar IRONVEIL\nZ / Enter: abrir o mapa (repita qualquer fase)"
+
+msgid "Ato 4 concluído"
+msgstr "Ato 4 concluído"
+
+msgid "A Fornalha-Mãe esfriou. Pela primeira vez em cem anos, as Caldeiras silenciam.\nLá no alto, sem pressão, as placas do Véu rangem e começam a ceder.\nO Conselho ainda está lá em cima, dentro do Tecelão."
+msgstr "A Fornalha-Mãe esfriou. Pela primeira vez em cem anos, as Caldeiras silenciam.\nLá no alto, sem pressão, as placas do Véu rangem e começam a ceder.\nO Conselho ainda está lá em cima, dentro do Tecelão."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 5"
+msgstr "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 5"
+
+msgid "Ato 3 concluído"
+msgstr "Ato 3 concluído"
+
+msgid "O Regulador parou. Antes de morrer, Maar riu: o relógio nunca foi dele.\nQuem mantém Ironveil fechada sob o Véu de Ferro é o Conselho das Válvulas —\ne a pressão que segura o Véu vem da Fornalha-Mãe, lá embaixo. Para chegar ao céu, é preciso descer."
+msgstr "O Regulador parou. Antes de morrer, Maar riu: o relógio nunca foi dele.\nQuem mantém Ironveil fechada sob o Véu de Ferro é o Conselho das Válvulas —\ne a pressão que segura o Véu vem da Fornalha-Mãe, lá embaixo. Para chegar ao céu, é preciso descer."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 4"
+msgstr "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 4"
+
+msgid "Ato 2 concluído"
+msgstr "Ato 2 concluído"
+
+msgid "O livro de válvulas prova: a ordem que explodiu a Caldeira Sul saiu da Torre do Diretório.\nLá em cima, alguém já sabe que Sera tem o livro."
+msgstr "O livro de válvulas prova: a ordem que explodiu a Caldeira Sul saiu da Torre do Diretório.\nLá em cima, alguém já sabe que Sera tem o livro."
+
+msgid "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 3"
+msgstr "Fases concluídas: %d/%d  ·  Progresso salvo\nZ / Enter: seguir para o Ato 3"
+
+msgid "NOVO: %s"
+msgstr "NOVO: %s"
+
+msgid "VIDA"
+msgstr "VIDA"
+
+msgid "CORRENDO"
+msgstr "CORRENDO"
+
+msgid "x%d   %s trocar · %s usar"
+msgstr "x%d   %s trocar · %s usar"
+
+msgid "— sem ferramenta —"
+msgstr "— sem ferramenta —"
+
+msgid "Ironveil. Uma cidade vertical, lacrada dentro da montanha há duzentos anos."
+msgstr "Ironveil. Uma cidade vertical, lacrada dentro da montanha há duzentos anos."
+
+msgid "No alto, o Mercado Suspenso vive na luz. Lá embaixo, as Caldeiras mantêm a cidade respirando."
+msgstr "No alto, o Mercado Suspenso vive na luz. Lá embaixo, as Caldeiras mantêm a cidade respirando."
+
+msgid "Até a noite em que a Caldeira Sul explodiu."
+msgstr "Até a noite em que a Caldeira Sul explodiu."
+
+msgid "O Diretório precisava de um culpado. Escolheu a engenheira-chefe de manutenção: Sera Vael."
+msgstr "O Diretório precisava de um culpado. Escolheu a engenheira-chefe de manutenção: Sera Vael."
+
+msgid "Não há tempo para provar a inocência. Só para correr."
+msgstr "Não há tempo para provar a inocência. Só para correr."
+
+msgid "A única saída é subir."
+msgstr "A única saída é subir."
+
+msgid "Pular ▶▶"
+msgstr "Pular ▶▶"
+
+msgid "Esc / Start: pular · Z / A: avançar"
+msgstr "Esc / Start: pular · Z / A: avançar"
+
+msgid "MERCADO SUSPENSO"
+msgstr "MERCADO SUSPENSO"
+
+msgid "AS CALDEIRAS"
+msgstr "AS CALDEIRAS"
+
+msgid "PROCURADA"
+msgstr "PROCURADA"
+
+msgid "SERA VAEL"
+msgstr "SERA VAEL"
+
+msgid "Sabotagem da Caldeira Sul"
+msgstr "Sabotagem da Caldeira Sul"
+
+msgid "Ordem do Diretório de Ironveil"
+msgstr "Ordem do Diretório de Ironveil"
+
+msgid "CULPADA"
+msgstr "CULPADA"
+
+msgid "IRONVEIL"
+msgstr "IRONVEIL"
+
+msgid "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
+msgstr "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
+
+msgid "Novo jogo"
+msgstr "Novo jogo"
+
+msgid "Continuar"
+msgstr "Continuar"
+
+msgid "Mapa de fases"
+msgstr "Mapa de fases"
+
+msgid "Introdução"
+msgstr "Introdução"
+
+msgid "Configurações"
+msgstr "Configurações"
+
+msgid "Sair"
+msgstr "Sair"
+
+msgid "Continuar — %s"
+msgstr "Continuar — %s"
+
+msgid "%s Ato %d: %d/3 fases"
+msgstr "%s Ato %d: %d/3 fases"
+
+msgid "[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"
+msgstr "[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"
+
+msgid "Escolha o idioma  ·  Choose your language"
+msgstr "Escolha o idioma  ·  Choose your language"
+
+msgid "Gore:"
+msgstr "Gore:"
+
+msgid "Ligado"
+msgstr "Ligado"
+
+msgid "Desligado"
+msgstr "Desligado"
+
+msgid "Efeitos:"
+msgstr "Efeitos:"
+
+msgid "Ligados"
+msgstr "Ligados"
+
+msgid "Desligados"
+msgstr "Desligados"
+
+msgid "PAUSA"
+msgstr "PAUSA"
+
+msgid "Reiniciar fase"
+msgstr "Reiniciar fase"
+
+msgid "Menu principal"
+msgstr "Menu principal"
+
+msgid "O apito da Caldeira Sul ainda ecoa. Os guardas já procuram pela engenheira."
+msgstr "O apito da Caldeira Sul ainda ecoa. Os guardas já procuram pela engenheira."
+
+msgid "As bombas que mantêm Ironveil respirando — e uma saída pelo elevador de carga."
+msgstr "As bombas que mantêm Ironveil respirando — e uma saída pelo elevador de carga."
+
+msgid "Tomé guarda o guindaste. Lá no alto, algo enorme se move."
+msgstr "Tomé guarda o guindaste. Lá no alto, algo enorme se move."
+
+msgid "O Mercado Suspenso: madeira podre, correntes e um abismo que não devolve ninguém."
+msgstr "O Mercado Suspenso: madeira podre, correntes e um abismo que não devolve ninguém."
+
+msgid "Na multidão, um rosto a mais não chama atenção. Um tiro chama."
+msgstr "Na multidão, um rosto a mais não chama atenção. Um tiro chama."
+
+msgid "Os arquivos do Diretório ficam nos telhados. Algo ronda no céu."
+msgstr "Os arquivos do Diretório ficam nos telhados. Algo ronda no céu."
+
+msgid "A Torre. Latão polido, pedra fria — e olhos por toda parte."
+msgstr "A Torre. Latão polido, pedra fria — e olhos por toda parte."
+
+msgid "O coração do relógio. Cada engrenagem aqui trabalha para o Diretor."
+msgstr "O coração do relógio. Cada engrenagem aqui trabalha para o Diretor."
+
+msgid "No alto, o Regulador marca o tempo da cidade. E Halvard Maar espera."
+msgstr "No alto, o Regulador marca o tempo da cidade. E Halvard Maar espera."
+
+msgid "Abaixo das Caldeiras, onde a montanha ainda queima. Tomé conhece o caminho."
+msgstr "Abaixo das Caldeiras, onde a montanha ainda queima. Tomé conhece o caminho."
+
+msgid "Cadinhos do tamanho de casas. Quem trabalha aqui nunca viu a luz do dia."
+msgstr "Cadinhos do tamanho de casas. Quem trabalha aqui nunca viu a luz do dia."
+
+msgid "A Fornalha-Mãe empurra a pressão que segura o Véu. Ela nunca parou."
+msgstr "A Fornalha-Mãe empurra a pressão que segura o Véu. Ela nunca parou."
+
+msgid "Sobre a cúpula, o vento uiva entre as placas. Do outro lado do ferro, o céu."
+msgstr "Sobre a cúpula, o vento uiva entre as placas. Do outro lado do ferro, o céu."
+
+msgid "A frota do Conselho troca as placas do Véu toda noite."
+msgstr "A frota do Conselho troca as placas do Véu toda noite."
+
+msgid "A Coroa. O Tecelão costura o céu fechado — e o Conselho assiste."
+msgstr "A Coroa. O Tecelão costura o céu fechado — e o Conselho assiste."
+
+msgid "Aperte qualquer tecla para começar"
+msgstr "Aperte qualquer tecla para começar"
+
+msgid "Martelo-de-Vapor"
+msgstr "Martelo-de-Vapor"
+
+msgid "Dirigível Vigília"
+msgstr "Dirigível Vigília"
+
+msgid "Tutorial nas caldeiras: bordas, reentrâncias, válvulas e a primeira carga de vapor."
+msgstr "Tutorial nas caldeiras: bordas, reentrâncias, válvulas e a primeira carga de vapor."
+
+msgid "Elevador de carga, caixa de força, painel, cartão de acesso e rebite de escalada."
+msgstr "Elevador de carga, caixa de força, painel, cartão de acesso e rebite de escalada."
+
+msgid "Tomé e o guindaste. No alto do poço espera o Martelo-de-Vapor."
+msgstr "Tomé e o guindaste. No alto do poço espera o Martelo-de-Vapor."
+
+msgid "Chegada ao Mercado pelas docas: tábuas podres sobre o abismo, tirolesas e o primeiro holofote."
+msgstr "Chegada ao Mercado pelas docas: tábuas podres sobre o abismo, tirolesas e o primeiro holofote."
+
+msgid "Multidão, holofotes e guardas com escudo. Lira, a contrabandista, conhece um atalho."
+msgstr "Multidão, holofotes e guardas com escudo. Lira, a contrabandista, conhece um atalho."
+
+msgid "Pelos telhados até o livro de válvulas. No céu, o dirigível Vigília caça Sera."
+msgstr "Pelos telhados até o livro de válvulas. No céu, o dirigível Vigília caça Sera."
+
+msgid "A base da Torre: torretas-sentinela, pistões esmagadores e o primeiro autômato. Hora de aprender a rolar."
+msgstr "A base da Torre: torretas-sentinela, pistões esmagadores e o primeiro autômato. Hora de aprender a rolar."
+
+msgid "O coração do relógio: plataformas de engrenagem, guardas, torretas e pistões trabalhando juntos."
+msgstr "O coração do relógio: plataformas de engrenagem, guardas, torretas e pistões trabalhando juntos."
+
+msgid "O Diretor Halvard Maar espera no alto, no comando do Regulador e seu pêndulo."
+msgstr "O Diretor Halvard Maar espera no alto, no comando do Regulador e seu pêndulo."
+
+msgid "Abaixo das Caldeiras: esteiras que arrastam para o ferro fundido e um poço para descer."
+msgstr "Abaixo das Caldeiras: esteiras que arrastam para o ferro fundido e um poço para descer."
+
+msgid "Martelos-pilão, rios de ferro e registros de água que endurecem a superfície por alguns segundos."
+msgstr "Martelos-pilão, rios de ferro e registros de água que endurecem a superfície por alguns segundos."
+
+msgid "A Fornalha-Mãe, o golem que gera a pressão do Véu, e a Conselheira Ívora."
+msgstr "A Fornalha-Mãe, o golem que gera a pressão do Véu, e a Conselheira Ívora."
+
+msgid "Sobre a cúpula: vento em rajadas, tábuas soltas e uma tirolesa sobre o vazio."
+msgstr "Sobre a cúpula: vento em rajadas, tábuas soltas e uma tirolesa sobre o vazio."
+
+msgid "A doca onde a frota do Conselho troca as placas: esteiras, prensas e uma plataforma de carga."
+msgstr "A doca onde a frota do Conselho troca as placas: esteiras, prensas e uma plataforma de carga."
+
+msgid "A Coroa do Véu. O Tecelão e o Conselho das Válvulas — o fim da história."
+msgstr "A Coroa do Véu. O Tecelão e o Conselho das Válvulas — o fim da história."
+
+msgid "MAPA DE IRONVEIL"
+msgstr "MAPA DE IRONVEIL"
+
+msgid "✓ Concluída"
+msgstr "✓ Concluída"
+
+msgid "● Checkpoint aqui"
+msgstr "● Checkpoint aqui"
+
+msgid "Liberada"
+msgstr "Liberada"
+
+msgid "Bloqueada"
+msgstr "Bloqueada"
+
+msgid "%d. %s"
+msgstr "%d. %s"
+
+msgid "Chefão: %s."
+msgstr "Chefão: %s."
+
+msgid "Sera segue para a próxima fase..."
+msgstr "Sera segue para a próxima fase..."
+
+msgid "Conclua a fase anterior para liberar."
+msgstr "Conclua a fase anterior para liberar."
+
+msgid "Z / A / Enter: repetir a fase\n(o checkpoint salvo não muda)"
+msgstr "Z / A / Enter: repetir a fase\n(o checkpoint salvo não muda)"
+
+msgid "Z / A / Enter: continuar do checkpoint"
+msgstr "Z / A / Enter: continuar do checkpoint"
+
+msgid "Z / A / Enter: começar a fase"
+msgstr "Z / A / Enter: começar a fase"
+
+msgid "←/→ ou ↑/↓: escolher fase · Esc: menu"
+msgstr "←/→ ou ↑/↓: escolher fase · Esc: menu"
+
+msgid "Z / Enter: seguir"
+msgstr "Z / Enter: seguir"
+
+msgid "Próxima fase: %s"
+msgstr "Próxima fase: %s"
+
+msgid "ATO 5 — O VÉU DE FERRO"
+msgstr "ATO 5 — O VÉU DE FERRO"
+
+msgid "ATO 2 — O MERCADO SUSPENSO"
+msgstr "ATO 2 — O MERCADO SUSPENSO"
+
+msgid "ATO 3 — A TORRE"
+msgstr "ATO 3 — A TORRE"
+
+msgid "ATO 1 — AS CALDEIRAS"
+msgstr "ATO 1 — AS CALDEIRAS"
+
+msgid "ATO 4 — AS FUNDIÇÕES"
+msgstr "ATO 4 — AS FUNDIÇÕES"
+
+msgid "Fases concluídas: %d/%d"
+msgstr "Fases concluídas: %d/%d"
+
+msgid "Atos"
+msgstr "Atos"
+
+msgid "Sangue que voa, mancha o cenário, gruda nas pessoas e espirra na tela. Desligado, vira faíscas e destroços."
+msgstr "Sangue que voa, mancha o cenário, gruda nas pessoas e espirra na tela. Desligado, vira faíscas e destroços."
+
+msgid "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado ao entardecer, Torre fria), brilho em volta das luzes, cantos escurecidos, grão de filme e a imagem separando em cores ao levar dano. Desligado: imagem limpa e um pouco mais leve para o computador. As luzes do cenário e a borda de vida continuam."
+msgstr "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado ao entardecer, Torre fria), brilho em volta das luzes, cantos escurecidos, grão de filme e a imagem separando em cores ao levar dano. Desligado: imagem limpa e um pouco mais leve para o computador. As luzes do cenário e a borda de vida continuam."
+
+msgid "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento."
+msgstr "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento."
+
+msgid "Idioma dos textos do jogo. Muda na hora."
+msgstr "Idioma dos textos do jogo. Muda na hora."
+
+msgid "Volume da trilha sonora (cada clique sobe 10%; depois de 100% volta a 0, que desliga a música)."
+msgstr "Volume da trilha sonora (cada clique sobe 10%; depois de 100% volta a 0, que desliga a música)."
+
+msgid "Volume dos efeitos sonoros: tiros, vapor, passos, explosões."
+msgstr "Volume dos efeitos sonoros: tiros, vapor, passos, explosões."
+
+msgid "Clique (ou Enter) numa ação e aperte a nova tecla. Se outra ação usava essa tecla, as duas trocam. Esc cancela. O controle de videogame não muda."
+msgstr "Clique (ou Enter) numa ação e aperte a nova tecla. Se outra ação usava essa tecla, as duas trocam. Esc cancela. O controle de videogame não muda."
+
+msgid "Volta todas as teclas para o padrão: setas, Z, X, C, Shift, A, S, Q e Esc."
+msgstr "Volta todas as teclas para o padrão: setas, Z, X, C, Shift, A, S, Q e Esc."
+
+msgid "Voltar."
+msgstr "Voltar."
+
+msgid "CONFIGURAÇÕES"
+msgstr "CONFIGURAÇÕES"
+
+msgid "JOGO"
+msgstr "JOGO"
+
+msgid "Restaurar teclas padrão"
+msgstr "Restaurar teclas padrão"
+
+msgid "Voltar"
+msgstr "Voltar"
+
+msgid "TECLAS"
+msgstr "TECLAS"
+
+msgid "Button"
+msgstr "Button"
+
+msgid "Sangue e gore: %s"
+msgstr "Sangue e gore: %s"
+
+msgid "Efeitos de tela: %s"
+msgstr "Efeitos de tela: %s"
+
+msgid "Tela cheia (F11): %s"
+msgstr "Tela cheia (F11): %s"
+
+msgid "Ligada"
+msgstr "Ligada"
+
+msgid "Desligada"
+msgstr "Desligada"
+
+msgid "Idioma: %s"
+msgstr "Idioma: %s"
+
+msgid "Música: %d%%"
+msgstr "Música: %d%%"
+
+msgid "Efeitos sonoros: %d%%"
+msgstr "Efeitos sonoros: %d%%"
+
+msgid "Aperte uma tecla…"
+msgstr "Aperte uma tecla…"
+
+msgid "II"
+msgstr "II"
+

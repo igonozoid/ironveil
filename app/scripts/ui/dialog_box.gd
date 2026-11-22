@@ -57,9 +57,9 @@ func start(new_lines: Array, done: Callable) -> void:
 
 func _show_line() -> void:
 	var entry: Array = lines[index]
-	speaker.text = String(entry[0])
+	speaker.text = tr(String(entry[0]))
 	speaker.modulate = Color("7fd4ff") if entry[0] == "Sera" else Color("e0b860")
-	text.text = String(entry[1])
+	text.text = Game.fmt(tr(String(entry[1])))
 	text.visible_characters = 0
 	shown = 0.0
 

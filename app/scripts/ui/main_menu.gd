@@ -14,15 +14,12 @@ func _ready() -> void:
 	Music.play("menu")
 	Music.preload_all()
 	set_anchors_preset(Control.PRESET_FULL_RECT)
+	# Primeira vez: escolher o idioma antes de qualquer coisa.
+	if Game.language() == "":
+		_language_picker()
+		return
 
-	var title := Label.new()
-	title.text = "IRONVEIL"
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.position = Vector2(0, 62)
-	title.size = Vector2(640, 50)
-	title.add_theme_font_size_override("font_size", 42)
-	title.add_theme_color_override("font_color", Color("d9965a"))
-	add_child(title)
+	_build_logo()
 
 	var sub := Label.new()
 	sub.text = "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
@@ -54,7 +51,7 @@ func _ready() -> void:
 
 	if Game.load_save():
 		var ph := int(Game.checkpoint.get("phase", 0))
-		continue_btn.text = "Continuar — %s" % Game.PHASE_NAMES[clampi(ph, 0, Game.PHASE_COUNT - 1)]
+		continue_btn.text = tr("Continuar — %s") % tr(Game.PHASE_NAMES[clampi(ph, 0, Game.PHASE_COUNT - 1)])
 		continue_btn.grab_focus()
 	else:
 		continue_btn.disabled = true
@@ -70,7 +67,7 @@ func _ready() -> void:
 			if Game.is_phase_complete(int(i)):
 				n += 1
 		var mark := "★" if Game.is_act_complete(a) else "·"
-		parts.append("%s Ato %d: %d/3 fases" % [mark, a + 1, n])
+		parts.append(tr("%s Ato %d: %d/3 fases") % [mark, a + 1, n])
 	prog.text = "      ".join(parts)
 	if Game.is_act_complete(0):
 		prog.add_theme_color_override("font_color", Color("ffd27a"))
@@ -81,7 +78,7 @@ func _ready() -> void:
 	add_child(prog)
 
 	controls = Label.new()
-	controls.text = Game.fmt("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia")
+	controls.text = Game.fmt(tr("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"))
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls.position = Vector2(0, 306)
 	controls.size = Vector2(640, 40)
@@ -90,10 +87,101 @@ func _ready() -> void:
 	add_child(controls)
 
 
+const LOGO_SHADER := """
+shader_type canvas_item;
+varying float ly;
+void vertex() { ly = VERTEX.y; }
+void fragment() {
+	float k = clamp((ly - 8.0) / 44.0, 0.0, 1.0);
+	vec3 top = vec3(1.0, 0.93, 0.62);
+	vec3 mid = vec3(0.86, 0.56, 0.24);
+	vec3 bot = vec3(0.42, 0.22, 0.09);
+	vec3 g = k < 0.5 ? mix(top, mid, k * 2.0) : mix(mid, bot, (k - 0.5) * 2.0);
+	g += vec3(0.25) * smoothstep(0.47, 0.5, k) * (1.0 - smoothstep(0.5, 0.56, k));
+	COLOR = vec4(g, COLOR.a);
+}
+"""
+
+
+## Logo: o emblema (engrenagem com o Véu rachado de luz) e o nome em latão.
+func _build_logo() -> void:
+	var emblem := TextureRect.new()
+	emblem.texture = load("res://icons/icon_192.png")
+	emblem.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	emblem.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	emblem.position = Vector2(296, 6)
+	emblem.size = Vector2(48, 48)
+	add_child(emblem)
+	var spacing := FontVariation.new()
+	spacing.base_font = ThemeDB.fallback_font
+	spacing.spacing_glyph = 6
+	spacing.variation_embolden = 0.6
+	for layer in 2:
+		var title := Label.new()
+		title.text = "IRONVEIL"
+		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		title.position = Vector2(0, 52)
+		title.size = Vector2(640, 56)
+		title.add_theme_font_override("font", spacing)
+		title.add_theme_font_size_override("font_size", 44)
+		if layer == 0:
+			# Sombra e contorno escuros por trás
+			title.add_theme_color_override("font_color", Color(0.1, 0.06, 0.04))
+			title.add_theme_color_override("font_outline_color", Color(0.06, 0.04, 0.03))
+			title.add_theme_constant_override("outline_size", 8)
+			title.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.7))
+			title.add_theme_constant_override("shadow_offset_y", 3)
+		else:
+			var sh := Shader.new()
+			sh.code = LOGO_SHADER
+			var mat := ShaderMaterial.new()
+			mat.shader = sh
+			title.material = mat
+		add_child(title)
+
+
+## Escolha de idioma na primeira abertura do jogo.
+func _language_picker() -> void:
+	var emblem := TextureRect.new()
+	emblem.texture = load("res://icons/icon_192.png")
+	emblem.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	emblem.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	emblem.position = Vector2(280, 40)
+	emblem.size = Vector2(80, 80)
+	add_child(emblem)
+	var l := Label.new()
+	l.text = "Escolha o idioma  ·  Choose your language"
+	l.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.position = Vector2(0, 140)
+	l.size = Vector2(640, 24)
+	l.add_theme_font_size_override("font_size", 14)
+	add_child(l)
+	var vb := VBoxContainer.new()
+	vb.position = Vector2(230, 180)
+	vb.custom_minimum_size = Vector2(180, 0)
+	vb.add_theme_constant_override("separation", 8)
+	add_child(vb)
+	var first: Button = null
+	for lang in Game.LANGUAGES:
+		var code := String(lang[0])
+		var b := _button(vb, String(lang[1]), func():
+			Game.set_language(code)
+			get_tree().reload_current_scene())
+		b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		if first == null:
+			first = b
+	first.grab_focus()
+
+
 func _open_settings(from: Button) -> void:
+	var lang_before := Game.language()
 	var s = load("res://scripts/ui/settings_menu.gd").new()
 	s.on_close = func():
-		controls.text = Game.fmt("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia")
+		if Game.language() != lang_before:
+			get_tree().reload_current_scene.call_deferred()
+			return
+		controls.text = Game.fmt(tr("[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"))
 		from.grab_focus()
 	add_child(s)
 

@@ -57,13 +57,13 @@ func _label(font_size: int, align: HorizontalAlignment) -> Label:
 
 
 func message(t: String) -> void:
-	message_label.text = t
+	message_label.text = tr(t)
 	message_label.modulate.a = 1.0
 	message_t = 2.4
 
 
 func show_hint(t: String) -> void:
-	hint_label.text = t
+	hint_label.text = tr(t)
 	hint_panel.visible = true
 	hint_panel.modulate.a = 1.0
 	hint_panel.reset_size()
@@ -77,7 +77,7 @@ func hide_hint() -> void:
 
 ## Aviso grande de upgrade novo.
 func show_upgrade(up_name: String, desc: String) -> void:
-	title_label.text = "NOVO: " + up_name
+	title_label.text = tr("NOVO: %s") % tr(up_name)
 	message(desc)
 	message_t = 4.5
 	title_label.modulate.a = 0.0
@@ -88,7 +88,7 @@ func show_upgrade(up_name: String, desc: String) -> void:
 
 
 func show_title(t: String) -> void:
-	title_label.text = t
+	title_label.text = tr(t)
 	var tw := create_tween()
 	tw.tween_interval(0.6)
 	tw.tween_property(title_label, "modulate:a", 1.0, 0.6)
@@ -116,7 +116,7 @@ class HudDraw extends Control:
 	func _draw() -> void:
 		var font := ThemeDB.fallback_font
 		# Vida
-		draw_string(font, Vector2(10, 17), "VIDA", HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
+		draw_string(font, Vector2(10, 17), tr("VIDA"), HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
 		for i in Game.max_hp():
 			var r := Rect2(Vector2(38 + i * 15, 8), Vector2(12, 10))
 			draw_rect(r.grow(1), Color("1e1b1b"))
@@ -141,7 +141,7 @@ class HudDraw extends Control:
 				draw_rect(Rect2(pr.position + Vector2(0, 12 * (1.0 - k)), Vector2(10, 12 * k)), Color(0.63, 0.48, 0.22, 0.5))
 			x += 16.0
 		if Game.run_mode:
-			draw_string(font, Vector2(x + 2, 17), "CORRENDO", HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.8, 0.45))
+			draw_string(font, Vector2(x + 2, 17), tr("CORRENDO"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.8, 0.45))
 		_draw_boss(font)
 		# Ferramenta
 		var box := Rect2(Vector2(470, 6), Vector2(162, 28))
@@ -151,10 +151,10 @@ class HudDraw extends Control:
 		var count := Game.tool_count(tool)
 		if count > 0:
 			Icons.draw_tool(self, tool, box.position + Vector2(14, 14), 1.2)
-			draw_string(font, box.position + Vector2(28, 13), String(Game.TOOL_NAMES[tool]), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.95, 0.9, 0.82))
-			draw_string(font, box.position + Vector2(28, 24), "x%d   %s trocar · %s usar" % [count, Game.key_name("swap_tool"), Game.key_name("use_tool")], HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.8, 0.65, 0.5))
+			draw_string(font, box.position + Vector2(28, 13), tr(String(Game.TOOL_NAMES[tool])), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.95, 0.9, 0.82))
+			draw_string(font, box.position + Vector2(28, 24), tr("x%d   %s trocar · %s usar") % [count, Game.key_name("swap_tool"), Game.key_name("use_tool")], HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.8, 0.65, 0.5))
 		else:
-			draw_string(font, box.position + Vector2(10, 17), "— sem ferramenta —", HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.55, 0.5, 0.47))
+			draw_string(font, box.position + Vector2(10, 17), tr("— sem ferramenta —"), HORIZONTAL_ALIGNMENT_LEFT, -1, 10, Color(0.55, 0.5, 0.47))
 
 
 	func _draw_boss(font: Font) -> void:
@@ -162,7 +162,7 @@ class HudDraw extends Control:
 		if b == null or not b.bar_visible:
 			return
 		var r := Rect2(Vector2(200, 10), Vector2(240, 7))
-		draw_string(font, Vector2(200, 30), String(b.title), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.95, 0.75, 0.6))
+		draw_string(font, Vector2(200, 30), tr(String(b.title)), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(0.95, 0.75, 0.6))
 		draw_rect(r.grow(1.5), Color("1e1b1b"))
 		draw_rect(r, Color("2e2a2a"))
 		var k: float = clampf(b.hp_ratio(), 0.0, 1.0)

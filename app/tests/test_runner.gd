@@ -25,6 +25,7 @@ func _ready() -> void:
 	await _act3()
 	await _features()
 	await _act45()
+	await _extras()
 	Game.checkpoint = saved_cp
 	Game.progress = saved_prog
 	if backup != "":
@@ -1144,3 +1145,78 @@ func _act45() -> void:
 		var f2 := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
 		f2.store_string(backup)
 		f2.close()
+
+
+func _extras() -> void:
+	var backup := ""
+	if FileAccess.file_exists(Game.SAVE_PATH):
+		backup = FileAccess.get_file_as_string(Game.SAVE_PATH)
+	var saved_cp: Dictionary = Game.checkpoint.duplicate()
+	var saved_prog: Dictionary = Game.progress.duplicate(true)
+	var saved_lang: String = Game.language()
+	Game.checkpoint = {}
+	Game.progress["upgrades"] = []
+	# ---------------- Tradução
+	TranslationServer.set_locale("en")
+	check(tr("Novo jogo") == "New game" and tr("Fase 7 — Átrio de Bronze") == "Stage 7 — Bronze Atrium", "English translation loads")
+	TranslationServer.set_locale("pt_BR")
+	check(tr("Novo jogo") == "Novo jogo", "Portuguese stays as source")
+	Game.apply_language()
+	# ---------------- Console de testes
+	await load_phase(0)
+	var p = g.player
+	var con = null
+	for n in g.get_children():
+		if n.has_method("run") and n.has_method("toggle"):
+			con = n
+	check(con != null, "test console exists")
+	con.run("god")
+	Game.hp = 2
+	p.hurt(1, "bullet")
+	check(Game.god_mode and Game.hp == 2, "console: god mode blocks damage")
+	con.run("god")
+	con.run("vida")
+	con.run("municao")
+	con.run("upgrades")
+	check(Game.hp == Game.max_hp() and Game.tool_count("charge") == 9 and Game.has_upgrade("botas") and p.armor == 1, "console: health, ammo, upgrades, shield")
+	Game.progress["upgrades"] = []
+	# ---------------- Fresta: Sera atrás de quem passa e na sombra
+	var cover = get_tree().get_nodes_in_group("cover")[0]
+	await place(cover.global_position + Vector2(0, -0.5), 1)
+	Input.action_press("move_up")
+	await frames(4)
+	Input.action_release("move_up")
+	await frames(4)
+	check(p.in_cover and p.z_index < 3 and p.fill_light.energy < p.fill_light.base_energy, "cover: Sera behind NPCs and in shadow")
+	release_all()
+	# ---------------- Indicadores de interação
+	var has_markers := false
+	for n in g.level.get_children():
+		if n.has_method("_draw") and n.get_script() == load("res://scripts/interact_markers.gd"):
+			has_markers = true
+	check(has_markers, "interaction markers present")
+	# ---------------- Arena trancada
+	await load_phase(5)
+	Game.hp = 99
+	p = g.player
+	await place(Vector2(1280 + 80, 299.5), 1)
+	await frames(10)
+	check(g.arena_walls != null, "boss arena is locked")
+	for i in 30:
+		if g.dialog.active:
+			g.dialog._close()
+		await frames(1)
+	p.global_position = Vector2(1280 + 30, 299.5)
+	Input.action_press("move_left")
+	await frames(60)
+	Input.action_release("move_left")
+	check(p.global_position.x >= 1280.0 - 2.0, "cannot leave the boss arena (x=%.0f)" % p.global_position.x)
+	release_all()
+	Game.checkpoint = saved_cp
+	Game.progress = saved_prog
+	Game.settings["lang"] = saved_lang
+	Game.apply_language()
+	if backup != "":
+		var f := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
+		f.store_string(backup)
+		f.close()

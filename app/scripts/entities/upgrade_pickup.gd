@@ -42,7 +42,7 @@ func collect(p) -> void:
 	if p.has_method("on_upgrade"):
 		p.on_upgrade(id)
 	var info: Array = Game.UPGRADES[id]
-	Game.world.hud.show_upgrade(String(info[1]), Game.fmt(String(info[2])))
+	Game.world.hud.show_upgrade(String(info[1]), Game.fmt(tr(String(info[2]))))
 	Sfx.play("heal", 0.0, 0.8)
 	Sfx.play("pickup", -2.0, 0.7)
 	Fx.burst(get_parent(), global_position, Color(1.0, 0.9, 0.6), 30, 180.0, 0.7, Vector2.ZERO, 2.0)

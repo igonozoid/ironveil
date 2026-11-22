@@ -22,6 +22,9 @@ const REBINDABLE := [
 	["interact", "Interagir"], ["use_tool", "Usar ferramenta"], ["swap_tool", "Trocar ferramenta"],
 	["pause", "Pausa"],
 ]
+## Idiomas disponíveis: [código, nome no próprio idioma]. Os textos ficam em
+## i18n/<código>.po (o português é o idioma-fonte).
+const LANGUAGES := [["pt_BR", "Português (Brasil)"], ["en", "English"]]
 const DEFAULT_KEYS := {
 	"move_left": KEY_LEFT, "move_right": KEY_RIGHT, "move_up": KEY_UP, "move_down": KEY_DOWN,
 	"jump": KEY_Z, "shoot": KEY_X, "roll": KEY_C, "run": KEY_SHIFT, "interact": KEY_A,
@@ -58,7 +61,7 @@ var checkpoint: Dictionary = {}
 ## Não é apagado por "Novo jogo".
 var progress: Dictionary = {"completed": [], "act1_complete": false, "acts_complete": [], "upgrades": []}
 ## Opções do jogador (salvas junto com o progresso).
-var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "keys": {}, "music": 0.7, "sfx": 1.0}
+var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "keys": {}, "music": 0.7, "sfx": 1.0, "lang": ""}
 var show_story: bool = false
 var intro_to_menu: bool = false
 ## Repetição de uma fase já concluída (pelo mapa): não mexe no checkpoint salvo.
@@ -74,6 +77,8 @@ var end_act: int = 0
 var phase_intro: bool = false
 ## Modo corrida (alternado pela tecla de trotar/correr).
 var run_mode: bool = false
+## Console de testes: invencibilidade.
+var god_mode: bool = false
 ## Sangue e sujeira na roupa de Sera (só nesta sessão; some ao fim de cada ato).
 var sera_splats: Array = []
 var sera_grime: float = 0.0
@@ -85,7 +90,9 @@ var world = null
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_setup_input()
+	_import_external_save()
 	load_save()
+	apply_language()
 	apply_keys()
 	apply_fullscreen()
 
@@ -200,6 +207,36 @@ func cycle_volume(key: String) -> void:
 	settings[key] = snappedf(v, 0.1)
 	Music.apply_volumes()
 	write_save()
+
+
+## Idioma escolhido ("" = ainda não escolheu: o menu pergunta antes de tudo).
+func language() -> String:
+	return String(settings.get("lang", ""))
+
+
+func language_name() -> String:
+	var code := language()
+	for l in LANGUAGES:
+		if l[0] == code:
+			return String(l[1])
+	return String(LANGUAGES[0][1])
+
+
+func apply_language() -> void:
+	var code := language()
+	TranslationServer.set_locale(code if code != "" else "pt_BR")
+
+
+func set_language(code: String) -> void:
+	settings["lang"] = code
+	apply_language()
+	write_save()
+
+
+func cycle_language() -> void:
+	var codes: Array = LANGUAGES.map(func(l): return l[0])
+	var i := codes.find(language())
+	set_language(String(codes[(i + 1) % codes.size()]))
 
 
 func toggle_fullscreen() -> void:
@@ -435,6 +472,33 @@ func restore_checkpoint() -> void:
 	tool_index = int(c.get("tool_index", 0))
 
 
+## Sem save aqui, mas existe um de outra instalação do jogo nesta máquina
+## (ex.: o jogo rodado pelo Godot Flatpak e a versão baixada usam pastas
+## diferentes)? Copia para cá, para não começar do zero.
+func _import_external_save() -> void:
+	if FileAccess.file_exists(SAVE_PATH):
+		return
+	var home := OS.get_environment("HOME")
+	var appdata := OS.get_environment("APPDATA")
+	var candidates: Array[String] = []
+	if home != "":
+		candidates.append(home + "/.var/app/org.godotengine.Godot/data/godot/app_userdata/Ironveil/ironveil_save.json")
+		candidates.append(home + "/.local/share/godot/app_userdata/Ironveil/ironveil_save.json")
+		candidates.append(home + "/Library/Application Support/Godot/app_userdata/Ironveil/ironveil_save.json")
+	if appdata != "":
+		candidates.append(appdata + "/Godot/app_userdata/Ironveil/ironveil_save.json")
+	var mine := ProjectSettings.globalize_path(SAVE_PATH)
+	for c in candidates:
+		if c != mine and FileAccess.file_exists(c):
+			var data := FileAccess.get_file_as_string(c)
+			if data.strip_edges().begins_with("{"):
+				var f := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+				if f:
+					f.store_string(data)
+					f.close()
+				return
+
+
 func has_save() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 
@@ -459,6 +523,7 @@ func load_save() -> bool:
 		settings["fx"] = bool(sett.get("fx", true))
 		settings["fullscreen"] = bool(sett.get("fullscreen", false))
 		settings["music"] = clampf(float(sett.get("music", 0.7)), 0.0, 1.0)
+		settings["lang"] = String(sett.get("lang", ""))
 		settings["sfx"] = clampf(float(sett.get("sfx", 1.0)), 0.0, 1.0)
 		var keys: Dictionary = {}
 		var sk = sett.get("keys", {})

@@ -91,6 +91,7 @@ var splats = SplatsScript.new()
 var wounds = SplatsScript.new()
 var grime := 0.0
 var hp_seen := 99
+var fill_light = null
 ## Animação de entrada no começo da fase: Sera chega andando até o início.
 var entering := false
 var enter_to := 0.0
@@ -139,6 +140,7 @@ func _ready() -> void:
 	armor = 1 if Game.has_upgrade("couraca") else 0
 	# Luz de preenchimento: Sera sempre legível no escuro.
 	var fill = Light.make(self, Vector2(0, -16), Color(1.0, 0.92, 0.82), 72.0, 0.42)
+	fill_light = fill
 	# Nas Fundições, escuras, a luz vira a lanterna de Sera.
 	if Game.world != null and Game.world.level != null and Game.world.level.theme == "foundry":
 		fill.texture_scale = 160.0 / 64.0
@@ -485,14 +487,14 @@ func _process_normal(delta: float, locked: bool) -> void:
 func _update_prompt() -> void:
 	var it = _find_interactable()
 	if it != null:
-		var pr := String(it.prompt)
+		var pr := tr(String(it.prompt))
 		if pr.begins_with("A:"):
 			pr = Game.key_name("interact") + ":" + pr.substr(2)
 		current_prompt = pr
 	elif not crouching and _find_cover() != null:
-		current_prompt = Game.key_name("move_up") + ": encostar"
+		current_prompt = tr("%s: encostar") % Game.key_name("move_up")
 	elif hidden_in_crowd():
-		current_prompt = "Misturada na multidão"
+		current_prompt = tr("Misturada na multidão")
 
 
 ## Escondida entre civis: no chão, sem correr e sem ter atirado há pouco.
@@ -563,6 +565,11 @@ func _process_zip(delta: float, locked: bool) -> void:
 ## Queda no abismo do Mercado: sem volta.
 func fall_into_abyss() -> void:
 	if state == S.DEAD:
+		return
+	if Game.god_mode:
+		# Invencível: volta para o início da tela.
+		global_position = Game.world.level.player_start if Game.world.level.screen_of_pos(Game.world.level.player_start) == Game.world.current_screen else Vector2(global_position.x, global_position.y - 400.0)
+		velocity = Vector2.ZERO
 		return
 	Game.hp = 0
 	state = S.DEAD
@@ -834,11 +841,15 @@ func _enter_cover(spot) -> void:
 	velocity = Vector2.ZERO
 	turn_timer = 0.0
 	Sfx.play("cover", -4.0)
+	# Dentro da fresta: na sombra e atrás de quem passa na frente.
+	z_index = 1
+	if fill_light != null:
+		fill_light.energy = fill_light.base_energy * 0.15
 
 
 func _process_cover(delta: float, locked: bool) -> void:
 	cover_t += delta
-	current_prompt = "↓ / ← →: sair"
+	current_prompt = tr("↓ / ← →: sair")
 	global_position.x = move_toward(global_position.x, cover_x, 140.0 * delta)
 	velocity = Vector2.ZERO
 	if locked or cover_t < 0.15:
@@ -854,6 +865,9 @@ func _process_cover(delta: float, locked: bool) -> void:
 
 func _leave_cover() -> void:
 	in_cover = false
+	z_index = 5
+	if fill_light != null:
+		fill_light.energy = fill_light.base_energy
 	state = S.NORMAL
 	was_on_floor = true
 
@@ -990,7 +1004,7 @@ func _find_security_door():
 
 func hurt(amount: int, kind: String = "generic") -> void:
 	# Ferro fundido não perdoa: ignora rolamento, couraça e invencibilidade.
-	if state == S.DEAD or (invuln > 0.0 and kind != "lava"):
+	if state == S.DEAD or (invuln > 0.0 and kind != "lava") or Game.god_mode:
 		return
 	if in_cover and kind == "bullet":
 		return
@@ -1030,6 +1044,7 @@ func hurt(amount: int, kind: String = "generic") -> void:
 func _die() -> void:
 	state = S.DEAD
 	in_cover = false
+	z_index = 5
 	dead_t = 0.0
 	if state == S.HANG or collider.disabled:
 		collider.set_deferred("disabled", false)
@@ -1445,7 +1460,7 @@ func _draw_hang(lift: float) -> void:
 
 ## Encostada: de frente para a câmera, costas na parede da reentrância.
 func _draw_cover() -> void:
-	var tint := Color(0.86, 0.86, 0.94)
+	var tint := Color(0.42, 0.41, 0.48)
 	var suit := suit_c * tint
 	var suit_d := suit_dc * tint
 	var by := bust_y - breath * 0.2
