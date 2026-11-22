@@ -733,3 +733,23 @@ entra luz do sol. Derrotado, o Véu se abre: **fim do jogo**.
   voltar à tela anterior. O elevador da arena do Martelo também não desce mais.
 - **Save entre versões**: se a versão baixada não encontra um save, ela procura e copia o de outra
   instalação do jogo na mesma máquina (ex.: o jogo rodado pelo Godot Flatpak).
+
+## 19. Dificuldades e Novo Jogo+
+
+Ao terminar o jogo, o botão **Novo jogo** vira **Novo jogo+** e a escolha de dificuldade libera
+**Intenso** e **Insano** (antes disso só **Normal** fica disponível). A dificuldade vai no save e
+aparece no HUD, embaixo da vida.
+
+| | Normal | Intenso | Insano |
+|---|---|---|---|
+| Vida dos inimigos comuns | base | ×1,5 | ×2 |
+| Vida dos chefões | base | ×1,35 | ×1,75 |
+| Guardas extras por guarda | 0 | +1 | +2 (e +1 autômato) |
+| Sangue (gotas, jatos, pedaços) | ×1 | ×2,6 | ×5 |
+| Tremor de tela | ×1 | ×1,5 | ×2,2, nunca para |
+| Efeitos (faíscas, luzes, bloom, grão) | base | mais fortes | no máximo |
+
+- **Intenso**: 40% das mortes de guarda viram estraçalhamento; sangue na lente fica mais tempo.
+- **Insano**: toda morte estraçalha; sangue escorre pelas bordas e cantos da tela; explosões
+  soltam rajadas secundárias de fogo e fumaça; a imagem tem aberração cromática constante.
+- Console: `dificuldade normal|intenso|insano` troca a dificuldade e reinicia a fase.

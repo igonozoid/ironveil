@@ -43,6 +43,7 @@ var splats = SplatsScript.new()
 
 
 func _ready() -> void:
+	hp = Game.enemy_hp(2)
 	add_to_group("enemy")
 	add_to_group("guard")
 	add_to_group("splat_target")
@@ -327,6 +328,12 @@ func _die(kind: String = "", dir: Vector2 = Vector2.ZERO) -> void:
 	if Game.world:
 		Game.world.hitstop(0.07)
 		Game.world.shake(4.0)
+	# Intenso/Insano: qualquer morte pode virar picadinho.
+	var fxl := Game.fx_level()
+	if kind != "blast" and kind != "crush" and (fxl >= 2 or (fxl == 1 and randf() < 0.4)) and Game.gore_enabled():
+		kind = "blast"
+		if dir == Vector2.ZERO:
+			dir = Vector2(-facing, -0.5)
 	if kind == "blast" or kind == "crush":
 		# Despedaçado
 		gibbed = true

@@ -18,8 +18,10 @@ const Fx := preload("res://scripts/fx.gd")
 
 enum S { IDLE, INTRO, WALK, AIM, FIRE, RAISE, RECOVER, LAUNCH, STUN, DYING, DEAD }
 
-const MAX_HP := 20
-const PHASE2_HP := 10
+const BASE_HP := 20
+## Vida máxima nesta dificuldade (definida em _ready).
+var MAX_HP := 20
+var PHASE2_HP := 10
 const GRAVITY := 980.0
 const HIGH_Y := -21.0
 const LOW_Y := -7.0
@@ -78,6 +80,10 @@ var arena := Rect2()
 
 
 func _ready() -> void:
+	MAX_HP = Game.boss_hp(BASE_HP)
+	hp = MAX_HP
+	bar_hp = float(MAX_HP)
+	PHASE2_HP = MAX_HP / 2
 	add_to_group("enemy")
 	add_to_group("boss")
 	collision_layer = 4

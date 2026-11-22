@@ -36,7 +36,7 @@ func _ready() -> void:
 	vb.add_theme_constant_override("separation", 4)
 	add_child(vb)
 
-	new_btn = _button(vb, "Novo jogo", func(): Game.new_game())
+	new_btn = _button(vb, "Novo jogo+" if Game.is_game_complete() else "Novo jogo", func(): _difficulty_picker())
 	continue_btn = _button(vb, "Continuar", func(): Game.continue_game())
 	var row1 := _row(vb)
 	var map_btn := _button(row1, "Mapa de fases", func(): Game.open_map("browse"))
@@ -138,6 +138,76 @@ func _build_logo() -> void:
 			mat.shader = sh
 			title.material = mat
 		add_child(title)
+
+
+const DIFF_DESC := [
+	"A aventura como foi pensada. Sangue e explosões na medida.",
+	"Mais guardas em cada posição, armaduras mais duras, chefões com mais vida. O sangue jorra para todos os lados.",
+	"Dobro de inimigos e de vida, chefões quase invencíveis. Gore absurdo, explosões em cadeia, a tela nunca para de tremer e as cores enlouquecem.",
+]
+
+
+## Escolha da dificuldade ao começar. Intenso e Insano são o Novo Jogo+:
+## liberam depois de vencer o Tecelão (os upgrades continuam com você).
+func _difficulty_picker() -> void:
+	var layer := Control.new()
+	layer.position = Vector2.ZERO
+	layer.size = Vector2(640, 360)
+	layer.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(layer)
+	var bg := ColorRect.new()
+	bg.color = Color(0.04, 0.03, 0.04, 0.95)
+	bg.size = Vector2(640, 360)
+	layer.add_child(bg)
+	var t := Label.new()
+	t.text = "ESCOLHA A DIFICULDADE"
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	t.position = Vector2(0, 40)
+	t.size = Vector2(640, 26)
+	t.add_theme_font_size_override("font_size", 18)
+	t.add_theme_color_override("font_color", Color("e0b860"))
+	layer.add_child(t)
+	var desc := Label.new()
+	desc.position = Vector2(110, 236)
+	desc.size = Vector2(420, 60)
+	desc.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	desc.add_theme_font_size_override("font_size", 10)
+	desc.add_theme_color_override("font_color", Color(1.0, 0.88, 0.7))
+	layer.add_child(desc)
+	var vb := VBoxContainer.new()
+	vb.position = Vector2(220, 92)
+	vb.custom_minimum_size = Vector2(200, 0)
+	vb.add_theme_constant_override("separation", 6)
+	layer.add_child(vb)
+	var unlocked := Game.is_game_complete()
+	var first: Button = null
+	for i in Game.DIFFICULTIES.size():
+		var d: Dictionary = Game.DIFFICULTIES[i]
+		var idx := i
+		var label := tr(String(d["name"]))
+		if i > 0 and not unlocked:
+			label += "  🔒"
+		var b := _button(vb, label, func(): Game.new_game(idx))
+		b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+		b.disabled = i > 0 and not unlocked
+		if i == 2:
+			b.add_theme_color_override("font_color", Color(1.0, 0.4, 0.3))
+		elif i == 1:
+			b.add_theme_color_override("font_color", Color(1.0, 0.7, 0.35))
+		var info := tr(DIFF_DESC[i])
+		if i > 0 and not unlocked:
+			info += "\n" + tr("Termine o jogo para liberar (Novo Jogo+).")
+		b.focus_entered.connect(func(): desc.text = info)
+		b.mouse_entered.connect(func(): desc.text = info)
+		if first == null:
+			first = b
+	var back := _button(vb, "Voltar", func():
+		layer.queue_free()
+		new_btn.grab_focus())
+	back.add_theme_font_size_override("font_size", 11)
+	first.grab_focus()
+	desc.text = tr(DIFF_DESC[0])
 
 
 ## Escolha de idioma na primeira abertura do jogo.

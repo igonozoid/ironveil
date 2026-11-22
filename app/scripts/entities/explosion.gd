@@ -27,7 +27,13 @@ func _ready() -> void:
 	Fx.steam_puff(par, position, 14)
 	Fx.sparks(par, position)
 	Fx.sparks(par, position + Vector2(4, -4))
-	Light.make(par, position, Color(1.0, 0.6, 0.25), radius * 4.0, 2.2, 0.0, 0.45)
+	Light.make(par, position, Color(1.0, 0.6, 0.25), radius * (4.0 + 2.0 * Game.fx_level()), 2.2 + Game.fx_level(), 0.0, 0.45 + 0.25 * Game.fx_level())
+	if Game.fx_level() >= 2:
+		# Insano: explosões secundárias de fogo e fumaça em volta.
+		for k in 4:
+			var off := Vector2(randf_range(-radius, radius), randf_range(-radius * 0.6, radius * 0.3))
+			Fx.fire(par, position + off, 10)
+			Fx.smoke(par, position + off, 6)
 	Sfx.play("explosion", -2.0 if radius > 30.0 else -6.0)
 	if Game.world:
 		Game.world.shake(6.0 if radius > 30.0 else 3.0)

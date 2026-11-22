@@ -15,8 +15,10 @@ const Light := preload("res://scripts/fx/light.gd")
 
 enum S { IDLE, INTRO, WADE, SLAM, THROW, COOLED, DYING, DEAD }
 
-const MAX_HP := 30
-const PHASE2_HP := 15
+const BASE_HP := 30
+## Vida máxima nesta dificuldade (definida em _ready).
+var MAX_HP := 30
+var PHASE2_HP := 15
 const COOL_DMG := 3
 const CORE_HITS := 5
 const COOL_TIME := 5.0
@@ -70,6 +72,10 @@ func setup(pos: Vector2, screen_rect: Rect2, floor_world_y: float, x_from: float
 
 
 func _ready() -> void:
+	MAX_HP = Game.boss_hp(BASE_HP)
+	hp = MAX_HP
+	bar_hp = float(MAX_HP)
+	PHASE2_HP = MAX_HP / 2
 	add_to_group("boss")
 	add_to_group("enemy")
 	collision_layer = 8

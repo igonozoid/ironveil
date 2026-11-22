@@ -107,6 +107,13 @@ lanternas, luar, holofotes, clarões de tiro), e o pós-processamento muda por a
 brilho, vinheta e grão. Há ainda tremor de tela por impacto e sangue que gruda nos personagens, no
 cenário e na tela. **Gore** e **Efeitos** podem ser desligados no menu.
 
+### Novo Jogo+ e dificuldades
+
+Terminando o jogo, o **Novo jogo+** libera duas dificuldades além do **Normal**: **Intenso** (mais
+guardas, armaduras mais duras e muito mais sangue) e **Insano** (tudo no máximo: o dobro de vida,
+o triplo de guardas, explosões em cadeia, tela tremendo sem parar e sangue escorrendo pelos cantos
+da tela).
+
 ## ⬇️ Instalar
 
 Baixe na página do jogo no **[itch.io](https://igonoz.itch.io/ironveil)** (o app do itch atualiza
@@ -160,7 +167,7 @@ Uma versão baixada dos Releases (Linux):
 Durante o jogo, **=** abre um console (o jogo pausa). Comandos: `god` (invencível), `vida`,
 `municao`, `escudo`, `upgrades`, `tudo` (todos esses juntos), `liberar` (todas as fases no mapa),
 `fase N` (vai para a fase N), `chefao` (vai para o chefão da fase), `matar` (inimigos da tela),
-`chefao_vida N`, `vento N`, `ajuda`.
+`chefao_vida N`, `vento N`, `dificuldade normal|intenso|insano`, `ajuda`.
 
 ### Idiomas
 
@@ -205,7 +212,7 @@ itch usa o secret `BUTLER_API_KEY` e a variável `ITCH_GAME`; veja [docs/itch/PA
 ## 🗺️ Próximos passos
 
 Os cinco atos estão no jogo. As melhorias propostas para as fases e ideias futuras (segredos,
-tempo e medalhas, Novo Jogo+, sprites com normal map) estão em [docs/ROADMAP.md](docs/ROADMAP.md).
+tempo e medalhas, sprites com normal map) estão em [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## 📚 Documentação
 

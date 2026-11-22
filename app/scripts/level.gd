@@ -442,6 +442,12 @@ func _spawn_entities() -> void:
 			g.position = cell_bottom_center(c) - Vector2(0, 0.5)
 			g.shielded = pair[1]
 			add_child(g)
+			# Intenso/Insano: mais guardas por posição.
+			for pos in _extra_spots(cell_bottom_center(c), Game.extra_enemies()):
+				var e = GuardScript.new()
+				e.position = pos
+				e.shielded = pair[1] and randf() < 0.5
+				add_child(e)
 
 	# Tirolesas: cada Z liga ao z mais próximo.
 	for c in _marks("Z"):
@@ -564,6 +570,10 @@ func _spawn_entities() -> void:
 		var au = AutomatonScript.new()
 		au.position = cell_bottom_center(c) - Vector2(0, 0.5)
 		add_child(au)
+		for pos in _extra_spots(cell_bottom_center(c), 1 if Game.extra_enemies() >= 2 else 0):
+			var ea = AutomatonScript.new()
+			ea.position = pos
+			add_child(ea)
 
 	for c in _marks("f"):
 		var br = BrakeScript.new()
@@ -693,6 +703,24 @@ func _build_belts() -> void:
 	add_child(drawer)
 
 
+## Posições livres ao lado de um inimigo (chão firme, sem parede, mesma tela).
+func _extra_spots(base: Vector2, n: int) -> Array:
+	var out: Array = []
+	if n <= 0:
+		return out
+	var scr := screen_of_pos(base + Vector2(0, -4))
+	for k in 6:
+		if out.size() >= n:
+			break
+		var off := (k / 2 + 1) * 38.0 * (1.0 if k % 2 == 0 else -1.0)
+		var p := base + Vector2(off, 0)
+		var floor_c := world_to_cell(p + Vector2(0, 4))
+		var body_c := world_to_cell(p + Vector2(0, -12))
+		if screen_of_pos(p + Vector2(0, -4)) == scr and (is_solid(floor_c) or is_oneway(floor_c)) and not is_solid(body_c) and _marks("~").find(world_to_cell(p + Vector2(0, -4))) < 0:
+			out.append(p - Vector2(0, 0.5))
+	return out
+
+
 func _spawn_npcs() -> void:
 	var i := 0
 	for e in npc_spots:
@@ -711,7 +739,9 @@ func _spawn_npcs() -> void:
 # ---------------------------------------------------------------- luzes
 
 func add_light(pos: Vector2, col: Color, radius: float, energy: float, flick: float = 0.0) -> void:
-	var l = Light.make(self, pos, col, radius, energy, flick)
+	# Intenso/Insano: luzes mais fortes e tremulando.
+	var fx := Game.fx_level()
+	var l = Light.make(self, pos, col, radius * (1.0 + 0.15 * fx), energy * (1.0 + 0.2 * fx), minf(0.9, flick + 0.2 * fx))
 	l.z_index = 20
 	l.enabled = false
 	lights.append([l, screen_of_pos(pos)])

@@ -140,6 +140,9 @@ class HudDraw extends Control:
 				draw_rect(pr, Color("2e2a2a"))
 				draw_rect(Rect2(pr.position + Vector2(0, 12 * (1.0 - k)), Vector2(10, 12 * k)), Color(0.63, 0.48, 0.22, 0.5))
 			x += 16.0
+		if Game.difficulty > 0:
+			draw_string(font, Vector2(10, 32), tr(String(Game.diff()["name"])).to_upper(), HORIZONTAL_ALIGNMENT_LEFT, -1, 8,
+				Color(1.0, 0.35, 0.2) if Game.difficulty >= 2 else Color(1.0, 0.65, 0.3))
 		if Game.run_mode:
 			draw_string(font, Vector2(x + 2, 17), tr("CORRENDO"), HORIZONTAL_ALIGNMENT_LEFT, -1, 8, Color(1.0, 0.8, 0.45))
 		_draw_boss(font)

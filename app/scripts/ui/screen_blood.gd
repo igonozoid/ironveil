@@ -2,8 +2,8 @@ extends CanvasLayer
 ## Sangue que espirra "na lente": manchas na tela quando alguém é estraçalhado
 ## perto de Sera. Escorrem devagar e somem em alguns segundos.
 
-const MAX_BLOBS := 16
-const HOLD := 2.6
+var MAX_BLOBS := 16
+var HOLD := 2.6
 const FADE := 2.4
 
 ## Cada mancha: {pos, parts: [[off, r]], drips: [[off, len, max, speed, w]], t, col}
@@ -12,6 +12,8 @@ var canvas: Node2D
 
 
 func _ready() -> void:
+	MAX_BLOBS = 16 * (1 + Game.fx_level() * 2)
+	HOLD = 2.6 + 1.6 * Game.fx_level()
 	layer = 9
 	canvas = Node2D.new()
 	add_child(canvas)
@@ -22,6 +24,7 @@ func _ready() -> void:
 func splat(pos: Vector2, dir: Vector2, k: float) -> void:
 	if not Game.gore_enabled():
 		return
+	k *= 1.0 + 0.6 * Game.fx_level()
 	var n := 1 + int(k * 2.2)
 	for i in n:
 		# Espalha em direção à "câmera": empurra para longe do ponto e para as bordas.
@@ -29,7 +32,13 @@ func splat(pos: Vector2, dir: Vector2, k: float) -> void:
 		if dir != Vector2.ZERO:
 			off += dir.normalized() * randf_range(20, 90) * k
 		var p := (pos + off).clamp(Vector2(-10, -10), Vector2(650, 370))
-		_add_blob(p, randf_range(5.0, 11.0) * clampf(k, 0.5, 1.4))
+		_add_blob(p, randf_range(5.0, 11.0) * clampf(k, 0.5, 1.4 + 0.4 * Game.fx_level()))
+	# Insano: sangue escorrendo pelos cantos e bordas da tela.
+	if Game.fx_level() >= 2:
+		for i in 2:
+			var edge: Vector2 = [Vector2(randf_range(0, 640), randf_range(-6, 14)), Vector2(randf_range(-6, 14), randf_range(0, 360)),
+				Vector2(randf_range(626, 646), randf_range(0, 360)), Vector2(randf_range(0, 640), randf_range(346, 366))][randi() % 4]
+			_add_blob(edge, randf_range(10.0, 20.0))
 
 
 func _add_blob(p: Vector2, size: float) -> void:

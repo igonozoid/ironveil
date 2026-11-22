@@ -147,6 +147,9 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_update_music()
+	# Insano: a tela nunca para de tremer.
+	if Game.fx_level() >= 2 and trauma < 0.22:
+		trauma = 0.22
 	if input_lock > 0.0:
 		input_lock -= delta
 	# Tremor: trauma² com senos de frequências diferentes (sem chiado aleatório),
@@ -234,7 +237,7 @@ func _build_ambient() -> void:
 				[Color(1.0, 0.55, 0.2, 0.8), 25, Vector2(0, -1), 14.0, Vector2(0, -8), 1.0, 2.0, 6.0]]
 	for s in specs:
 		var p := CPUParticles2D.new()
-		p.amount = s[1]
+		p.amount = int(s[1]) * (1 + Game.fx_level())
 		p.lifetime = s[7]
 		p.preprocess = s[7]
 		p.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
@@ -263,6 +266,7 @@ func _build_ambient() -> void:
 func hitstop(duration: float) -> void:
 	hitstop_id += 1
 	var my_id := hitstop_id
+	duration *= 1.0 + 0.35 * Game.fx_level()
 	hitstop_left = duration
 	Engine.time_scale = 0.05
 	await get_tree().create_timer(duration, true, false, true).timeout
@@ -287,6 +291,7 @@ func add_entity(n: Node) -> void:
 
 ## `amount` na escala antiga (≈2 leve, 6 forte, 12 enorme); vira trauma somado.
 func shake(amount: float) -> void:
+	amount *= Game.shake_mult()
 	shake_amt = maxf(shake_amt, amount)
 	trauma = clampf(trauma + amount / 12.0, 0.0, 1.0)
 

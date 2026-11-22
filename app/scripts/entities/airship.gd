@@ -15,8 +15,10 @@ const Fx := preload("res://scripts/fx.gd")
 
 enum S { IDLE, INTRO, CRUISE, BOMB, SEARCH, BURST, DROP, ANCHOR, STAGGER, DYING, DEAD }
 
-const MAX_HP := 24
-const PHASE2_HP := 12
+const BASE_HP := 24
+## Vida máxima nesta dificuldade (definida em _ready).
+var MAX_HP := 24
+var PHASE2_HP := 12
 const HARPOON_DMG := 4
 const ANCHOR_DMG := 3
 const BEAM_LEN := 260.0
@@ -83,6 +85,10 @@ func setup(pos: Vector2, screen_rect: Rect2, floor_world_y: float) -> void:
 
 
 func _ready() -> void:
+	MAX_HP = Game.boss_hp(BASE_HP)
+	hp = MAX_HP
+	bar_hp = float(MAX_HP)
+	PHASE2_HP = MAX_HP / 2
 	add_to_group("boss")
 	add_to_group("enemy")
 	collision_layer = 8

@@ -22,6 +22,16 @@ const REBINDABLE := [
 	["interact", "Interagir"], ["use_tool", "Usar ferramenta"], ["swap_tool", "Trocar ferramenta"],
 	["pause", "Pausa"],
 ]
+## Dificuldades. Intenso e Insano (Novo Jogo+) liberam ao terminar o jogo.
+## gore: multiplica sangue e pedaços; hp: vida dos inimigos comuns; boss: vida
+## dos chefões; extra: inimigos a mais por posição; shake: tremor de tela;
+## fx: exagero visual (0 normal, 1 intenso, 2 insano).
+const DIFFICULTIES := [
+	{"id": "normal", "name": "Normal", "gore": 1.0, "hp": 1.0, "boss": 1.0, "extra": 0, "shake": 1.0, "fx": 0},
+	{"id": "intenso", "name": "Intenso", "gore": 2.6, "hp": 1.5, "boss": 1.35, "extra": 1, "shake": 1.5, "fx": 1},
+	{"id": "insano", "name": "Insano", "gore": 5.0, "hp": 2.0, "boss": 1.75, "extra": 2, "shake": 2.2, "fx": 2},
+]
+
 ## Idiomas disponíveis: [código, nome no próprio idioma]. Os textos ficam em
 ## i18n/<código>.po (o português é o idioma-fonte).
 const LANGUAGES := [["pt_BR", "Português (Brasil)"], ["en", "English"]]
@@ -77,6 +87,8 @@ var end_act: int = 0
 var phase_intro: bool = false
 ## Modo corrida (alternado pela tecla de trotar/correr).
 var run_mode: bool = false
+## Dificuldade da partida atual (índice em DIFFICULTIES); vai no checkpoint.
+var difficulty: int = 0
 ## Console de testes: invencibilidade.
 var god_mode: bool = false
 ## Sangue e sujeira na roupa de Sera (só nesta sessão; some ao fim de cada ato).
@@ -252,6 +264,42 @@ func apply_fullscreen() -> void:
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fs else DisplayServer.WINDOW_MODE_WINDOWED)
 
 
+# ---------------------------------------------------------------- dificuldade
+
+func diff() -> Dictionary:
+	return DIFFICULTIES[clampi(difficulty, 0, DIFFICULTIES.size() - 1)]
+
+
+## Novo Jogo+ (Intenso e Insano): liberado depois de vencer o Tecelão.
+func is_game_complete() -> bool:
+	return is_act_complete(ACTS.size() - 1)
+
+
+func gore_mult() -> float:
+	return float(diff()["gore"])
+
+
+func fx_level() -> int:
+	return int(diff()["fx"])
+
+
+func shake_mult() -> float:
+	return float(diff()["shake"])
+
+
+func extra_enemies() -> int:
+	return int(diff()["extra"])
+
+
+## Vida de um inimigo comum na dificuldade atual.
+func enemy_hp(base: int) -> int:
+	return maxi(base, int(ceil(base * float(diff()["hp"]))))
+
+
+func boss_hp(base: int) -> int:
+	return int(round(base * float(diff()["boss"])))
+
+
 # ---------------------------------------------------------------- upgrades
 
 func max_hp() -> int:
@@ -272,8 +320,9 @@ func grant_upgrade(id: String) -> void:
 
 # ---------------------------------------------------------------- fluxo
 
-func new_game() -> void:
+func new_game(diff: int = 0) -> void:
 	phase_intro = true
+	difficulty = clampi(diff, 0, DIFFICULTIES.size() - 1)
 	phase = 0
 	hp = max_hp()
 	inv = {"charge": 0, "sealant": 0, "card": 0}
@@ -388,6 +437,7 @@ func go_to_menu() -> void:
 
 func save_checkpoint() -> void:
 	var cp := {
+		"diff": difficulty,
 		"phase": phase,
 		"hp": hp,
 		"inv": inv.duplicate(),
@@ -464,6 +514,7 @@ func restore_checkpoint() -> void:
 	if c.is_empty():
 		return
 	phase = int(c.get("phase", 0))
+	difficulty = clampi(int(c.get("diff", 0)), 0, DIFFICULTIES.size() - 1)
 	hp = mini(int(c.get("hp", max_hp())), max_hp())
 	var saved_inv: Dictionary = c.get("inv", {})
 	inv = {"charge": 0, "sealant": 0, "card": 0}

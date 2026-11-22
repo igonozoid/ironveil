@@ -15,6 +15,7 @@ const HELP := [
 	"matar — derrota os inimigos da tela",
 	"chefao_vida N — deixa o chefão com N de vida",
 	"vento N — força do vento (0 desliga)",
+	"dificuldade normal|intenso|insano — muda a dificuldade e reinicia a fase",
 	"limpar — limpa o console",
 	"fechar — fecha (ou = / Esc)",
 ]
@@ -199,6 +200,17 @@ func run(cmd: String) -> String:
 				return "Fora do jogo."
 			w.set_wind(float(arg))
 			return "Vento: %s" % arg
+		"dificuldade", "difficulty":
+			var names := ["normal", "intenso", "insano"]
+			var di := names.find(arg)
+			if di < 0:
+				return "Use: dificuldade normal | intenso | insano"
+			Game.difficulty = di
+			if w != null:
+				toggle()
+				Game.save_checkpoint()
+				get_tree().reload_current_scene()
+			return "Dificuldade: " + arg
 		"limpar", "clear":
 			lines.clear()
 			log_label.text = ""

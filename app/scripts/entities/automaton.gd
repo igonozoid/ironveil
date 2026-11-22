@@ -35,6 +35,7 @@ var splats = SplatsScript.new()
 
 
 func _ready() -> void:
+	hp = Game.enemy_hp(2)
 	add_to_group("enemy")
 	add_to_group("guard")
 	add_to_group("automaton")

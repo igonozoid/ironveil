@@ -9,9 +9,10 @@ extends Node2D
 const Fx := preload("res://scripts/fx.gd")
 const TILE := 20
 const GRAV := 900.0
-const MAX_DROPS := 700
+## Limites crescem com a dificuldade (Intenso/Insano: gore absurdo).
+var MAX_DROPS := 700
 const MAX_STAINS := 3000
-const MAX_GIBS := 180
+var MAX_GIBS := 180
 const MAX_POOLS := 60
 
 const BLOOD := Color(0.62, 0.04, 0.04)
@@ -44,6 +45,9 @@ var drips: Array = []
 
 
 func _ready() -> void:
+	var fx := Game.fx_level()
+	MAX_DROPS = 700 * (1 + fx * 2)
+	MAX_GIBS = 180 * (1 + fx * 2)
 	z_index = 7
 	stains = StainLayer.new()
 	stains.z_index = -6   # relativo: fica atrás dos personagens, sobre o cenário
@@ -67,6 +71,9 @@ func spray(pos: Vector2, dir: Vector2, amount: int, speed: float, spread: float 
 		Fx.sparks(get_parent(), pos)
 		return
 	var base := dir.angle() if dir != Vector2.ZERO else -PI * 0.5
+	amount = int(amount * Game.gore_mult())
+	speed *= 1.0 + 0.18 * Game.fx_level()
+	spread = minf(PI, spread * (1.0 + 0.25 * Game.fx_level()))
 	for i in amount:
 		if d_pos.size() >= MAX_DROPS:
 			_remove_drop(0)
@@ -89,13 +96,13 @@ func _maybe_screen(pos: Vector2, dir: Vector2, amount: int, speed: float) -> voi
 		return
 	var pc: Vector2 = Game.world.player.center()
 	var d := pos.distance_to(pc)
-	var reach := 70.0 + amount * 1.2 + speed * 0.08
+	var reach := (70.0 + amount * 1.2 + speed * 0.08) * (1.0 + 0.8 * Game.fx_level())
 	if d > reach:
 		return
 	var k := clampf(1.0 - d / reach, 0.15, 1.0) * clampf(amount / 40.0, 0.4, 1.6)
 	var cam: Vector2 = Game.world.camera.position
 	sb.splat(pos - cam, dir, k)
-	screen_cd = 0.12
+	screen_cd = 0.12 / (1.0 + Game.fx_level())
 
 
 ## Explosão de sangue em todas as direções.
@@ -114,7 +121,7 @@ func pool(pos: Vector2, radius: float) -> void:
 		tries += 1
 	if not level.is_solid(c):
 		return
-	stains.add_pool(Vector2(pos.x, c.y * TILE), radius)
+	stains.add_pool(Vector2(pos.x, c.y * TILE), radius * (1.0 + 0.45 * Game.fx_level()))
 
 
 ## Pedaços que voam, quicam e (se `bleed`) sangram.
@@ -122,6 +129,8 @@ func gibs(pos: Vector2, amount: int, colors: Array, bleed: bool = true, speed: f
 	if bleed and not _gore():
 		Fx.debris(get_parent(), pos)
 		return
+	amount = int(amount * (Game.gore_mult() if bleed else 1.0 + 0.5 * Game.fx_level()))
+	speed *= 1.0 + 0.2 * Game.fx_level()
 	for i in amount:
 		var idx := g_pos.size()
 		if idx >= MAX_GIBS:
@@ -334,7 +343,7 @@ class StainLayer extends Node2D:
 	var dirty := false
 
 	func add_stain(p: Vector2, r: float, kind: int, col: Color) -> void:
-		if s_pos.size() < 3000:
+		if s_pos.size() < 3000 * (1 + Game.fx_level()):
 			s_pos.append(p)
 			s_r.append(r)
 			s_kind.append(kind)
@@ -344,7 +353,7 @@ class StainLayer extends Node2D:
 			s_r[ring] = r
 			s_kind[ring] = kind
 			s_col[ring] = col
-			ring = (ring + 1) % 3000
+			ring = (ring + 1) % (3000 * (1 + Game.fx_level()))
 		dirty = true
 
 	func add_pool(p: Vector2, target: float) -> void:

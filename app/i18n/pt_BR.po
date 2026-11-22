@@ -63,6 +63,15 @@ msgstr "Trocar ferramenta"
 msgid "Pausa"
 msgstr "Pausa"
 
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Intenso"
+msgstr "Intenso"
+
+msgid "Insano"
+msgstr "Insano"
+
 msgid "pt_BR"
 msgstr "pt_BR"
 
@@ -1101,6 +1110,9 @@ msgstr "IRONVEIL"
 msgid "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
 msgstr "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
 
+msgid "Novo jogo+"
+msgstr "Novo jogo+"
+
 msgid "Novo jogo"
 msgstr "Novo jogo"
 
@@ -1127,6 +1139,24 @@ msgstr "%s Ato %d: %d/3 fases"
 
 msgid "[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"
 msgstr "[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"
+
+msgid "A aventura como foi pensada. Sangue e explosões na medida."
+msgstr "A aventura como foi pensada. Sangue e explosões na medida."
+
+msgid "Mais guardas em cada posição, armaduras mais duras, chefões com mais vida. O sangue jorra para todos os lados."
+msgstr "Mais guardas em cada posição, armaduras mais duras, chefões com mais vida. O sangue jorra para todos os lados."
+
+msgid "Dobro de inimigos e de vida, chefões quase invencíveis. Gore absurdo, explosões em cadeia, a tela nunca para de tremer e as cores enlouquecem."
+msgstr "Dobro de inimigos e de vida, chefões quase invencíveis. Gore absurdo, explosões em cadeia, a tela nunca para de tremer e as cores enlouquecem."
+
+msgid "ESCOLHA A DIFICULDADE"
+msgstr "ESCOLHA A DIFICULDADE"
+
+msgid "Termine o jogo para liberar (Novo Jogo+)."
+msgstr "Termine o jogo para liberar (Novo Jogo+)."
+
+msgid "Voltar"
+msgstr "Voltar"
 
 msgid "Escolha o idioma  ·  Choose your language"
 msgstr "Escolha o idioma  ·  Choose your language"
@@ -1358,9 +1388,6 @@ msgstr "JOGO"
 
 msgid "Restaurar teclas padrão"
 msgstr "Restaurar teclas padrão"
-
-msgid "Voltar"
-msgstr "Voltar"
 
 msgid "TECLAS"
 msgstr "TECLAS"

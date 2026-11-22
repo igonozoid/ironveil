@@ -63,6 +63,15 @@ msgstr "Swap tool"
 msgid "Pausa"
 msgstr "Pause"
 
+msgid "Normal"
+msgstr "Normal"
+
+msgid "Intenso"
+msgstr "Intense"
+
+msgid "Insano"
+msgstr "Insane"
+
 msgid "pt_BR"
 msgstr ""
 
@@ -1101,6 +1110,9 @@ msgstr ""
 msgid "Caldeiras · Mercado Suspenso · Torre · Fundições · Véu de Ferro"
 msgstr "Boilers · Hanging Market · Tower · Foundries · Iron Veil"
 
+msgid "Novo jogo+"
+msgstr "New game+"
+
 msgid "Novo jogo"
 msgstr "New game"
 
@@ -1127,6 +1139,24 @@ msgstr "%s Act %d: %d/3 stages"
 
 msgid "[move_left] [move_right]: mover · [jump]: pular · [shoot]: atirar · [roll]: rolar · [run]: trotar/correr\n[move_up] na parede: encostar · [interact]: interagir · [use_tool]: usar ferramenta · [swap_tool]: trocar · [pause]: pausa · F11: tela cheia"
 msgstr "[move_left] [move_right]: move · [jump]: jump · [shoot]: shoot · [roll]: roll · [run]: jog/run\n[move_up] at the wall: take cover · [interact]: interact · [use_tool]: use tool · [swap_tool]: swap · [pause]: pause · F11: fullscreen"
+
+msgid "A aventura como foi pensada. Sangue e explosões na medida."
+msgstr "The adventure as designed. Blood and explosions in good measure."
+
+msgid "Mais guardas em cada posição, armaduras mais duras, chefões com mais vida. O sangue jorra para todos os lados."
+msgstr "More guards at every post, tougher armor, bosses with more health. Blood sprays in every direction."
+
+msgid "Dobro de inimigos e de vida, chefões quase invencíveis. Gore absurdo, explosões em cadeia, a tela nunca para de tremer e as cores enlouquecem."
+msgstr "Double the enemies and their health, near-invincible bosses. Absurd gore, chain explosions, a screen that never stops shaking and colors gone mad."
+
+msgid "ESCOLHA A DIFICULDADE"
+msgstr "CHOOSE THE DIFFICULTY"
+
+msgid "Termine o jogo para liberar (Novo Jogo+)."
+msgstr "Finish the game to unlock (New Game+)."
+
+msgid "Voltar"
+msgstr "Back"
 
 msgid "Escolha o idioma  ·  Choose your language"
 msgstr ""
@@ -1358,9 +1388,6 @@ msgstr "GAME"
 
 msgid "Restaurar teclas padrão"
 msgstr "Reset default keys"
-
-msgid "Voltar"
-msgstr "Back"
 
 msgid "TECLAS"
 msgstr "KEYS"

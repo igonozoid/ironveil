@@ -26,6 +26,7 @@ func _ready() -> void:
 	await _features()
 	await _act45()
 	await _extras()
+	await _difficulty()
 	Game.checkpoint = saved_cp
 	Game.progress = saved_prog
 	if backup != "":
@@ -1216,6 +1217,41 @@ func _extras() -> void:
 	Game.progress = saved_prog
 	Game.settings["lang"] = saved_lang
 	Game.apply_language()
+	if backup != "":
+		var f := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
+		f.store_string(backup)
+		f.close()
+
+
+func _difficulty() -> void:
+	var backup := ""
+	if FileAccess.file_exists(Game.SAVE_PATH):
+		backup = FileAccess.get_file_as_string(Game.SAVE_PATH)
+	var saved_cp: Dictionary = Game.checkpoint.duplicate()
+	var saved_prog: Dictionary = Game.progress.duplicate(true)
+	Game.checkpoint = {}
+	Game.progress["upgrades"] = []
+	var counts := []
+	var drops := []
+	for d in [0, 2]:
+		Game.difficulty = d
+		await load_phase(1)
+		Game.hp = 99
+		var guards := get_tree().get_nodes_in_group("guard")
+		counts.append(guards.size())
+		if d == 2:
+			check(guards[0].hp == 4, "insane: guards have double health (%d)" % guards[0].hp)
+		g.blood.burst(g.player.center() + Vector2(40, 0), 40)
+		drops.append(g.blood.d_pos.size())
+	check(counts[1] > counts[0], "insane: more guards (%d -> %d)" % [counts[0], counts[1]])
+	check(drops[1] > drops[0] * 3, "insane: much more blood (%d -> %d)" % [drops[0], drops[1]])
+	Game.difficulty = 1
+	await load_phase(8)
+	check(g.boss.MAX_HP > g.boss.BASE_HP, "intense: boss has more health (%d)" % g.boss.MAX_HP)
+	Game.difficulty = 0
+	await load_phase(0)
+	Game.checkpoint = saved_cp
+	Game.progress = saved_prog
 	if backup != "":
 		var f := FileAccess.open(Game.SAVE_PATH, FileAccess.WRITE)
 		f.store_string(backup)

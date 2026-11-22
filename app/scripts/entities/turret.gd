@@ -31,6 +31,7 @@ func setup(pos: Vector2, f: int, off: float) -> void:
 
 
 func _ready() -> void:
+	hp = Game.enemy_hp(3)
 	add_to_group("turret")
 	add_to_group("breakable")
 	collision_layer = 8
