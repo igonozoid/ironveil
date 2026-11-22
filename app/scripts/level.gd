@@ -1068,11 +1068,11 @@ class Backdrop extends Node2D:
 		draw_rect(rect, Color(0.07, 0.05, 0.05))
 		# Paredes de rocha em camadas
 		for i in 6:
-			var y := rect.position.y + rng.randf_range(0, rect.size.y)
+			var y := rect.position.y + rng.randf_range(20, rect.size.y - 40)
 			var pts := PackedVector2Array()
 			var x := rect.position.x
-			while x <= rect.end.x + 40:
-				pts.append(Vector2(x, y + rng.randf_range(-14, 14)))
+			while x <= rect.end.x:
+				pts.append(Vector2(x, clampf(y + rng.randf_range(-14, 14), rect.position.y, rect.end.y - 4.0)))
 				x += 40.0
 			pts.append(Vector2(rect.end.x, rect.end.y))
 			pts.append(Vector2(rect.position.x, rect.end.y))
