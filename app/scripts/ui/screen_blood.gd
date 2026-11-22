@@ -2,17 +2,18 @@ extends CanvasLayer
 ## Sangue que espirra "na lente": manchas na tela quando alguém é estraçalhado
 ## perto de Sera. Escorrem devagar e somem em alguns segundos.
 
+const Dot := preload("res://scripts/fx/dot.gd")
+
 var MAX_BLOBS := 16
 var HOLD := 2.6
 const FADE := 2.4
 
-## Cada mancha: {pos, parts: [[off, r]], drips: [[off, len, max, speed, w]], t, col}
 var blobs: Array = []
 var canvas: Node2D
 
 
 func _ready() -> void:
-	MAX_BLOBS = 16 * (1 + Game.fx_level() * 2)
+	MAX_BLOBS = 16 * (1 + Game.fx_level())
 	HOLD = 2.6 + 1.6 * Game.fx_level()
 	layer = 9
 	canvas = Node2D.new()
@@ -43,56 +44,85 @@ func splat(pos: Vector2, dir: Vector2, k: float) -> void:
 
 func _add_blob(p: Vector2, size: float) -> void:
 	if blobs.size() >= MAX_BLOBS:
+		blobs[0].queue_free()
 		blobs.remove_at(0)
-	var parts: Array = [[Vector2.ZERO, size]]
-	for i in randi_range(4, 9):
-		var a := randf() * TAU
-		var d := randf_range(size * 0.5, size * 1.9)
-		parts.append([Vector2.from_angle(a) * d, size * randf_range(0.12, 0.45)])
-	var drips: Array = []
-	for i in randi_range(1, 3):
-		drips.append([Vector2(randf_range(-size * 0.6, size * 0.6), size * 0.4), 0.0,
-			randf_range(size * 1.5, size * 5.0), randf_range(6.0, 16.0), randf_range(1.2, size * 0.35)])
-	var col := Color(randf_range(0.42, 0.6), 0.02, 0.03, 0.82)
-	blobs.append({"pos": p, "parts": parts, "drips": drips, "t": 0.0, "col": col})
+	var b := Blob.new()
+	b.pos = p
+	b.setup(size, HOLD, FADE)
+	add_child(b)
+	blobs.append(b)
 
 
 func clear() -> void:
+	for b in blobs:
+		b.queue_free()
 	blobs.clear()
 	canvas.queue_redraw()
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if blobs.is_empty():
 		return
+	canvas.queue_redraw()
 	var i := 0
 	while i < blobs.size():
-		var b: Dictionary = blobs[i]
-		b["t"] = float(b["t"]) + delta
-		for d in b["drips"]:
-			if float(d[1]) < float(d[2]):
-				d[1] = minf(float(d[1]) + float(d[3]) * delta, float(d[2]))
-		if float(b["t"]) > HOLD + FADE:
+		if blobs[i].done:
+			blobs[i].queue_free()
 			blobs.remove_at(i)
 		else:
 			i += 1
-	canvas.queue_redraw()
 
 
+## Uma mancha na lente (só o estado; o desenho é feito em lote em _paint).
+class Blob extends Node:
+	var pos := Vector2.ZERO
+	var parts: Array = []   # [off, r]
+	var drips: Array = []   # [off, len, max, speed, w]
+	var col: Color
+	var t := 0.0
+	var hold := 2.6
+	var fade := 2.4
+	var done := false
+	var alpha := 1.0
+
+	func setup(size: float, h: float, f: float) -> void:
+		hold = h
+		fade = f
+		parts.append([Vector2.ZERO, size])
+		for i in randi_range(4, 9):
+			var a := randf() * TAU
+			var d := randf_range(size * 0.5, size * 1.9)
+			parts.append([Vector2.from_angle(a) * d, size * randf_range(0.12, 0.45)])
+		for i in randi_range(1, 3):
+			drips.append([Vector2(randf_range(-size * 0.6, size * 0.6), size * 0.4), 0.0,
+				randf_range(size * 1.5, size * 5.0), randf_range(6.0, 16.0), randf_range(1.2, size * 0.35)])
+		col = Color(randf_range(0.42, 0.6), 0.02, 0.03, 0.82)
+
+	func _process(delta: float) -> void:
+		t += delta
+		for d in drips:
+			if float(d[1]) < float(d[2]):
+				d[1] = minf(float(d[1]) + float(d[3]) * delta, float(d[2]))
+		alpha = 1.0 if t < hold else maxf(0.0, 1.0 - (t - hold) / fade)
+		done = t > hold + fade
+
+
+## Tudo num lote só: primeiro os círculos de todas as manchas, depois as
+## linhas (trocar de tipo a cada mancha quebrava o lote na placa de vídeo).
 func _paint() -> void:
 	for b in blobs:
-		var t: float = b["t"]
-		var a := 1.0 if t < HOLD else 1.0 - (t - HOLD) / FADE
-		var col: Color = b["col"]
-		col.a *= a
-		var hi := Color(1.0, 0.6, 0.6, 0.18 * a)
-		var p: Vector2 = b["pos"]
-		for part in b["parts"]:
-			canvas.draw_circle(p + part[0], part[1], col)
-		for d in b["drips"]:
-			var o: Vector2 = p + d[0]
-			var l: float = d[1]
-			canvas.draw_line(o, o + Vector2(0, l), col, d[4])
-			canvas.draw_circle(o + Vector2(0, l), float(d[4]) * 0.7, col)
-		var main: Array = b["parts"][0]
-		canvas.draw_circle(p + Vector2(-0.3, -0.3) * float(main[1]), float(main[1]) * 0.3, hi)
+		var col: Color = b.col
+		col.a *= b.alpha
+		for part in b.parts:
+			Dot.draw(canvas, b.pos + part[0], part[1], col)
+		for d in b.drips:
+			Dot.draw(canvas, b.pos + d[0] + Vector2(0, float(d[1])), float(d[4]) * 0.7, col)
+	for b in blobs:
+		var main: Array = b.parts[0]
+		Dot.draw(canvas, b.pos + Vector2(-0.3, -0.3) * float(main[1]), float(main[1]) * 0.3, Color(1.0, 0.6, 0.6, 0.18 * b.alpha))
+	for b in blobs:
+		var col: Color = b.col
+		col.a *= b.alpha
+		for d in b.drips:
+			var o: Vector2 = b.pos + d[0]
+			canvas.draw_line(o, o + Vector2(0, float(d[1])), col, d[4])

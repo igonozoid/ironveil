@@ -116,9 +116,12 @@ class HudDraw extends Control:
 	func _draw() -> void:
 		var font := ThemeDB.fallback_font
 		# Vida
-		draw_string(font, Vector2(10, 17), tr("VIDA"), HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
+		var label := tr("VIDA")
+		draw_string(font, Vector2(10, 17), label, HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color(0.85, 0.75, 0.65))
+		# A barra começa depois do rótulo (em inglês "HEALTH" é mais largo).
+		var bx := maxf(38.0, 10.0 + font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, 9).x + 6.0)
 		for i in Game.max_hp():
-			var r := Rect2(Vector2(38 + i * 15, 8), Vector2(12, 10))
+			var r := Rect2(Vector2(bx + i * 15, 8), Vector2(12, 10))
 			draw_rect(r.grow(1), Color("1e1b1b"))
 			if i < Game.hp:
 				draw_rect(r, Color("7fd4ff"))
@@ -126,7 +129,7 @@ class HudDraw extends Control:
 			else:
 				draw_rect(r, Color("2e2a2a"))
 				draw_rect(r, Color("5a3a24"), false, 1.0)
-		var x := 38.0 + Game.max_hp() * 15.0 + 4.0
+		var x := bx + Game.max_hp() * 15.0 + 4.0
 		var pl = Game.world.player if Game.world else null
 		# Couraça (upgrade): placa cheia ou recarregando
 		if Game.has_upgrade("couraca") and pl != null:

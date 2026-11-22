@@ -3,6 +3,7 @@ extends RefCounted
 ## coordenadas "olhando para a direita" e em fração da altura do corpo, para
 ## acompanharem o personagem quando ele vira, agacha ou anda.
 
+const Dot := preload("res://scripts/fx/dot.gd")
 const MAX := 48
 
 ## Cada item: [x (px, lado da frente > 0), h (0 = pés, 1 = topo), raio, cor, escorrido (px), criado (s)]
@@ -46,20 +47,23 @@ func count() -> int:
 
 ## Desenha no CanvasItem já transformado (espelhado pelo facing do dono).
 func draw_on(ci: CanvasItem, height: float, x_scale: float = 1.0, limit: int = -1) -> void:
-	var n := 0
-	for it in items:
-		if limit >= 0 and n >= limit:
-			break
-		n += 1
+	# Círculos primeiro, escorridos depois: menos trocas de tipo = menos
+	# chamadas de desenho.
+	var n := mini(items.size(), limit) if limit >= 0 else items.size()
+	for i in n:
+		var it: Array = items[i]
 		var p := Vector2(float(it[0]) * x_scale, -float(it[1]) * height)
 		var r: float = it[2]
 		var col: Color = it[3]
-		ci.draw_circle(p, r * 0.75, col)
+		Dot.draw(ci, p, r * 0.75, col)
 		if r > 1.0:
-			ci.draw_circle(p + Vector2(r * 0.6, r * 0.3), r * 0.4, col)
+			Dot.draw(ci, p + Vector2(r * 0.6, r * 0.3), r * 0.4, col)
+	for i in n:
+		var it: Array = items[i]
 		var d: float = it[4]
 		if d > 0.0:
-			ci.draw_line(p, p + Vector2(0, d), col, maxf(0.5, r * 0.45))
+			var p := Vector2(float(it[0]) * x_scale, -float(it[1]) * height)
+			ci.draw_line(p, p + Vector2(0, d), it[3], maxf(0.5, float(it[2]) * 0.45))
 
 
 func to_array() -> Array:

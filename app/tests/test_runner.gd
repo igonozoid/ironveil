@@ -615,10 +615,7 @@ func _act3() -> void:
 	await frames(70)
 	check(p.splats.count() > 0, "gore blood sticks to Sera's suit (%d)" % p.splats.count())
 	check(witness.splats.count() > 0, "gore blood sticks to a nearby guard (%d)" % witness.splats.count())
-	var bg_stains := 0
-	for k in g.blood.stains.s_kind:
-		if k == 3:
-			bg_stains += 1
+	var bg_stains: int = g.blood.stains.kind_count[3]
 	check(bg_stains > 0, "gore blood stains the backdrop (%d)" % bg_stains)
 	check(g.screen_blood.blobs.size() > 0, "gore blood splashes the screen (%d)" % g.screen_blood.blobs.size())
 	witness.queue_free()
@@ -826,7 +823,7 @@ func _act3() -> void:
 	Game.end_act = 4
 	add_child(es)
 	await frames(5)
-	check(es.title.text.contains("Fim"), "finale end screen")
+	check(es.title.text == tr("Ato 5 concluído — Fim"), "finale end screen")
 	es.queue_free()
 	await frames(2)
 	Game.settings["gore"] = saved_gore

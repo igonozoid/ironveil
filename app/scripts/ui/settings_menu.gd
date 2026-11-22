@@ -13,6 +13,7 @@ const DESCRIPTIONS := {
 	"gore": "Sangue que voa, mancha o cenário, gruda nas pessoas e espirra na tela. Desligado, vira faíscas e destroços.",
 	"fx": "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado ao entardecer, Torre fria), brilho em volta das luzes, cantos escurecidos, grão de filme e a imagem separando em cores ao levar dano. Desligado: imagem limpa e um pouco mais leve para o computador. As luzes do cenário e a borda de vida continuam.",
 	"fs": "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento.",
+	"sharp": "Leve: o jogo é desenhado em 640×360 e ampliado — muito mais rápido em notebooks e placas de vídeo integradas. Nítida: tudo na resolução da tela, com texto mais fino, mas bem mais pesado.",
 	"lang": "Idioma dos textos do jogo. Muda na hora.",
 	"music": "Volume da trilha sonora (cada clique sobe 10%; depois de 100% volta a 0, que desliga a música).",
 	"sfx": "Volume dos efeitos sonoros: tiros, vapor, passos, explosões.",
@@ -45,7 +46,7 @@ func _ready() -> void:
 	var left := VBoxContainer.new()
 	left.position = Vector2(36, 54)
 	left.custom_minimum_size = Vector2(240, 0)
-	left.add_theme_constant_override("separation", 3)
+	left.add_theme_constant_override("separation", 2)
 	add_child(left)
 	var head := _head(left, "JOGO")
 	head.custom_minimum_size = Vector2(0, 14)
@@ -62,6 +63,10 @@ func _ready() -> void:
 	fs.pressed.connect(func():
 		Game.toggle_fullscreen()
 		_refresh())
+	var sharp := _button(left, "", "sharp")
+	sharp.pressed.connect(func():
+		Game.toggle_sharp()
+		_refresh())
 	var lang := _button(left, "", "lang")
 	lang.pressed.connect(func():
 		Game.cycle_language()
@@ -76,7 +81,7 @@ func _ready() -> void:
 		Game.cycle_volume("sfx")
 		Sfx.play("shot", -3.0)
 		_refresh())
-	left.add_child(_spacer(6))
+	left.add_child(_spacer(2))
 	var reset := _button(left, "Restaurar teclas padrão", "reset")
 	reset.pressed.connect(func():
 		Game.reset_keys()
@@ -116,8 +121,8 @@ func _ready() -> void:
 		key_buttons[action] = b
 
 	desc = Label.new()
-	desc.position = Vector2(36, 306)
-	desc.size = Vector2(570, 52)
+	desc.position = Vector2(36, 312)
+	desc.size = Vector2(570, 46)
 	desc.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	desc.add_theme_font_size_override("font_size", 10)
 	desc.add_theme_color_override("font_color", Color(1.0, 0.88, 0.7))
@@ -169,6 +174,8 @@ func _refresh() -> void:
 				c.text = tr("Efeitos de tela: %s") % tr("Ligados" if Game.fx_enabled() else "Desligados")
 			"fs":
 				c.text = tr("Tela cheia (F11): %s") % tr("Ligada" if bool(Game.settings.get("fullscreen", false)) else "Desligada")
+			"sharp":
+				c.text = tr("Resolução: %s") % tr("Nítida" if bool(Game.settings.get("sharp", false)) else "Leve (mais rápida)")
 			"lang":
 				c.text = tr("Idioma: %s") % Game.language_name()
 			"music":

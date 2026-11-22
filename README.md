@@ -107,6 +107,12 @@ lanternas, luar, holofotes, clarões de tiro), e o pós-processamento muda por a
 brilho, vinheta e grão. Há ainda tremor de tela por impacto e sangue que gruda nos personagens, no
 cenário e na tela. **Gore** e **Efeitos** podem ser desligados no menu.
 
+O fundo de cada tela tem camadas (a de longe com um leve parallax) e peças que se mexem:
+engrenagens, fornalhas e lava pulsando, vapor, lanternas balançando, raios e luzes de aviso.
+Tudo que é fixo é desenhado uma vez só e guardado como textura, então o jogo roda bem em
+notebooks. Em **Configurações → Resolução**, *Leve* (padrão) desenha em 640×360 e amplia;
+*Nítida* desenha na resolução da tela (texto mais fino, bem mais pesado).
+
 ### Novo Jogo+ e dificuldades
 
 Terminando o jogo, o **Novo jogo+** libera duas dificuldades além do **Normal**: **Intenso** (mais

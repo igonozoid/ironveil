@@ -1362,6 +1362,9 @@ msgstr "Pós-processamento: cor própria de cada ato (Caldeiras quentes, Mercado
 msgid "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento."
 msgstr "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento."
 
+msgid "Leve: o jogo é desenhado em 640×360 e ampliado — muito mais rápido em notebooks e placas de vídeo integradas. Nítida: tudo na resolução da tela, com texto mais fino, mas bem mais pesado."
+msgstr "Leve: o jogo é desenhado em 640×360 e ampliado — muito mais rápido em notebooks e placas de vídeo integradas. Nítida: tudo na resolução da tela, com texto mais fino, mas bem mais pesado."
+
 msgid "Idioma dos textos do jogo. Muda na hora."
 msgstr "Idioma dos textos do jogo. Muda na hora."
 
@@ -1409,6 +1412,15 @@ msgstr "Ligada"
 
 msgid "Desligada"
 msgstr "Desligada"
+
+msgid "Resolução: %s"
+msgstr "Resolução: %s"
+
+msgid "Nítida"
+msgstr "Nítida"
+
+msgid "Leve (mais rápida)"
+msgstr "Leve (mais rápida)"
 
 msgid "Idioma: %s"
 msgstr "Idioma: %s"

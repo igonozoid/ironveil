@@ -753,3 +753,16 @@ aparece no HUD, embaixo da vida.
 - **Insano**: toda morte estraçalha; sangue escorre pelas bordas e cantos da tela; explosões
   soltam rajadas secundárias de fogo e fumaça; a imagem tem aberração cromática constante.
 - Console: `dificuldade normal|intenso|insano` troca a dificuldade e reinicia a fase.
+
+## 20. Cenário e desempenho
+
+- **Fundo em camadas** (`scripts/backdrop.gd`): cada tela tem a camada *de longe* (céu, silhuetas,
+  caldeiras gigantes, lava distante — com parallax que acompanha Sera) e a *do meio* (colunas,
+  canos, janelas, plataformas). Os elementos ficam em vagas fixas para não se sobreporem.
+- **Peças animadas** (`scripts/backdrop_props.gd`): engrenagens, ponteiros de relógio, cápsulas
+  pneumáticas, brilhos pulsando, vapor, lanternas, luzes de aviso e raios. Só a tela atual anima.
+- **Assado em textura**: blocos, fundos e manchas de sangue são desenhados uma vez num
+  SubViewport e viram textura. Círculos de sangue usam uma textura de círculo para a placa de
+  vídeo juntar tudo em poucas chamadas.
+- **Resolução** (Configurações): *Leve* (padrão) desenha em 640×360 e amplia; *Nítida* desenha
+  na resolução da tela.

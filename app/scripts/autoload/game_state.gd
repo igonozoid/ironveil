@@ -71,7 +71,7 @@ var checkpoint: Dictionary = {}
 ## Não é apagado por "Novo jogo".
 var progress: Dictionary = {"completed": [], "act1_complete": false, "acts_complete": [], "upgrades": []}
 ## Opções do jogador (salvas junto com o progresso).
-var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "keys": {}, "music": 0.7, "sfx": 1.0, "lang": ""}
+var settings: Dictionary = {"gore": true, "fx": true, "fullscreen": false, "sharp": false, "keys": {}, "music": 0.7, "sfx": 1.0, "lang": ""}
 var show_story: bool = false
 var intro_to_menu: bool = false
 ## Repetição de uma fase já concluída (pelo mapa): não mexe no checkpoint salvo.
@@ -107,6 +107,7 @@ func _ready() -> void:
 	apply_language()
 	apply_keys()
 	apply_fullscreen()
+	apply_render()
 
 
 func _input(event: InputEvent) -> void:
@@ -262,6 +263,22 @@ func apply_fullscreen() -> void:
 		return
 	var fs := bool(settings.get("fullscreen", false))
 	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN if fs else DisplayServer.WINDOW_MODE_WINDOWED)
+
+
+## Resolução interna. "Leve" (padrão): o jogo é desenhado em 640×360 e
+## ampliado — 3 a 4 vezes mais rápido em placas de vídeo integradas.
+## "Nítida": tudo desenhado na resolução da tela (texto mais fino, bem mais pesado).
+func apply_render() -> void:
+	var root := get_tree().root if get_tree() else null
+	if root == null:
+		return
+	root.content_scale_mode = Window.CONTENT_SCALE_MODE_CANVAS_ITEMS if bool(settings.get("sharp", false)) else Window.CONTENT_SCALE_MODE_VIEWPORT
+
+
+func toggle_sharp() -> void:
+	settings["sharp"] = not bool(settings.get("sharp", false))
+	apply_render()
+	write_save()
 
 
 # ---------------------------------------------------------------- dificuldade
@@ -573,6 +590,7 @@ func load_save() -> bool:
 		settings["gore"] = bool(sett.get("gore", true))
 		settings["fx"] = bool(sett.get("fx", true))
 		settings["fullscreen"] = bool(sett.get("fullscreen", false))
+		settings["sharp"] = bool(sett.get("sharp", false))
 		settings["music"] = clampf(float(sett.get("music", 0.7)), 0.0, 1.0)
 		settings["lang"] = String(sett.get("lang", ""))
 		settings["sfx"] = clampf(float(sett.get("sfx", 1.0)), 0.0, 1.0)

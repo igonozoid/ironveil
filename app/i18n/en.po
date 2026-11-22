@@ -1362,6 +1362,9 @@ msgstr "Post-processing: each act's own color grade (warm Boilers, dusky Market,
 msgid "Alterna entre janela e tela cheia. Atalho: F11 a qualquer momento."
 msgstr "Toggle between window and fullscreen. Shortcut: F11 at any time."
 
+msgid "Leve: o jogo é desenhado em 640×360 e ampliado — muito mais rápido em notebooks e placas de vídeo integradas. Nítida: tudo na resolução da tela, com texto mais fino, mas bem mais pesado."
+msgstr "Light: the game is drawn at 640×360 and scaled up — much faster on laptops and integrated graphics. Sharp: everything at screen resolution, with crisper text, but much heavier."
+
 msgid "Idioma dos textos do jogo. Muda na hora."
 msgstr "Language of the game's text. Changes immediately."
 
@@ -1409,6 +1412,15 @@ msgstr "On"
 
 msgid "Desligada"
 msgstr "Off"
+
+msgid "Resolução: %s"
+msgstr "Resolution: %s"
+
+msgid "Nítida"
+msgstr "Sharp"
+
+msgid "Leve (mais rápida)"
+msgstr "Light (faster)"
 
 msgid "Idioma: %s"
 msgstr "Language: %s"

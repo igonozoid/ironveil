@@ -81,6 +81,9 @@ func _physics_process(delta: float) -> void:
 			if b:
 				b.pool(global_position + Vector2(-facing * 3.0, 0), randf_range(12.0, 18.0))
 		queue_redraw()
+		# Corpo assentado: não precisa mais de física nem de redesenho.
+		if dead_t > 1.5 and not pool_pending and is_on_floor() and absf(velocity.x) < 1.0:
+			set_physics_process(false)
 		return
 	if Game.world == null or not Game.world.is_active(global_position):
 		return

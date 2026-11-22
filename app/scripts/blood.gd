@@ -38,18 +38,18 @@ var g_size := PackedVector2Array()
 var g_col := PackedColorArray()
 var g_rest := PackedByteArray()
 var g_bleed := PackedByteArray()
-var g_ring := 0
 
-# Escorridos na parede: [pos, restante, velocidade, tamanho, cor]
+# Escorridos na parede: [pos, restante, velocidade, tamanho, cor, tipo, px desde a última mancha]
 var drips: Array = []
 
 
 func _ready() -> void:
 	var fx := Game.fx_level()
-	MAX_DROPS = 700 * (1 + fx * 2)
-	MAX_GIBS = 180 * (1 + fx * 2)
+	MAX_DROPS = 700 * (1 + fx)
+	MAX_GIBS = 120 * (1 + fx)
 	z_index = 7
 	stains = StainLayer.new()
+	stains.level = level
 	stains.z_index = -6   # relativo: fica atrás dos personagens, sobre o cenário
 	add_child(stains)
 
@@ -132,10 +132,9 @@ func gibs(pos: Vector2, amount: int, colors: Array, bleed: bool = true, speed: f
 	amount = int(amount * (Game.gore_mult() if bleed else 1.0 + 0.5 * Game.fx_level()))
 	speed *= 1.0 + 0.2 * Game.fx_level()
 	for i in amount:
+		if g_pos.size() >= MAX_GIBS:
+			_settle_gib(0)
 		var idx := g_pos.size()
-		if idx >= MAX_GIBS:
-			idx = g_ring
-			g_ring = (g_ring + 1) % MAX_GIBS
 		var a := randf_range(-PI * 0.95, -PI * 0.05)
 		var vel := Vector2.from_angle(a) * speed * randf_range(0.35, 1.0)
 		var sz := Vector2(randf_range(2.0, 4.5), randf_range(1.5, 3.5))
@@ -161,6 +160,29 @@ func gibs(pos: Vector2, amount: int, colors: Array, bleed: bool = true, speed: f
 
 
 # ---------------------------------------------------------------- simulação
+
+## Pedaço que parou de vez: vira desenho fixo na camada de manchas.
+func _settle_gib(j: int, keep: bool = true) -> void:
+	if keep:
+		stains.add_gib(g_pos[j], g_rot[j], g_size[j], g_col[j])
+	var last := g_pos.size() - 1
+	g_pos[j] = g_pos[last]
+	g_vel[j] = g_vel[last]
+	g_rot[j] = g_rot[last]
+	g_rv[j] = g_rv[last]
+	g_size[j] = g_size[last]
+	g_col[j] = g_col[last]
+	g_rest[j] = g_rest[last]
+	g_bleed[j] = g_bleed[last]
+	g_pos.resize(last)
+	g_vel.resize(last)
+	g_rot.resize(last)
+	g_rv.resize(last)
+	g_size.resize(last)
+	g_col.resize(last)
+	g_rest.resize(last)
+	g_bleed.resize(last)
+
 
 func _remove_drop(i: int) -> void:
 	var last := d_pos.size() - 1
@@ -220,29 +242,42 @@ func _physics_process(delta: float) -> void:
 		dr[0] = (dr[0] as Vector2) + Vector2(0, step)
 		dr[1] = float(dr[1]) - step
 		dr[2] = maxf(float(dr[2]) * (1.0 - 0.4 * delta), 3.0)
-		var dk: int = 1 if dr.size() < 6 else int(dr[5])
-		stains.add_stain(dr[0], float(dr[3]) * randf_range(0.7, 1.0), dk, dr[4])
+		var dk: int = int(dr[5])
+		# Uma mancha a cada pixel escorrido (não a cada passo da física).
+		dr[6] = float(dr[6]) + step
+		if float(dr[6]) >= 1.0:
+			dr[6] = 0.0
+			stains.add_stain(dr[0], float(dr[3]) * randf_range(0.7, 1.0), dk, dr[4])
 		if float(dr[1]) <= 0.0:
 			stains.add_stain(dr[0] + Vector2(0, 0.6), float(dr[3]) * 1.5, 1, dr[4])
 			drips.remove_at(k)
 		else:
 			k += 1
 
-	# Pedaços
-	for j in g_pos.size():
+	# Pedaços (os que param são assados e saem da lista)
+	var j := 0
+	while j < g_pos.size():
 		if g_rest[j] == 1:
+			_settle_gib(j)
 			continue
 		var gv := g_vel[j]
 		gv.y += GRAV * delta
 		var gp := g_pos[j]
 		var ngp := gp + gv * delta
 		var gc: Vector2i = level.world_to_cell(ngp)
+		if level.is_solid(level.world_to_cell(gp)):
+			# Nasceu dentro da parede: some.
+			_settle_gib(j, false)
+			continue
 		if level.is_solid(gc):
 			var side: Vector2i = level.world_to_cell(Vector2(ngp.x, gp.y))
 			if level.is_solid(side):
 				gv.x *= -0.4
 				ngp.x = gp.x
-			else:
+			# Bateu de lado e ainda tem chão/teto: trata o vertical também
+			# (antes o pedaço atravessava o chão e caía para sempre).
+			gc = level.world_to_cell(ngp)
+			if level.is_solid(gc):
 				if gv.y > 0.0:
 					ngp.y = gc.y * TILE - g_size[j].y * 0.5
 					if g_bleed[j] == 1 and _gore() and absf(gv.y) > 80.0:
@@ -265,6 +300,7 @@ func _physics_process(delta: float) -> void:
 			d_life.append(1.2)
 			d_col.append(blood_color())
 			d_age.append(0.0)
+		j += 1
 	queue_redraw()
 
 
@@ -297,7 +333,7 @@ func _hit_backdrop(p: Vector2, v: Vector2, size: float, col: Color) -> void:
 	for k in randi_range(1, 3):
 		stains.add_stain(p + dir * randf_range(2.0, 6.0) + Vector2(randf_range(-1.5, 1.5), randf_range(-1.5, 1.5)), r * 0.35, 3, bc)
 	if r > 1.8 and randf() < 0.4 and drips.size() < 80:
-		drips.append([p, randf_range(6.0, 22.0), randf_range(6.0, 12.0), randf_range(0.4, 0.7), bc, 3])
+		drips.append([p, randf_range(6.0, 22.0), randf_range(6.0, 12.0), randf_range(0.4, 0.7), bc, 3, 1.0])
 
 
 func _hit_surface(p: Vector2, np: Vector2, v: Vector2, size: float, col: Color) -> void:
@@ -310,7 +346,7 @@ func _hit_surface(p: Vector2, np: Vector2, v: Vector2, size: float, col: Color) 
 		var sp := Vector2(wall_x, p.y)
 		stains.add_stain(sp, r, 1, col)
 		if r > 1.4 and randf() < 0.28 and drips.size() < 80:
-			drips.append([sp, randf_range(8.0, 30.0), randf_range(8.0, 18.0), randf_range(0.5, 0.9), col])
+			drips.append([sp, randf_range(8.0, 30.0), randf_range(8.0, 18.0), randf_range(0.5, 0.9), col, 1, 1.0])
 	else:
 		var c: Vector2i = level.world_to_cell(np)
 		if v.y > 0.0:
@@ -320,10 +356,20 @@ func _hit_surface(p: Vector2, np: Vector2, v: Vector2, size: float, col: Color) 
 
 
 func _draw() -> void:
+	# Gotas em três espessuras, cada uma num único comando de desenho.
+	var pts: Array = [PackedVector2Array(), PackedVector2Array(), PackedVector2Array()]
+	var cols: Array = [PackedColorArray(), PackedColorArray(), PackedColorArray()]
 	for i in d_pos.size():
 		var p := d_pos[i]
-		var tail := p - d_vel[i] * 0.012
-		draw_line(tail, p, d_col[i], d_size[i], true)
+		var sz := d_size[i]
+		var k := 0 if sz < 1.0 else (1 if sz < 1.7 else 2)
+		(pts[k] as PackedVector2Array).append(p - d_vel[i] * 0.012)
+		(pts[k] as PackedVector2Array).append(p)
+		(cols[k] as PackedColorArray).append(d_col[i])
+	var widths := [0.8, 1.4, 2.2]
+	for k in 3:
+		if not (pts[k] as PackedVector2Array).is_empty():
+			draw_multiline_colors(pts[k], cols[k], widths[k])
 	for j in g_pos.size():
 		draw_set_transform(g_pos[j], g_rot[j], Vector2.ONE)
 		var s := g_size[j]
@@ -332,64 +378,123 @@ func _draw() -> void:
 	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 
-## Camada de manchas: só redesenha quando algo muda.
+## Camada de manchas. Cada tela tem uma textura própria (SubViewport que
+## nunca é limpo): as manchas novas são desenhadas uma vez só e ficam
+## "assadas" nela. Assim o custo não cresce com a quantidade de sangue.
+## As poças crescem, então ficam num nó à parte que redesenha (são poucas).
 class StainLayer extends Node2D:
-	var s_pos := PackedVector2Array()
-	var s_r := PackedFloat32Array()
-	var s_kind := PackedByteArray()
-	var s_col := PackedColorArray()
-	var ring := 0
+	const SCREEN := Vector2(640, 360)
+	## Quantas manchas de cada tipo já foram feitas (0 chão, 1 parede, 2 teto, 3 fundo).
+	var kind_count := PackedInt32Array([0, 0, 0, 0])
+	var total := 0
 	var pools: Array = []   # [pos, r, alvo, cor]
-	var dirty := false
+	var pools_dirty := false
+	var pool_node: Node2D
+	## Vector2i(tela) -> {"vp": SubViewport, "pen": Node2D, "new": Array}
+	var pages := {}
+	var level = null
+
+	func _ready() -> void:
+		pool_node = Node2D.new()
+		pool_node.draw.connect(_draw_pools)
+		add_child(pool_node)
+
+	func _page(s: Vector2i) -> Dictionary:
+		if pages.has(s):
+			return pages[s]
+		var vp := SubViewport.new()
+		vp.size = Vector2i(SCREEN)
+		vp.transparent_bg = true
+		vp.disable_3d = true
+		vp.render_target_clear_mode = SubViewport.CLEAR_MODE_NEVER
+		vp.render_target_update_mode = SubViewport.UPDATE_ONCE
+		add_child(vp)
+		var pen := Node2D.new()
+		pen.position = -Vector2(s) * SCREEN
+		vp.add_child(pen)
+		var spr := Sprite2D.new()
+		spr.centered = false
+		spr.position = Vector2(s) * SCREEN
+		spr.texture = vp.get_texture()
+		var mat := CanvasItemMaterial.new()
+		mat.blend_mode = CanvasItemMaterial.BLEND_MODE_PREMULT_ALPHA
+		spr.material = mat
+		add_child(spr)
+		var pg := {"vp": vp, "pen": pen, "new": []}
+		pen.draw.connect(_draw_page.bind(pg))
+		pages[s] = pg
+		return pg
 
 	func add_stain(p: Vector2, r: float, kind: int, col: Color) -> void:
-		if s_pos.size() < 3000 * (1 + Game.fx_level()):
-			s_pos.append(p)
-			s_r.append(r)
-			s_kind.append(kind)
-			s_col.append(col)
-		else:
-			s_pos[ring] = p
-			s_r[ring] = r
-			s_kind[ring] = kind
-			s_col[ring] = col
-			ring = (ring + 1) % (3000 * (1 + Game.fx_level()))
-		dirty = true
+		kind_count[kind] += 1
+		total += 1
+		_put(p, r, [p, r, kind, col])
+
+	func _put(p: Vector2, r: float, item: Array) -> void:
+		# Uma mancha na divisa entre telas vai para as duas.
+		var m := r * 1.5 + 1.0
+		var a := Vector2i(floori((p.x - m) / SCREEN.x), floori((p.y - m) / SCREEN.y))
+		var b := Vector2i(floori((p.x + m) / SCREEN.x), floori((p.y + m) / SCREEN.y))
+		for sx in range(a.x, b.x + 1):
+			for sy in range(a.y, b.y + 1):
+				if level != null and not level.has_screen(Vector2i(sx, sy)):
+					continue
+				var pg := _page(Vector2i(sx, sy))
+				var fresh: Array = pg["new"]
+				if fresh.is_empty():
+					(pg["pen"] as Node2D).queue_redraw()
+					(pg["vp"] as SubViewport).render_target_update_mode = SubViewport.UPDATE_ONCE
+				fresh.append(item)
+
+	func add_gib(p: Vector2, rot: float, size: Vector2, col: Color) -> void:
+		_put(p, maxf(size.x, size.y), [p, rot, 4, col, size])
 
 	func add_pool(p: Vector2, target: float) -> void:
 		if pools.size() >= 60:
 			pools.remove_at(0)
 		pools.append([p, 1.0, target, Color(0.45, 0.02, 0.02, 0.92)])
-		dirty = true
+		pools_dirty = true
 
 	func _process(delta: float) -> void:
 		for pl in pools:
 			if float(pl[1]) < float(pl[2]):
 				pl[1] = minf(float(pl[1]) + delta * 5.0, float(pl[2]))
-				dirty = true
-		if dirty:
-			dirty = false
-			queue_redraw()
+				pools_dirty = true
+		if pools_dirty:
+			pools_dirty = false
+			pool_node.queue_redraw()
 
-	func _draw() -> void:
+	func _draw_pools() -> void:
 		for pl in pools:
 			var p: Vector2 = pl[0]
 			var r: float = pl[1]
 			var col: Color = pl[3]
-			draw_rect(Rect2(p.x - r, p.y - 0.6, r * 2.0, 2.4), col)
-			draw_rect(Rect2(p.x - r * 0.7, p.y - 1.1, r * 1.4, 0.6), col.darkened(0.2))
-			draw_rect(Rect2(p.x - r * 0.4, p.y - 0.6, r * 0.5, 0.5), Color(1, 0.5, 0.5, 0.25))
-		for i in s_pos.size():
-			var p := s_pos[i]
-			var r := s_r[i]
-			var col := s_col[i]
-			match s_kind[i]:
+			pool_node.draw_rect(Rect2(p.x - r, p.y - 0.6, r * 2.0, 2.4), col)
+			pool_node.draw_rect(Rect2(p.x - r * 0.7, p.y - 1.1, r * 1.4, 0.6), col.darkened(0.2))
+			pool_node.draw_rect(Rect2(p.x - r * 0.4, p.y - 0.6, r * 0.5, 0.5), Color(1, 0.5, 0.5, 0.25))
+
+	## Desenha só as manchas novas; a textura guarda as antigas.
+	func _draw_page(pg: Dictionary) -> void:
+		var pen: Node2D = pg["pen"]
+		var fresh: Array = pg["new"]
+		for st in fresh:
+			var p: Vector2 = st[0]
+			var r: float = st[1]
+			var col: Color = st[3]
+			match int(st[2]):
+				4:
+					var gs: Vector2 = st[4]
+					pen.draw_set_transform(p, float(st[1]), Vector2.ONE)
+					pen.draw_rect(Rect2(-gs * 0.5, gs), col)
+					pen.draw_rect(Rect2(-gs * 0.5, Vector2(gs.x, 0.8)), col.lightened(0.2))
+					pen.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 				3:
-					draw_circle(p, r * 0.85, col)
+					pen.draw_circle(p, r * 0.85, col)
 				0:
-					draw_rect(Rect2(p.x - r * 1.4, p.y - 0.3, r * 2.8, maxf(1.0, r * 0.7)), col)
-					draw_circle(Vector2(p.x + r * 0.6, p.y + r * 0.25), r * 0.45, col)
+					pen.draw_rect(Rect2(p.x - r * 1.4, p.y - 0.3, r * 2.8, maxf(1.0, r * 0.7)), col)
+					pen.draw_circle(Vector2(p.x + r * 0.6, p.y + r * 0.25), r * 0.45, col)
 				1:
-					draw_circle(p, r * 0.8, col)
+					pen.draw_circle(p, r * 0.8, col)
 				_:
-					draw_rect(Rect2(p.x - r, p.y - maxf(1.0, r * 0.6), r * 2.0, maxf(1.0, r * 0.6)), col)
+					pen.draw_rect(Rect2(p.x - r, p.y - maxf(1.0, r * 0.6), r * 2.0, maxf(1.0, r * 0.6)), col)
+		fresh.clear()

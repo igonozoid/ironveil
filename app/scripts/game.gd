@@ -237,7 +237,7 @@ func _build_ambient() -> void:
 				[Color(1.0, 0.55, 0.2, 0.8), 25, Vector2(0, -1), 14.0, Vector2(0, -8), 1.0, 2.0, 6.0]]
 	for s in specs:
 		var p := CPUParticles2D.new()
-		p.amount = int(s[1]) * (1 + Game.fx_level())
+		p.amount = int(int(s[1]) * (1.0 + 0.5 * Game.fx_level()))
 		p.lifetime = s[7]
 		p.preprocess = s[7]
 		p.emission_shape = CPUParticles2D.EMISSION_SHAPE_RECTANGLE
