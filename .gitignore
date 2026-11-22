@@ -1,0 +1,24 @@
+# Godot
+app/.godot/
+.godot/
+*.translation
+export_credentials.cfg
+
+# Builds
+build/
+*.apk
+*.aab
+*.x86_64
+*.exe
+*.pck
+
+# Sistema / editores
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Segredos (nunca versionar)
+*.keystore
+*.jks

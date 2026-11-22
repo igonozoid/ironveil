@@ -1,0 +1,126 @@
+# Compila IRONVEIL para Linux, Windows, macOS e Android.
+# - Em todo push/PR: roda o teste de fumaça e gera os builds como artefatos.
+# - Numa tag v* (ex.: v1.0.0): também publica um Release com os arquivos.
+# Android: sem os secrets de assinatura, gera um APK de depuração (instalável
+# por sideload). Com ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_ALIAS e
+# ANDROID_KEYSTORE_PASSWORD configurados, gera o APK de release assinado.
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: "4.7.2"
+  GODOT_RELEASE: "stable"
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache do Godot e dos templates
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/godot
+            ~/.local/share/godot/export_templates
+          key: godot-${{ env.GODOT_VERSION }}-${{ env.GODOT_RELEASE }}
+
+      - name: Baixar Godot e templates de exportação
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          set -e
+          V="${GODOT_VERSION}-${GODOT_RELEASE}"
+          BASE="https://github.com/godotengine/godot-builds/releases/download/${V}"
+          mkdir -p ~/godot ~/.local/share/godot/export_templates
+          curl -fsSL -o /tmp/godot.zip "${BASE}/Godot_v${V}_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d ~/godot
+          mv ~/godot/Godot_v${V}_linux.x86_64 ~/godot/godot
+          chmod +x ~/godot/godot
+          curl -fsSL -o /tmp/templates.tpz "${BASE}/Godot_v${V}_export_templates.tpz"
+          unzip -q /tmp/templates.tpz -d /tmp/tpl
+          mv /tmp/tpl/templates ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}
+
+      - name: Java 17 (Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Configurar Android SDK e keystore no Godot
+        run: |
+          set -e
+          SDK="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          keytool -genkeypair -v -keystore ~/debug.keystore -storepass android -alias androiddebugkey \
+            -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          mkdir -p ~/.config/godot
+          cat > ~/.config/godot/editor_settings-4.7.tres <<TRES
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/android_sdk_path = "${SDK}"
+          export/android/java_sdk_path = "${JAVA_HOME}"
+          export/android/debug_keystore = "${HOME}/debug.keystore"
+          export/android/debug_keystore_user = "androiddebugkey"
+          export/android/debug_keystore_pass = "android"
+          TRES
+
+      - name: Importar o projeto
+        run: ~/godot/godot --headless --path app --import
+
+      - name: Teste de fumaça
+        run: |
+          ~/godot/godot --headless --path app res://tests/test_runner.tscn 2>&1 | tee test.log
+          grep -q "RESULT: ALL PASS" test.log
+
+      - name: Exportar Linux, Windows e macOS
+        run: |
+          set -e
+          B="$GITHUB_WORKSPACE/build"
+          mkdir -p "$B/linux" "$B/windows" "$B/macos" "$B/android" "$B/dist"
+          ~/godot/godot --headless --path app --export-release "Linux" "$B/linux/ironveil.x86_64"
+          ~/godot/godot --headless --path app --export-release "Windows Desktop" "$B/windows/ironveil.exe"
+          ~/godot/godot --headless --path app --export-release "macOS" "$B/macos/ironveil-macos.zip"
+          tar -czf "$B/dist/ironveil-linux-x86_64.tar.gz" -C "$B/linux" .
+          (cd "$B/windows" && zip -qr "$B/dist/ironveil-windows-x86_64.zip" .)
+          cp "$B/macos/ironveil-macos.zip" "$B/dist/ironveil-macos-universal.zip"
+
+      - name: Exportar Android
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KS_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+          KS_PASS: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          set -e
+          B="$GITHUB_WORKSPACE/build"
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > ~/release.keystore
+            export GODOT_ANDROID_KEYSTORE_RELEASE_PATH="$HOME/release.keystore"
+            export GODOT_ANDROID_KEYSTORE_RELEASE_USER="$KS_ALIAS"
+            export GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD="$KS_PASS"
+            ~/godot/godot --headless --path app --export-release "Android" "$B/android/ironveil.apk"
+            cp "$B/android/ironveil.apk" "$B/dist/ironveil-android.apk"
+          else
+            echo "Sem keystore de release: gerando APK de depuração."
+            ~/godot/godot --headless --path app --export-debug "Android" "$B/android/ironveil.apk"
+            cp "$B/android/ironveil.apk" "$B/dist/ironveil-android-debug.apk"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ironveil-builds
+          path: build/dist/*
+
+      - name: Publicar Release (tags v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/dist/*
